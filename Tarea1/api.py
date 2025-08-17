@@ -11,5 +11,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-# Para ejecutar la API, guarda este código en un archivo llamado api.py y ejecuta el comando:
-# python api.py
