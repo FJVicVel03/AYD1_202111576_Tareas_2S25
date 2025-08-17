@@ -6,7 +6,7 @@ def index():
     ##retoonrar mi nombre y canción favorita
     return jsonify({
         'Nombre': 'Fernando José Vicente Velásquez',
-        'Canción Fav': 'Zinni e Buotti'
+        'Album Fav': 'Rush!- Maneskin'
     })
 
 if __name__ == '__main__':
