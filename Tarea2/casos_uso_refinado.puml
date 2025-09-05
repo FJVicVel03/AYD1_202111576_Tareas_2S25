@@ -1,0 +1,114 @@
+@startuml
+' ===== Estilo general =====
+left to right direction
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam defaultFontName Arial
+skinparam usecase {
+  BorderColor #888
+  BackgroundColor #f9f9f9
+  FontColor #111
+}
+skinparam rectangle {
+  BorderColor #4e4e4e
+  RoundCorner 12
+}
+skinparam ArrowColor #666
+skinparam linetype ortho
+
+' ===== Límite del sistema =====
+rectangle "Sistema E-commerce" as System {
+  ' Casos de uso principales
+  usecase "UC1 Autenticarse" as UC1
+  usecase "UC2 Explorar catálogo" as UC2
+  usecase "UC3 Buscar productos" as UC3
+  usecase "UC4 Ver detalle de producto" as UC4
+  usecase "UC5 Gestionar carrito" as UC5
+  usecase "UC6 Realizar checkout" as UC6
+  usecase "UC7 Pagar pedido" as UC7
+  usecase "UC8 Consultar pedido y tracking" as UC8
+  usecase "UC9 Cancelar/Devolver pedido" as UC9
+  usecase "UC10 Escribir reseña" as UC10
+  usecase "UC11 Administrar catálogo" as UC11
+  usecase "UC12 Administrar promociones" as UC12
+  usecase "UC13 Ver reportes" as UC13
+
+  ' Sub-casos (include/extend)
+  usecase "Autorizar pago" as UCa
+  usecase "Calcular envío e impuestos" as UCb
+  usecase "2FA" as UCc
+  usecase "Reintento pago" as UCd
+  usecase "Generar etiqueta" as UCe
+  usecase "Solicitar reembolso" as UCf
+
+  ' Relaciones include/extend
+  UC7 --> UCa : <<include>>
+  UC6 --> UCb : <<include>>
+  UC1 ..> UCc : <<extend>>
+  UC7 ..> UCd : <<extend>>
+  UC9 ..> UCe : <<extend>>
+  UC9 ..> UCf : <<extend>>
+}
+
+' ===== Actores humanos (izquierda) =====
+actor "Cliente invitado" as Invitado
+actor "Cliente registrado" as Cliente
+actor "Administrador" as Admin
+actor "Vendedor (opcional)" as Seller
+
+' ===== Sistemas externos (derecha) =====
+actor "Pasarela de pago" as Pago <<external>>
+actor "Motor antifraude" as Fraud <<external>>
+actor "Servicio de notificaciones" as Notif <<external>>
+actor "Transportista" as Ship <<external>>
+
+' ===== Posicionamiento (izquierda/derecha del sistema) =====
+' Forzamos agrupaciones visuales.
+' Colocamos humanos a la izquierda del sistema
+Invitado -left-|> System
+Cliente -left-|> System
+Admin -left-|> System
+Seller -left-|> System
+
+' Colocamos sistemas externos a la derecha
+System -right-|> Pago
+System -right-|> Fraud
+System -right-|> Notif
+System -right-|> Ship
+
+' ===== Asociaciones actores ↔ casos de uso =====
+' Invitado
+Invitado --> UC2
+Invitado --> UC3
+Invitado --> UC4
+Invitado --> UC5
+Invitado --> UC6
+
+' Cliente
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+Cliente --> UC4
+Cliente --> UC5
+Cliente --> UC6
+Cliente --> UC7
+Cliente --> UC8
+Cliente --> UC9
+Cliente --> UC10
+
+' Administrador
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+
+' Vendedor (opcional)
+Seller --> UC11
+
+' Sistemas externos
+Pago --> UC7
+Fraud --> UC7
+Notif --> UC6
+Notif --> UC9
+Ship --> UC8
+
+@enduml
