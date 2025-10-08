@@ -1,0 +1,52 @@
+%% Diagrama en columnas (compacto vertical)
+%%{init: {
+  "theme": "default",
+  "flowchart": { "curve":"linear", "nodeSpacing": 24, "rankSpacing": 36 },
+  "themeVariables": { "fontSize":"12px", "lineHeight":"16px" }
+}}%%
+
+flowchart TB
+  %% Etapas en fila vertical
+  subgraph E1[Conciencia del riesgo]
+    direction TB
+    E1A[Se informa de asaltos<br/>y escucha disparos]
+    E1E[😟 Preocupación / ansiedad]
+    E1P[Miedo normalizado<br/>y vulnerabilidad]
+  end
+
+  subgraph E2[Prevención comunitaria]
+    direction TB
+    E2A[Cambia rutas, evita salir tarde,<br/>participa en grupos vecinales]
+    E2E[😐 Confianza ligera / frustración]
+    E2P[Costos altos y desinformación]
+  end
+
+  subgraph E3[Incidente]
+    direction TB
+    E3A[Vive un asalto o extorsión]
+    E3E[😨 Miedo / impotencia]
+    E3P[Riesgo de violencia<br/>y amenaza a la vida]
+  end
+
+  subgraph E4[Acción inmediata]
+    direction TB
+    E4A[Llama al 110,<br/>busca apoyo vecinal]
+    E4E[😰 Estrés / enojo]
+    E4P[Respuesta tardía,<br/>burocracia, poco seguimiento]
+  end
+
+  subgraph E5[Largo plazo]
+    direction TB
+    E5A[Ajusta rutinas;<br/>contrata seguridad privada]
+    E5E[😔 Resignación]
+    E5P[Altos costos, desigualdad,<br/>abandono percibido]
+  end
+
+  %% Conexión vertical entre etapas
+  E1 --> E2 --> E3 --> E4 --> E5
+
+  %% Estilos
+  classDef etapa fill:#eef3ff,stroke:#90a4f6,stroke-width:1px,rx:10,ry:10;
+  classDef nodo fill:#ffffff,stroke:#c7c7c7,rx:8,ry:8;
+  class E1,E2,E3,E4,E5 etapa;
+  class E1A,E1E,E1P,E2A,E2E,E2P,E3A,E3E,E3P,E4A,E4E,E4P,E5A,E5E,E5P nodo;
