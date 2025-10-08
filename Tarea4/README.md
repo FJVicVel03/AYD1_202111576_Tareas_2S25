@@ -8,24 +8,24 @@ Este repositorio contiene las pruebas end-to-end (E2E) desarrolladas con Cypress
 ## Capturas (flujo)
 
 - Login
-  - ![L1](/img/login1.png)
-  - ![L2](/img/login2.png)
+  - ![L1](img/login1.png)
+  - ![L2](img/login2.png)
 - Selección de producto
-  - ![S1](/img/selecc1.png)
-  - ![S2](/img/selecc2.png)
-  - ![S3](/img/selecc3.png)
+  - ![S1](img/selecc1.png)
+  - ![S2](img/selecc2.png)
+  - ![S3](img/selecc3.png)
 - Agregar al carrito
-  - ![A1](/img/agg1.png)
-  - ![A2](/img/agg2.png)
+  - ![A1](img/agg1.png)
+  - ![A2](img/agg2.png)
 - Checkout
-  - ![C1](/img/check1.png)
-  - ![C2](/img/check2.png)
-  - ![C3](/img/check3.png)
+  - ![C1](img/check1.png)
+  - ![C2](img/check2.png)
+  - ![C3](img/check3.png)
 - Completar orden
-  - ![CO1](/img/comp1.png)
-  - ![CO2](/img/comp2.png)
-  - ![CO3](/img/comp3.png)
-  - ![CO4](/img/comp4.png)
+  - ![CO1](img/comp1.png)
+  - ![CO2](img/comp2.png)
+  - ![CO3](img/comp3.png)
+  - ![CO4](img/comp4.png)
 
 ## Requisitos
 
