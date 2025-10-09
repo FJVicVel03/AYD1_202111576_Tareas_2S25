@@ -27,16 +27,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/colaboracion": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/colaboracion.js"
-    ],
-    "/denuncias": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/denuncias.js"
-    ],
     "/mockups": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
