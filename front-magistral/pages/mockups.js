@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import SectionHeader from '@/components/SectionHeader';
 import styles from '@/styles/Mockups.module.css';
 
@@ -20,6 +21,8 @@ const ORIENTATION_FILTERS = [
 ];
 
 export default function MockupsPage() {
+  const router = useRouter();
+  const base = router.basePath || '';
   const [activeMockup, setActiveMockup] = useState(null);
   const [orientationFilter, setOrientationFilter] = useState('all');
 
@@ -56,7 +59,8 @@ export default function MockupsPage() {
         {filteredMockups.map((mockup) => (
           <article key={mockup.key} className={styles.card}>
             <button type="button" className={styles.thumbButton} onClick={() => setActiveMockup(mockup)}>
-              <img className={styles.thumb} src={mockup.src} alt={`${mockup.module} ${mockup.orientation}`} />
+              {/* eslint-disable-next-line @next/next/no-img-element -- Requerimos <img> para cargar recursos locales SVG */}
+              <img className={styles.thumb} src={`${base}${mockup.src}`} alt={`${mockup.module} ${mockup.orientation}`} />
             </button>
             <div className={styles.meta}>
               <div>
@@ -66,7 +70,7 @@ export default function MockupsPage() {
                 </p>
               </div>
               <div className={styles.actions}>
-                <a className={styles.secondaryButton} href={mockup.src} download>
+                <a className={styles.secondaryButton} href={`${base}${mockup.src}`} download>
                   Descargar
                 </a>
                 <button className={styles.primaryButton} type="button" onClick={() => setActiveMockup(mockup)}>
@@ -96,8 +100,9 @@ export default function MockupsPage() {
                 Cerrar
               </button>
             </header>
-            <img className={styles.viewerImg} src={activeMockup.src} alt={`${activeMockup.module} ${activeMockup.orientation}`} />
-            <a className={styles.viewerDownload} href={activeMockup.src} download>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Vista en vivo de SVG locales */}
+            <img className={styles.viewerImg} src={`${base}${activeMockup.src}`} alt={`${activeMockup.module} ${activeMockup.orientation}`} />
+            <a className={styles.viewerDownload} href={`${base}${activeMockup.src}`} download>
               Descargar SVG
             </a>
           </div>

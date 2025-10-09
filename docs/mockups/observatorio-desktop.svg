@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#091427" />
+      <stop offset="1" stop-color="#1f3d99" />
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="1" stop-color="#f1f4ff" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  <g transform="translate(72 64)">
+    <rect width="1296" height="776" rx="36" fill="#f7f9ff" opacity="0.97" />
+    <text x="96" y="120" font-family="Segoe UI, Arial" font-size="34" font-weight="700" fill="#1b254b">Observatorio de Seguridad</text>
+    <text x="96" y="162" font-family="Segoe UI, Arial" font-size="18" fill="#566087">Filtros, tableros y reporte ejecutivo.</text>
+    <g transform="translate(96 200)">
+      <rect width="260" height="520" rx="24" fill="#ffffff" stroke="#dde3f7" />
+      <text x="24" y="40" font-family="Segoe UI, Arial" font-size="18" font-weight="600" fill="#1f2a44">Filtros</text>
+      <text x="24" y="76" font-family="Segoe UI, Arial" font-size="14" fill="#6a769b">Periodo</text>
+      <rect x="24" y="88" width="212" height="36" rx="12" fill="#e9efff" />
+      <text x="36" y="112" font-family="Segoe UI, Arial" font-size="14" fill="#1f3d99">Ultimos 30 dias</text>
+      <text x="24" y="150" font-family="Segoe UI, Arial" font-size="14" fill="#6a769b">Indicadores</text>
+      <rect x="24" y="162" width="212" height="32" rx="10" fill="#ffffff" stroke="#e6ebfb" />
+      <rect x="24" y="202" width="212" height="32" rx="10" fill="#ffffff" stroke="#e6ebfb" />
+      <rect x="24" y="242" width="212" height="32" rx="10" fill="#ffffff" stroke="#e6ebfb" />
+      <text x="36" y="184" font-family="Segoe UI, Arial" font-size="13" fill="#3b4b73">Homicidios</text>
+      <text x="36" y="224" font-family="Segoe UI, Arial" font-size="13" fill="#3b4b73">Extorsiones</text>
+      <text x="36" y="264" font-family="Segoe UI, Arial" font-size="13" fill="#3b4b73">Violencia intrafamiliar</text>
+      <text x="24" y="310" font-family="Segoe UI, Arial" font-size="14" fill="#6a769b">Enfoque</text>
+      <rect x="24" y="322" width="92" height="32" rx="10" fill="#e9efff" />
+      <rect x="124" y="322" width="112" height="32" rx="10" fill="#ffffff" stroke="#e6ebfb" />
+      <text x="38" y="342" font-family="Segoe UI, Arial" font-size="13" fill="#1f3d99">Mujeres</text>
+      <text x="138" y="342" font-family="Segoe UI, Arial" font-size="13" fill="#3b4b73">Juventud</text>
+    </g>
+    <g transform="translate(380 200)">
+      <rect width="540" height="260" rx="24" fill="url(#card)" />
+      <text x="32" y="48" font-family="Segoe UI, Arial" font-size="20" font-weight="600" fill="#1f2a44">Tendencia de homicidios</text>
+      <text x="32" y="74" font-family="Segoe UI, Arial" font-size="14" fill="#6a769b">Promedio movil trimestral por departamento.</text>
+      <polyline points="64,212 140,160 216,172 292,126 368,150 444,108 520,136"
+        fill="none" stroke="#4b7bec" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+      <line x1="64" y1="204" x2="520" y2="204" stroke="#d7def5" stroke-dasharray="6 6" />
+      <line x1="64" y1="156" x2="520" y2="156" stroke="#d7def5" stroke-dasharray="6 6" />
+      <line x1="64" y1="108" x2="520" y2="108" stroke="#d7def5" stroke-dasharray="6 6" />
+    </g>
+    <g transform="translate(940 200)">
+      <rect width="320" height="260" rx="24" fill="#10172a" />
+      <text x="28" y="48" font-family="Segoe UI, Arial" font-size="18" fill="#53d8ff">Alertas prioritarias</text>
+      <text x="28" y="82" font-family="Segoe UI, Arial" font-size="16" fill="#ffffff">Zona 6 - Mixco</text>
+      <text x="28" y="110" font-family="Segoe UI, Arial" font-size="13" fill="rgba(255,255,255,0.6)">Extorsion - hace 2h</text>
+      <line x1="28" y1="124" x2="292" y2="124" stroke="rgba(255,255,255,0.18)" />
+      <text x="28" y="160" font-family="Segoe UI, Arial" font-size="16" fill="#ffffff">Villa Nueva - Barcena</text>
+      <text x="28" y="188" font-family="Segoe UI, Arial" font-size="13" fill="rgba(255,255,255,0.6)">Violencia juvenil - hace 5h</text>
+    </g>
+    <g transform="translate(380 484)">
+      <rect width="880" height="236" rx="24" fill="#ffffff" stroke="#dde3f7" />
+      <text x="32" y="48" font-family="Segoe UI, Arial" font-size="20" font-weight="600" fill="#1f2a44">Reporte ejecutivo</text>
+      <text x="32" y="78" font-family="Segoe UI, Arial" font-size="15" fill="#5a648c">Narrativa automatica con metricas clave.</text>
+      <g transform="translate(32 112)">
+        <rect width="180" height="100" rx="20" fill="#f0f4ff" />
+        <text x="20" y="42" font-family="Segoe UI, Arial" font-size="14" fill="#4b5b8f">Casos geolocalizados</text>
+        <text x="20" y="78" font-family="Segoe UI, Arial" font-size="28" font-weight="700" fill="#1f3d99">5,164</text>
+      </g>
+      <g transform="translate(236 112)">
+        <rect width="180" height="100" rx="20" fill="#f0f4ff" />
+        <text x="20" y="42" font-family="Segoe UI, Arial" font-size="14" fill="#4b5b8f">Respuesta media</text>
+        <text x="20" y="78" font-family="Segoe UI, Arial" font-size="28" font-weight="700" fill="#1f3d99">2.3 h</text>
+      </g>
+      <g transform="translate(440 112)">
+        <rect width="180" height="100" rx="20" fill="#f0f4ff" />
+        <text x="20" y="42" font-family="Segoe UI, Arial" font-size="14" fill="#4b5b8f">Instituciones</text>
+        <text x="20" y="78" font-family="Segoe UI, Arial" font-size="28" font-weight="700" fill="#1f3d99">18</text>
+      </g>
+      <g transform="translate(644 112)">
+        <rect width="180" height="100" rx="20" fill="#f0f4ff" />
+        <text x="20" y="42" font-family="Segoe UI, Arial" font-size="14" fill="#4b5b8f">Alertas activas</text>
+        <text x="20" y="78" font-family="Segoe UI, Arial" font-size="28" font-weight="700" fill="#1f3d99">42</text>
+      </g>
+    </g>
+  </g>
+</svg>

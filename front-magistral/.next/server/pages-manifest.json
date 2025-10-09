@@ -2,8 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/colaboracion": "pages/colaboracion.js",
+  "/mockups": "pages/mockups.js",
+  "/perfil": "pages/perfil.js",
   "/observatorio": "pages/observatorio.js",
-  "/mockups": "pages/mockups.js"
+  "/colaboracion": "pages/colaboracion.js"
 }
