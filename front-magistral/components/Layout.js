@@ -19,7 +19,7 @@ export default function Layout({ children }) {
       <header className={styles.header}>
         <div className={styles.branding}>
           <div className={styles.logoGroup}>
-            <Image src="/logo.svg" alt="SeguridadGT logo" width={40} height={40} priority />
+            <Image src={`${router.basePath || ''}/logo.svg`} alt="SeguridadGT logo" width={40} height={40} priority />
             <span className={styles.logo}>SeguridadGT</span>
           </div>
           <span className={styles.tagline}>Ecosistema digital para comunidades seguras</span>

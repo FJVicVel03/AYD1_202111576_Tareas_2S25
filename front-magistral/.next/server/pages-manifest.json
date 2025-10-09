@@ -1,9 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/colaboracion": "pages/colaboracion.js",
-  "/observatorio": "pages/observatorio.js",
-  "/mockups": "pages/mockups.js"
-}
+{"/_app":"pages/_app.js","/_document":"pages/_document.js","/colaboracion":"pages/colaboracion.html","/_error":"pages/_error.js","/":"pages/index.html","/denuncias":"pages/denuncias.html","/mockups":"pages/mockups.html","/observatorio":"pages/observatorio.html","/404":"pages/404.html"}
