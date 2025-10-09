@@ -25,8 +25,9 @@ npm install
 
 - `pages/index.js` - Pagina principal con vision general, modulos clave y alertas recientes.
 - `pages/observatorio.js` - Panel del observatorio con tableros de analisis e indicadores criticos.
-- `pages/denuncias.js` - Flujo conceptual para iniciar denuncias digitales y recibir acompanamiento.
+- `pages/denuncias.js` - Flujo avanzado para denuncias anonimas o con perfil, limpieza de metadatos, reconocimiento asistido y aprobacion superior.
 - `pages/colaboracion.js` - Estrategia de alianzas, hoja de ruta y resultados comunitarios.
+- `pages/perfil.js` - Tablero personal con control de identidad, seguimiento de casos y auditoria de coincidencias IA.
 - `pages/mockups.js` - Galeria de mockups con filtros por orientacion y visor con zoom.
 - `public/mockups/*.svg` - Conjunto de mockups estaticos (desktop y mobile) listos para descargar.
 - `components/SectionHeader.js` y `components/Layout.js` - Componentes compartidos para mantener consistencia visual.
