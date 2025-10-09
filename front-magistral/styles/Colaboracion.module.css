@@ -1,0 +1,139 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.introCard {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+  box-shadow: 0 22px 45px rgba(45, 62, 101, 0.12);
+  display: grid;
+  gap: 1.5rem;
+}
+
+.alliances {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.allyCard {
+  border-radius: 1.4rem;
+  background: #f5f7ff;
+  padding: 1.4rem;
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+}
+
+.allyTitle {
+  font-weight: 600;
+  color: #1f2a44;
+  margin: 0;
+}
+
+.allyDescription {
+  margin: 0;
+  color: #4a5a87;
+  line-height: 1.55;
+}
+
+.roadmap {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.roadmapCard {
+  border-radius: 1.5rem;
+  background: white;
+  padding: 1.75rem;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+  box-shadow: 0 20px 40px rgba(45, 62, 101, 0.1);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(27, 158, 166, 0.14);
+  color: #1b6d73;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.timeline {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timelineRow {
+  border-left: 3px solid rgba(27, 158, 166, 0.25);
+  padding-left: 1.25rem;
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.timelineRow::before {
+  content: '';
+  position: absolute;
+  left: -1.6rem;
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1b9ea6;
+}
+
+.timelineTitle {
+  font-weight: 600;
+  color: #1f2a44;
+}
+
+.timelineDescription {
+  margin: 0;
+  color: #4a5a87;
+  line-height: 1.6;
+}
+
+.communityShowcase {
+  border-radius: 1.5rem;
+  background: #10172a;
+  color: white;
+  padding: 2rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.communityGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.communityCard {
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.communityLabel {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.communityMeta {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.5;
+}

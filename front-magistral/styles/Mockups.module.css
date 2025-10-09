@@ -1,0 +1,203 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.filterGroup {
+  display: inline-flex;
+  gap: 0.5rem;
+  background: rgba(75, 123, 236, 0.08);
+  padding: 0.35rem;
+  border-radius: 999px;
+}
+
+.filterButton {
+  border: none;
+  background: transparent;
+  color: #3a4670;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterButton:hover {
+  background: rgba(75, 123, 236, 0.14);
+}
+
+.filterButtonActive {
+  background: #1f3d99;
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(31, 61, 153, 0.25);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1.25rem;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+  box-shadow: 0 16px 32px rgba(31, 61, 153, 0.08);
+}
+
+.thumbButton {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.thumb {
+  width: 100%;
+  display: block;
+  border-radius: 1rem;
+  border: 1px solid #e2e7f5;
+  background: #f7f9ff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.thumbButton:hover .thumb {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 28px rgba(31, 61, 153, 0.12);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.moduleLabel {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2a44;
+}
+
+.metaSecondary {
+  margin: 0;
+  color: #57628a;
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.primaryButton,
+.secondaryButton {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.primaryButton {
+  background: #1f3d99;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(31, 61, 153, 0.2);
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: rgba(31, 61, 153, 0.08);
+  color: #1f3d99;
+}
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 15, 35, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 50;
+}
+
+.viewerOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.viewerContent {
+  width: min(90vw, 960px);
+  max-height: 90vh;
+  background: #0f162e;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.viewerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.viewerClose {
+  background: rgba(255, 255, 255, 0.14);
+  border: none;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.viewerImg {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #000714;
+}
+
+.viewerDownload {
+  align-self: flex-end;
+  background: #4b7bec;
+  color: #ffffff;
+  padding: 0.45rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
