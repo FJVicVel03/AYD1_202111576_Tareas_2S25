@@ -59,6 +59,7 @@ export default function MockupsPage() {
         {filteredMockups.map((mockup) => (
           <article key={mockup.key} className={styles.card}>
             <button type="button" className={styles.thumbButton} onClick={() => setActiveMockup(mockup)}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- Requerimos <img> para cargar recursos locales SVG */}
               <img className={styles.thumb} src={`${base}${mockup.src}`} alt={`${mockup.module} ${mockup.orientation}`} />
             </button>
             <div className={styles.meta}>
@@ -99,6 +100,7 @@ export default function MockupsPage() {
                 Cerrar
               </button>
             </header>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Vista en vivo de SVG locales */}
             <img className={styles.viewerImg} src={`${base}${activeMockup.src}`} alt={`${activeMockup.module} ${activeMockup.orientation}`} />
             <a className={styles.viewerDownload} href={`${base}${activeMockup.src}`} download>
               Descargar SVG
