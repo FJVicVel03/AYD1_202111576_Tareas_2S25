@@ -23,7 +23,7 @@ export default function Layout({ children }) {
     } catch (error) {
       // Opcional: ignorar si el entorno bloquea el acceso.
     }
-    const safeUrl = 'https://www.google.com/search?q=clima+en+guatemala';
+    const safeUrl = 'https://www.pnc.gob.gt/';
     // Abre una pestaña neutra y redirige la actual.
     window.open(safeUrl, '_blank', 'noopener,noreferrer');
     window.location.replace(safeUrl);

@@ -30,7 +30,7 @@ const anonimatoPrincipios = [
 const seguridadRapida = [
   'Abre la plataforma en una ventana privada e introduce un PIN de cierre rapido para dispositivos compartidos.',
   'Define dos contactos de emergencia. Si detectamos riesgo alto, enviamos un enlace de verificacion sin exponer tu nombre.',
-  'Utiliza el boton "Salida rapida" del encabezado para redirigirte a un sitio neutro si percibes peligro.'
+  'Utiliza el boton "Salida rapida" del encabezado para abrir el portal oficial de la PNC y cerrar tu sesion activa.'
 ];
 
 const seguimientoCasos = {
@@ -79,6 +79,42 @@ const supportNeeds = [
   { value: 'juridico', label: 'Asesoria juridica' },
   { value: 'psicosocial', label: 'Apoyo psicosocial' },
   { value: 'comunitario', label: 'Acompanamiento comunitario' }
+];
+
+const registrationChecklist = [
+  'Fotografia frontal reciente sin mascarilla ni gafas oscuras.',
+  'Numero de DPI unico validado contra bases oficiales.',
+  'Clave robusta: minimo 12 caracteres, mayuscula, numero y simbolo.'
+];
+
+const penaltyGuidelines = [
+  'Toda denuncia pasa por analisis automatizado y revision humana para detectar inconsistencias.',
+  'El envio intencional de informacion falsa puede derivar en acciones legales y suspension del acceso.',
+  'Cuando exista sospecha, se verificara el DPI y la fotografia del perfil con aliados institucionales.'
+];
+
+const emergencyFlow = [
+  'Activalo desde la interfaz, con triple pulsacion del boton de encendido o agitando el dispositivo.',
+  'Envia coordenadas cada 3-5 segundos por WebSocket y genera fallback por SMS si no hay datos.',
+  'Mantiene el rastreo hasta que el caso se marca como resuelto y se genera informe de auditoria.'
+];
+
+const emergencyPermits = [
+  'Requiere permisos de ubicacion en primer y segundo plano para monitoreo continuo.',
+  'Necesita acceso a notificaciones y servicios de accesibilidad para gestos configurables.',
+  'Cifra coordenadas y datos del usuario antes de transmitirlos a autoridades o contactos confiables.'
+];
+
+const assistantCapabilities = [
+  'Chat seguro 24/7 con IA entrenada en primeros auxilios emocionales y protocolos de atencion.',
+  'Identifica nivel de riesgo y deriva a profesionales humanos cuando detecta palabras clave criticas.',
+  'Entrega planes personalizados de autocuidado y educacion con seguimiento discreto.'
+];
+
+const assistantEscalations = [
+  'Escala a videollamada con psicologos o medicos aliados cuando el riesgo es alto (previo consentimiento).',
+  'Registra notas cifradas para que el equipo clinico tenga contexto sin exponer al usuario.',
+  'Compatible con lectura en voz alta, contraste alto y traducciones para asegurar accesibilidad.'
 ];
 
 const recognitionCatalog = [
@@ -163,19 +199,27 @@ function generateTrackingCode() {
 
 const respuestaCrisis = [
   {
-    title: 'Boton de panico inteligente',
+    title: 'Boton de emergencia 360°',
     bullets: [
-      'Envio simultaneo de alerta geolocalizada a red de confianza definida por la persona usuaria.',
-      'Activa modo silencioso: oculta la interfaz y habilita grabacion discreta de audio para evidencia.',
-      'Permite cancelar la alerta con una combinacion secreta para evitar represalias.'
+      'Disponible en la interfaz, triple pulsacion del boton fisico o gesto de agitar el dispositivo.',
+      'Mantiene transmision de ubicacion cada pocos segundos hasta marcar el incidente como resuelto.',
+      'Cifra coordenadas y contacto de emergencia antes de compartirlos con autoridades o aliados.'
+    ]
+  },
+  {
+    title: 'Asistente virtual IA',
+    bullets: [
+      'Chat seguro que ofrece primeros auxilios emocionales y guias de respiracion en segundos.',
+      'Activa escalamiento con psicologos o medicos aliados cuando detecta lenguaje de alto riesgo.',
+      'Genera bitacora anonima para que la persona usuaria decida que compartir con el equipo clinico.'
     ]
   },
   {
     title: 'Guardian digital 24/7',
     bullets: [
-      'Motor de riesgo que analiza palabras clave y patrones para sugerir rutas de proteccion inmediatas.',
-      'Integra chat seguro con especialistas y acceso directo a refugios y asesorias juridicas.',
-      'Recomienda material educativo personalizado segun el tipo de violencia detectada.'
+      'Motor de riesgo analiza patrones para sugerir protocolos inmediatos y materiales educativos.',
+      'Sincroniza con comunidades vigilantes y refugios para coordinar respuesta.',
+      'Permite activar modo sigiloso y salida rapida sin abandonar la sesion segura.'
     ]
   }
 ];
@@ -207,7 +251,7 @@ const canales = [
 
 export default function DenunciasPage() {
   const [reportMode, setReportMode] = useState('anonimo');
-  const [credentials, setCredentials] = useState({ email: '', password: '', otp: '' });
+  const [credentials, setCredentials] = useState({ email: '', password: '', otp: '', dpi: '', selfie: '' });
   const [incidentForm, setIncidentForm] = useState({
     type: incidentTypes[0].value,
     location: incidentLocations[0].value,
@@ -217,11 +261,14 @@ export default function DenunciasPage() {
   });
   const [evidenceList, setEvidenceList] = useState([]);
   const [evidenceNotes, setEvidenceNotes] = useState('');
+  const [selfiePreview, setSelfiePreview] = useState(null);
   const [suspectPreview, setSuspectPreview] = useState(null);
   const [recognitionState, setRecognitionState] = useState('idle');
   const [recognitionMatches, setRecognitionMatches] = useState([]);
+  const [selfieInputKey, setSelfieInputKey] = useState(0);
   const [suspectInputKey, setSuspectInputKey] = useState(0);
   const recognitionTimerRef = useRef(null);
+  const selfiePreviewUrlRef = useRef(null);
   const suspectPreviewUrlRef = useRef(null);
   const [trackingCode, setTrackingCode] = useState('');
   const sanitizedCode = trackingCode.trim().toUpperCase();
@@ -258,6 +305,39 @@ export default function DenunciasPage() {
     setEvidenceList(mapped);
     // Limpiar input para permitir volver a seleccionar el mismo archivo si es necesario
     event.target.value = '';
+  };
+
+  const handleSelfieUpload = (event) => {
+    const [file] = event.target.files ?? [];
+    if (selfiePreviewUrlRef.current) {
+      URL.revokeObjectURL(selfiePreviewUrlRef.current);
+      selfiePreviewUrlRef.current = null;
+    }
+    if (!file) {
+      setSelfiePreview(null);
+      setCredentials((prev) => ({ ...prev, selfie: '' }));
+      return;
+    }
+    const objectUrl = URL.createObjectURL(file);
+    selfiePreviewUrlRef.current = objectUrl;
+    setSelfiePreview({
+      name: file.name,
+      size: formatFileSize(file.size),
+      type: file.type || 'imagen',
+      src: objectUrl
+    });
+    setCredentials((prev) => ({ ...prev, selfie: file.name }));
+    event.target.value = '';
+  };
+
+  const clearSelfie = () => {
+    if (selfiePreviewUrlRef.current) {
+      URL.revokeObjectURL(selfiePreviewUrlRef.current);
+      selfiePreviewUrlRef.current = null;
+    }
+    setSelfiePreview(null);
+    setCredentials((prev) => ({ ...prev, selfie: '' }));
+    setSelfieInputKey((prev) => prev + 1);
   };
 
   const handleSuspectUpload = (event) => {
@@ -332,6 +412,9 @@ export default function DenunciasPage() {
     }
     if (suspectPreviewUrlRef.current) {
       URL.revokeObjectURL(suspectPreviewUrlRef.current);
+    }
+    if (selfiePreviewUrlRef.current) {
+      URL.revokeObjectURL(selfiePreviewUrlRef.current);
     }
   }, []);
 
@@ -415,12 +498,26 @@ export default function DenunciasPage() {
               <ul className={styles.accessBullets}>
                 <li>Sesiones en contenedor seguro: cierre automatico tras 15 minutos de inactividad.</li>
                 <li>Encriptacion extremo a extremo y limpieza automatica de metadatos en cada archivo adjunto.</li>
-                <li>Salida rapida: un clic cambia a un sitio de cobertura y bloquea notificaciones sensibles.</li>
+                <li>Salida rapida: un clic abre el portal de la PNC y bloquea notificaciones sensibles.</li>
+                <li>Denuncias maliciosas generan alertas y podrian derivar en acciones legales.</li>
               </ul>
             </div>
           ) : (
             <div className={styles.loginPanel}>
               <div className={styles.loginFields}>
+                <label className={styles.loginLabel} htmlFor="perfil-dpi">
+                  Numero de DPI
+                </label>
+                <input
+                  id="perfil-dpi"
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={13}
+                  className={styles.loginInput}
+                  placeholder="0000000000000"
+                  value={credentials.dpi}
+                  onChange={handleCredentialsChange('dpi')}
+                />
                 <label className={styles.loginLabel} htmlFor="perfil-email">
                   Correo cifrado
                 </label>
@@ -456,19 +553,71 @@ export default function DenunciasPage() {
                   onChange={handleCredentialsChange('otp')}
                 />
               </div>
+              <div className={styles.selfieUpload}>
+                <label className={styles.loginLabel} htmlFor="perfil-selfie">
+                  Fotografia frontal (JPG/PNG)
+                </label>
+                <div className={styles.selfieDrop}>
+                  <input
+                    key={selfieInputKey}
+                    id="perfil-selfie"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleSelfieUpload}
+                    className={styles.fileInput}
+                  />
+                  <span>Sube una imagen sin mascarilla ni lentes oscuros para validar identidad.</span>
+                </div>
+                {selfiePreview ? (
+                  <div className={styles.selfiePreview}>
+                    {/* eslint-disable-next-line @next/next/no-img-element -- requerido para mostrar blob locales */}
+                    <img src={selfiePreview.src} alt="Selfie de verificacion" />
+                    <div>
+                      <strong>{selfiePreview.name}</strong>
+                      <span>{selfiePreview.type}</span>
+                      <span>{selfiePreview.size}</span>
+                    </div>
+                    <button type="button" className={styles.selfieClear} onClick={clearSelfie}>
+                      Reemplazar
+                    </button>
+                  </div>
+                ) : (
+                  <p className={styles.selfieHint}>
+                    Se utilizara exclusivamente para evitar suplantaciones y se almacenara cifrada (AES-256 + claves efimeras).
+                  </p>
+                )}
+              </div>
               <div className={styles.loginNotes}>
                 <p>
                   Aun con tu perfil verificado puedes alternar a modo anonimo antes de enviar la denuncia. Solo el equipo
                   auditor conoce tu identidad y cada acceso queda notificado.
                 </p>
-                <ul>
+                <ul className={styles.loginChecklist}>
+                  {registrationChecklist.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <ul className={styles.loginNotesList}>
                   <li>Firma digital para solicitudes de medidas de proteccion.</li>
                   <li>Historial cifrado: descarga constancias sin revelar datos personales.</li>
                   <li>Control granular para compartir expedientes con superior o abogado.</li>
+                  <li>Contraseñas se guardan con hashing bcrypt y sesiones con tokens JWT de corta duracion.</li>
                 </ul>
               </div>
             </div>
           )}
+          <aside className={styles.penaltyNotice}>
+            <h3>Advertencia sobre denuncias falsas</h3>
+            <p>
+              El sistema cruza la informacion con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y
+              pueden trasladarse al Ministerio Publico.
+            </p>
+            <ul>
+              {penaltyGuidelines.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </aside>
         </article>
 
         <article className={styles.profileCard}>
@@ -805,6 +954,64 @@ export default function DenunciasPage() {
               <li>Los superiores reciben alertas con version difuminada hasta aprobar medidas.</li>
               <li>Integra panel de entrenamiento para mejorar la precision con bucles de retroalimentacion.</li>
             </ul>
+          </div>
+        </article>
+      </section>
+
+      <section className={styles.emergencySection}>
+        <article className={styles.emergencyCard}>
+          <h2>Boton de emergencia en campo</h2>
+          <p>
+            Pensado para escenarios de riesgo inmediato. Puede activarse en pantalla, con combinaciones de botones fisicos o
+            mediante gestos configurables.
+          </p>
+          <ul>
+            {emergencyFlow.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className={styles.emergencyCard}>
+          <h3>Permisos y seguridad tecnica</h3>
+          <ul>
+            {emergencyPermits.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <div className={styles.emergencyActions}>
+            <button type="button">Configurar accesos</button>
+            <button type="button" className={styles.emergencyGhost}>
+              Probar simulacro
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section className={styles.assistantSection}>
+        <article className={styles.assistantCard}>
+          <h2>Asistente virtual IA</h2>
+          <p>
+            Chat seguro que ofrece acompanamiento emocional, material educativo y deriva a profesionales cuando detecta
+            senales de riesgo.
+          </p>
+          <ul>
+            {assistantCapabilities.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className={styles.assistantCard}>
+          <h3>Escalonamiento y seguimiento</h3>
+          <ul>
+            {assistantEscalations.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <div className={styles.assistantActions}>
+            <button type="button">Iniciar chat de apoyo</button>
+            <button type="button" className={styles.assistantGhost}>
+              Ver guias de autocuidado
+            </button>
           </div>
         </article>
       </section>
