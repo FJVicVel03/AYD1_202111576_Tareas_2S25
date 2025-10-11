@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import SectionHeader from '@/components/SectionHeader';
 import styles from '@/styles/Denuncias.module.css';
 
@@ -102,19 +103,23 @@ const emergencyFlow = [
 const emergencyPermits = [
   'Requiere permisos de ubicacion en primer y segundo plano para monitoreo continuo.',
   'Necesita acceso a notificaciones y servicios de accesibilidad para gestos configurables.',
-  'Cifra coordenadas y datos del usuario antes de transmitirlos a autoridades o contactos confiables.'
+  'Cifra coordenadas y datos del usuario antes de transmitirlos a autoridades o contactos confiables.',
+  'Puede enviar alertas discretas a WhatsApp o SMS verificados cuando no haya datos.'
 ];
 
 const assistantCapabilities = [
   'Chat seguro 24/7 con IA entrenada en primeros auxilios emocionales y protocolos de atencion.',
   'Identifica nivel de riesgo y deriva a profesionales humanos cuando detecta palabras clave criticas.',
-  'Entrega planes personalizados de autocuidado y educacion con seguimiento discreto.'
+  'Entrega planes personalizados de autocuidado y educacion con seguimiento discreto.',
+  'Disponible en español, ingles y lenguas mayas priorizadas; interfaz guiada por voz para alfabetizacion digital baja.',
+  'Envia notificaciones silenciosas a WhatsApp y SMS con autorizacion explicita de la persona usuaria.'
 ];
 
 const assistantEscalations = [
   'Escala a videollamada con psicologos o medicos aliados cuando el riesgo es alto (previo consentimiento).',
   'Registra notas cifradas para que el equipo clinico tenga contexto sin exponer al usuario.',
-  'Compatible con lectura en voz alta, contraste alto y traducciones para asegurar accesibilidad.'
+  'Compatible con lectura en voz alta, contraste alto y traducciones para asegurar accesibilidad.',
+  'Ofrece guias narradas y respuestas por voz para personas con dificultades de lectura.'
 ];
 
 const recognitionCatalog = [
@@ -199,7 +204,7 @@ function generateTrackingCode() {
 
 const respuestaCrisis = [
   {
-    title: 'Boton de emergencia 360°',
+    title: 'Boton de emergencia 360 grados',
     bullets: [
       'Disponible en la interfaz, triple pulsacion del boton fisico o gesto de agitar el dispositivo.',
       'Mantiene transmision de ubicacion cada pocos segundos hasta marcar el incidente como resuelto.',
@@ -250,6 +255,7 @@ const canales = [
 ];
 
 export default function DenunciasPage() {
+  const { t } = useLanguage();
   const [reportMode, setReportMode] = useState('anonimo');
   const [credentials, setCredentials] = useState({ email: '', password: '', otp: '', dpi: '', selfie: '' });
   const [incidentForm, setIncidentForm] = useState({
@@ -273,8 +279,8 @@ export default function DenunciasPage() {
   const [trackingCode, setTrackingCode] = useState('');
   const sanitizedCode = trackingCode.trim().toUpperCase();
   const caseInfo = useMemo(() => seguimientoCasos[sanitizedCode] ?? null, [sanitizedCode]);
-  const anonymousCode = useMemo(() => generateTrackingCode(), []);
-  const [safeWordIndex, setSafeWordIndex] = useState(() => Math.floor(Math.random() * safeWords.length));
+  const [anonymousCode, setAnonymousCode] = useState('SG-XXXX-000');
+  const [safeWordIndex, setSafeWordIndex] = useState(0);
   const safeWord = safeWords[safeWordIndex];
 
   const handleRotateSafeWord = () => setSafeWordIndex((prev) => (prev + 1) % safeWords.length);
@@ -418,6 +424,14 @@ export default function DenunciasPage() {
     }
   }, []);
 
+  useEffect(() => {
+    setAnonymousCode(generateTrackingCode());
+  }, []);
+
+  useEffect(() => {
+    setSafeWordIndex(Math.floor(Math.random() * safeWords.length));
+  }, []);
+
   const analysing = recognitionState === 'processing';
   const canRunRecognition = recognitionState === 'ready' || recognitionState === 'done';
   const riskLevel = useMemo(() => {
@@ -439,18 +453,23 @@ export default function DenunciasPage() {
   return (
     <div className={styles.page}>
       <SectionHeader
-        eyebrow="Denuncias"
-        title="Ruta digital para reportar incidentes y activar proteccion"
-        description="Diseno de experiencia centrada en la persona denunciante, con orientacion clara, accesible y acompanamiento institucional desde el primer contacto."
+        eyebrow={t('denuncias.hero.eyebrow', 'Denuncias')}
+        title={t('denuncias.hero.title', 'Ruta digital para reportar incidentes y activar protección')}
+        description={t(
+          'denuncias.hero.description',
+          'Diseño de experiencia centrada en la persona denunciante, con orientación clara, accesible y acompañamiento institucional desde el primer contacto.'
+        )}
       />
 
       <section className={styles.accessSection}>
         <article className={styles.accessCard}>
           <header className={styles.accessHeader}>
-            <h2>Control de identidad flexible</h2>
+            <h2>{t('denuncias.identity.title', 'Control de identidad flexible')}</h2>
             <p>
-              El anonimato total es la configuracion predeterminada. Puedes activar tu perfil verificado cuando quieras sin
-              perder el codigo seguro ni las evidencias asociadas.
+              {t(
+                'denuncias.identity.description',
+                'El anonimato total es la configuración predeterminada. Puedes activar tu perfil verificado cuando quieras sin perder el código seguro ni las evidencias asociadas.'
+              )}
             </p>
           </header>
           <div className={styles.modeToggle}>
@@ -589,8 +608,10 @@ export default function DenunciasPage() {
               </div>
               <div className={styles.loginNotes}>
                 <p>
-                  Aun con tu perfil verificado puedes alternar a modo anonimo antes de enviar la denuncia. Solo el equipo
-                  auditor conoce tu identidad y cada acceso queda notificado.
+                  {t(
+                    'denuncias.identity.note',
+                    'Aún con tu perfil verificado puedes alternar a modo anónimo antes de enviar la denuncia. Solo el equipo auditor conoce tu identidad y cada acceso queda notificado.'
+                  )}
                 </p>
                 <ul className={styles.loginChecklist}>
                   {registrationChecklist.map((item) => (
@@ -607,10 +628,12 @@ export default function DenunciasPage() {
             </div>
           )}
           <aside className={styles.penaltyNotice}>
-            <h3>Advertencia sobre denuncias falsas</h3>
+            <h3>{t('denuncias.penalty.title', 'Advertencia sobre denuncias falsas')}</h3>
             <p>
-              El sistema cruza la informacion con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y
-              pueden trasladarse al Ministerio Publico.
+              {t(
+                'denuncias.penalty.description',
+                'El sistema cruza la información con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y pueden trasladarse al Ministerio Público.'
+              )}
             </p>
             <ul>
               {penaltyGuidelines.map((item) => (
@@ -960,10 +983,12 @@ export default function DenunciasPage() {
 
       <section className={styles.emergencySection}>
         <article className={styles.emergencyCard}>
-          <h2>Boton de emergencia en campo</h2>
+          <h2>{t('denuncias.emergency.title', 'Botón de emergencia en campo')}</h2>
           <p>
-            Pensado para escenarios de riesgo inmediato. Puede activarse en pantalla, con combinaciones de botones fisicos o
-            mediante gestos configurables.
+            {t(
+              'denuncias.emergency.description',
+              'Pensado para escenarios de riesgo inmediato. Puede activarse en pantalla, con combinaciones de botones físicos o mediante gestos configurables.'
+            )}
           </p>
           <ul>
             {emergencyFlow.map((item) => (
@@ -972,16 +997,16 @@ export default function DenunciasPage() {
           </ul>
         </article>
         <article className={styles.emergencyCard}>
-          <h3>Permisos y seguridad tecnica</h3>
+          <h3>{t('denuncias.emergency.permitsTitle', 'Permisos y seguridad técnica')}</h3>
           <ul>
             {emergencyPermits.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
           <div className={styles.emergencyActions}>
-            <button type="button">Configurar accesos</button>
+            <button type="button">{t('denuncias.emergency.configure', 'Configurar accesos')}</button>
             <button type="button" className={styles.emergencyGhost}>
-              Probar simulacro
+              {t('denuncias.emergency.simulation', 'Probar simulacro')}
             </button>
           </div>
         </article>
@@ -989,10 +1014,12 @@ export default function DenunciasPage() {
 
       <section className={styles.assistantSection}>
         <article className={styles.assistantCard}>
-          <h2>Asistente virtual IA</h2>
+          <h2>{t('denuncias.assistant.title', 'Asistente virtual IA')}</h2>
           <p>
-            Chat seguro que ofrece acompanamiento emocional, material educativo y deriva a profesionales cuando detecta
-            senales de riesgo.
+            {t(
+              'denuncias.assistant.description',
+              'Chat seguro que ofrece acompañamiento emocional, material educativo y deriva a profesionales cuando detecta señales de riesgo.'
+            )}
           </p>
           <ul>
             {assistantCapabilities.map((item) => (
@@ -1001,16 +1028,17 @@ export default function DenunciasPage() {
           </ul>
         </article>
         <article className={styles.assistantCard}>
-          <h3>Escalonamiento y seguimiento</h3>
+          <h3>{t('denuncias.assistant.followupTitle', 'Escalonamiento y seguimiento')}</h3>
           <ul>
             {assistantEscalations.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
           <div className={styles.assistantActions}>
-            <button type="button">Iniciar chat de apoyo</button>
+            <button type="button">{t('denuncias.assistant.startChat', 'Iniciar chat de apoyo')}</button>
+            <button type="button">{t('denuncias.assistant.whatsapp', 'Configurar alertas WhatsApp')}</button>
             <button type="button" className={styles.assistantGhost}>
-              Ver guias de autocuidado
+              {t('denuncias.assistant.guides', 'Ver guías de autocuidado')}
             </button>
           </div>
         </article>
