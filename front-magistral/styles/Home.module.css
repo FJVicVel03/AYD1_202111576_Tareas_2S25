@@ -271,6 +271,137 @@
   box-shadow: 0 18px 35px rgba(45, 62, 101, 0.1);
 }
 
+.inclusionSection {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.inclusionGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.inclusionCard {
+  border-radius: 1.4rem;
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+  box-shadow: 0 18px 35px rgba(45, 62, 101, 0.1);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.inclusionCard h3 {
+  margin: 0;
+  color: #1f2a44;
+}
+
+.inclusionCard p {
+  margin: 0;
+  color: #4f5f91;
+  line-height: 1.6;
+}
+
+.inclusionTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tagPill {
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  background: rgba(27, 158, 166, 0.12);
+  color: #1b9ea6;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.roadmapSection {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.roadmapGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.roadmapCard {
+  border-radius: 1.4rem;
+  background: #10172a;
+  color: white;
+  padding: 1.5rem;
+  display: grid;
+  gap: 0.85rem;
+  box-shadow: 0 20px 38px rgba(16, 23, 42, 0.4);
+}
+
+.roadmapHeader span {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.roadmapHeader p {
+  margin: 0.4rem 0 0;
+  line-height: 1.6;
+}
+
+.roadmapDeliverables {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.storyKpiGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.storyCard,
+.kpiCard {
+  border-radius: 1.4rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+  background: white;
+  box-shadow: 0 18px 35px rgba(45, 62, 101, 0.1);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.storyCard h3,
+.kpiCard h3 {
+  margin: 0;
+  color: #1f2a44;
+}
+
+.storyList,
+.kpiList {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.55rem;
+  color: #4f5f91;
+  line-height: 1.6;
+}
+
+.kpiList li {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.kpiList strong {
+  color: #1f2a44;
+}
+
 .timeline {
   list-style: none;
   margin: 0;

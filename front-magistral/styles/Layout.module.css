@@ -71,6 +71,54 @@
   justify-self: end;
 }
 
+.languageSwitch {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.languageLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5b678d;
+}
+
+.languageSelect {
+  appearance: none;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(38, 61, 115, 0.15);
+  background: white url('data:image/svg+xml,%3Csvg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M1 1l4 4 4-4" stroke="%23363f5b" stroke-width="1.5" fill="none" stroke-linecap="round"/%3E%3C/svg%3E')
+    no-repeat right 0.75rem center;
+  padding: 0.45rem 2.1rem 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #263d73;
+}
+
+.languageSelect:focus-visible {
+  outline: none;
+  border-color: #4b7bec;
+  box-shadow: 0 0 0 3px rgba(75, 123, 236, 0.2);
+}
+
+.voiceAssist {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(27, 158, 166, 0.35);
+  background: rgba(27, 158, 166, 0.12);
+  color: #1b9ea6;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.voiceAssist:hover,
+.voiceAssist:focus-visible {
+  transform: translateY(-1px);
+  border-color: #1b9ea6;
+}
+
 .quickExit {
   background: linear-gradient(120deg, #f25c54, #e04352);
   color: white;

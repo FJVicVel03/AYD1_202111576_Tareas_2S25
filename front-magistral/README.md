@@ -32,12 +32,14 @@ npm install
 - `public/mockups/*.svg` - Conjunto de mockups estaticos (desktop y mobile) listos para descargar.
 - `components/SectionHeader.js` y `components/Layout.js` - Componentes compartidos para mantener consistencia visual.
 - `styles/*` - Hojas de estilos modulares para cada vista.
+- Documentacion adicional en `docs/Plan_Agil_SeguridadGT.md` con MVP, roadmap incremental, historias de usuario y KPIs sugeridos.
 
 ## Proximos pasos sugeridos
 
 1. Conectar las vistas con datos reales o servicios mock (APIs, archivos JSON).
 2. Integrar autenticacion para perfiles institucionales y comunitarios.
 3. Anadir diseno responsivo avanzado y pruebas de usabilidad con personas usuarias finales.
+4. Seguir el roadmap descrito en `docs/Plan_Agil_SeguridadGT.md` para priorizar el MVP y preparar la expansion.
 
 ## Despliegue en GitHub Pages
 
