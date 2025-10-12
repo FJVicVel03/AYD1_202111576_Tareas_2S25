@@ -491,3 +491,4 @@ export default function Layout({ children }) {
     </LanguageContext.Provider>
   );
 }
+
