@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SectionHeader from "@/components/SectionHeader";
+import PanelSwitcher from "@/components/PanelSwitcher";
 import styles from "@/styles/Home.module.css";
 
 const heroStats = [
@@ -134,6 +135,71 @@ const successMetrics = [
 export default function HomePage() {
   const { t } = useLanguage();
 
+  const chunkArray = (items, size) => {
+    const result = [];
+    items.forEach((item, index) => {
+      if (index % size === 0) {
+        result.push([item]);
+      } else {
+        result[result.length - 1].push(item);
+      }
+    });
+    return result;
+  };
+
+  const renderModuleCard = useCallback(
+    (module) => (
+      <article key={module.title} className={styles.moduleCard}>
+        <span className={styles.badge}>{module.badge}</span>
+        <h3 className={styles.moduleTitle}>{module.title}</h3>
+        <p className={styles.moduleDescription}>{module.description}</p>
+        <ul className={styles.moduleList}>
+          {module.bullets.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <Link href={module.href} className={styles.secondaryButton}>
+          {t('home.modules.cta', 'Ver prototipo')}
+        </Link>
+      </article>
+    ),
+    [t]
+  );
+
+  const renderInclusionCard = useCallback(
+    (feature) => (
+      <article key={feature.title} className={styles.inclusionCard}>
+        <h3>{feature.title}</h3>
+        <p>{feature.description}</p>
+        <div className={styles.inclusionTags}>
+          {feature.tags.map((tag) => (
+            <span key={tag} className={styles.tagPill}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </article>
+    ),
+    []
+  );
+
+  const renderRoadmapCard = useCallback(
+    (phase) => (
+      <article key={phase.phase} className={styles.roadmapCard}>
+        <div className={styles.roadmapHeader}>
+          <span>{phase.phase}</span>
+          <p>{phase.focus}</p>
+        </div>
+        <ul className={styles.roadmapDeliverables}>
+          {phase.deliverables.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </article>
+    ),
+    []
+  );
+
   const heroContent = useMemo(
     () => ({
       subtitle: t("home.hero.subtitle", "Estrategia integral de prevencion y respuesta"),
@@ -192,6 +258,39 @@ export default function HomePage() {
     [t]
   );
 
+  const strategicPanels = useMemo(
+    () =>
+      chunkArray(strategicModules, 1).map((chunk, index) => ({
+        key: `module-${index}`,
+        title: chunk[0].title,
+        description: chunk[0].description,
+        content: <div className={styles.panelGrid}>{chunk.map((module) => renderModuleCard(module))}</div>
+      })),
+    [renderModuleCard]
+  );
+
+  const inclusionPanels = useMemo(
+    () =>
+      chunkArray(inclusionFeatures, 1).map((chunk, index) => ({
+        key: `inclusion-${index}`,
+        title: chunk[0].title,
+        description: chunk[0].description,
+        content: <div className={styles.panelGrid}>{chunk.map((feature) => renderInclusionCard(feature))}</div>
+      })),
+    [renderInclusionCard]
+  );
+
+  const roadmapPanels = useMemo(
+    () =>
+      chunkArray(roadmapPhases, 1).map((chunk, index) => ({
+        key: `roadmap-${index}`,
+        title: chunk[0].phase,
+        description: chunk[0].focus,
+        content: <div className={styles.panelGrid}>{chunk.map((phase) => renderRoadmapCard(phase))}</div>
+      })),
+    [renderRoadmapCard]
+  );
+
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
@@ -225,22 +324,11 @@ export default function HomePage() {
           title={modulesHeader.title}
           description={modulesHeader.description}
         />
-        <div className={styles.sectionsGrid}>
-          {strategicModules.map((module) => (
-            <article key={module.title} className={styles.moduleCard}>
-              <span className={styles.badge}>{module.badge}</span>
-              <h3 className={styles.moduleTitle}>{module.title}</h3>
-              <p className={styles.moduleDescription}>{module.description}</p>
-              <ul className={styles.moduleList}>
-                {module.bullets.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-              <Link href={module.href} className={styles.secondaryButton}>
-                Ver prototipo
-              </Link>
-            </article>
-          ))}
+        <div className={styles.mobileOnly}>
+          <PanelSwitcher panels={strategicPanels} />
+        </div>
+        <div className={`${styles.sectionsGrid} ${styles.desktopOnly}`}>
+          {strategicModules.map((module) => renderModuleCard(module))}
         </div>
       </section>
 
@@ -319,20 +407,11 @@ export default function HomePage() {
           title={inclusionHeader.title}
           description={inclusionHeader.description}
         />
-        <div className={styles.inclusionGrid}>
-          {inclusionFeatures.map((feature) => (
-            <article key={feature.title} className={styles.inclusionCard}>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
-              <div className={styles.inclusionTags}>
-                {feature.tags.map((tag) => (
-                  <span key={tag} className={styles.tagPill}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
+        <div className={styles.mobileOnly}>
+          <PanelSwitcher panels={inclusionPanels} />
+        </div>
+        <div className={`${styles.inclusionGrid} ${styles.desktopOnly}`}>
+          {inclusionFeatures.map((feature) => renderInclusionCard(feature))}
         </div>
       </section>
 
@@ -342,20 +421,11 @@ export default function HomePage() {
           title={roadmapHeader.title}
           description={roadmapHeader.description}
         />
-        <div className={styles.roadmapGrid}>
-          {roadmapPhases.map((phase) => (
-            <article key={phase.phase} className={styles.roadmapCard}>
-              <div className={styles.roadmapHeader}>
-                <span>{phase.phase}</span>
-                <p>{phase.focus}</p>
-              </div>
-              <ul className={styles.roadmapDeliverables}>
-                {phase.deliverables.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
+        <div className={styles.mobileOnly}>
+          <PanelSwitcher panels={roadmapPanels} />
+        </div>
+        <div className={`${styles.roadmapGrid} ${styles.desktopOnly}`}>
+          {roadmapPhases.map((phase) => renderRoadmapCard(phase))}
         </div>
         <div className={styles.storyKpiGrid}>
           <article className={styles.storyCard}>
@@ -382,3 +452,4 @@ export default function HomePage() {
     </div>
   );
 }
+

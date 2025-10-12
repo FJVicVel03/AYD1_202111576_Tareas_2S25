@@ -125,6 +125,12 @@
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
+.panelGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
 .moduleCard {
   border-radius: 1.5rem;
   background: white;
@@ -440,8 +446,30 @@
   line-height: 1.55;
 }
 
+.mobileOnly {
+  display: none;
+}
+
+.desktopOnly {
+  display: block;
+}
+
 @media (max-width: 960px) {
   .mapPreview {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobileOnly {
+    display: block;
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+
+  .panelGrid {
+    gap: 1rem;
   }
 }

@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SectionHeader from '@/components/SectionHeader';
+import PanelSwitcher from '@/components/PanelSwitcher';
 import styles from '@/styles/Denuncias.module.css';
 
 const requisitos = [
   'Datos basicos de la persona denunciante o representante.',
   'Descripcion detallada del incidente (lugar, fecha y hora).',
   'Evidencias disponibles: fotografias, videos, documentos, contactos.',
-  'Seleccion de acompanamiento requerido: juridico, psicosocial o de proteccion.'
+  'Seleccion de Acompanamiento requerido: juridico, psicosocial o de proteccion.'
 ];
 
 const anonimatoPrincipios = [
@@ -111,7 +112,7 @@ const assistantCapabilities = [
   'Chat seguro 24/7 con IA entrenada en primeros auxilios emocionales y protocolos de atencion.',
   'Identifica nivel de riesgo y deriva a profesionales humanos cuando detecta palabras clave criticas.',
   'Entrega planes personalizados de autocuidado y educacion con seguimiento discreto.',
-  'Disponible en español, ingles y lenguas mayas priorizadas; interfaz guiada por voz para alfabetizacion digital baja.',
+  'Disponible en espanol, ingles y lenguas mayas priorizadas; interfaz guiada por voz para alfabetizacion digital baja.',
   'Envia notificaciones silenciosas a WhatsApp y SMS con autorizacion explicita de la persona usuaria.'
 ];
 
@@ -450,17 +451,8 @@ export default function DenunciasPage() {
     return 'Medio';
   }, [incidentForm.type]);
 
-  return (
-    <div className={styles.page}>
-      <SectionHeader
-        eyebrow={t('denuncias.hero.eyebrow', 'Denuncias')}
-        title={t('denuncias.hero.title', 'Ruta digital para reportar incidentes y activar protección')}
-        description={t(
-          'denuncias.hero.description',
-          'Diseño de experiencia centrada en la persona denunciante, con orientación clara, accesible y acompañamiento institucional desde el primer contacto.'
-        )}
-      />
-
+  const identityPanelContent = (
+    <>
       <section className={styles.accessSection}>
         <article className={styles.accessCard}>
           <header className={styles.accessHeader}>
@@ -468,7 +460,7 @@ export default function DenunciasPage() {
             <p>
               {t(
                 'denuncias.identity.description',
-                'El anonimato total es la configuración predeterminada. Puedes activar tu perfil verificado cuando quieras sin perder el código seguro ni las evidencias asociadas.'
+                'El anonimato total es la configuracion predeterminada. Puedes activar tu perfil verificado cuando quieras sin perder el codigo seguro ni las evidencias asociadas.'
               )}
             </p>
           </header>
@@ -478,14 +470,14 @@ export default function DenunciasPage() {
               className={`${styles.modeButton} ${reportMode === 'anonimo' ? styles.modeButtonActive : ''}`}
               onClick={() => setReportMode('anonimo')}
             >
-              Denuncia anonima
+              {t('denuncias.identity.anonymous', 'Denuncia anonima')}
             </button>
             <button
               type="button"
               className={`${styles.modeButton} ${reportMode === 'identificado' ? styles.modeButtonActive : ''}`}
               onClick={() => setReportMode('identificado')}
             >
-              Ingresar con perfil
+              {t('denuncias.identity.identified', 'Ingresar con perfil')}
             </button>
           </div>
 
@@ -493,39 +485,50 @@ export default function DenunciasPage() {
             <div className={styles.anonymousPanel}>
               <div className={styles.codeSummary}>
                 <div>
-                  <span className={styles.codeLabel}>Codigo de seguimiento efimero</span>
+                  <span className={styles.codeLabel}>{t('denuncias.identity.codeLabel', 'codigo de seguimiento efimero')}</span>
                   <p className={styles.codeDescription}>
-                    Guarda este codigo en un lugar seguro. Solo tu podrás consultar el avance sin exponer tus datos.
+                    {t(
+                      'denuncias.identity.codeDescription',
+                      'Guarda este codigo en un lugar seguro. Solo tu podras consultar el avance sin exponer tus datos.'
+                    )}
                   </p>
                 </div>
                 <span className={styles.codeBadge}>{anonymousCode}</span>
               </div>
               <div className={styles.safeWordBox}>
                 <div>
-                  <span className={styles.safeWordLabel}>Palabra clave para contacto telefonico</span>
+                  <span className={styles.safeWordLabel}>{t('denuncias.identity.safeWord', 'Palabra clave para contacto telefonico')}</span>
                   <p className={styles.safeWordDescription}>
-                    Sirve para validar tu identidad sin revelar nombre ni numero. Cambiala tantas veces como necesites.
+                    {t(
+                      'denuncias.identity.safeWordDescription',
+                      'Sirve para validar tu identidad sin revelar nombre ni Numero. Cmbiala tantas veces como necesites.'
+                    )}
                   </p>
                 </div>
                 <div className={styles.safeWordActions}>
                   <span className={styles.safeWord}>{safeWord}</span>
                   <button type="button" className={styles.safeWordButton} onClick={handleRotateSafeWord}>
-                    Generar nueva
+                    {t('denuncias.identity.safeWordButton', 'Generar nueva')}
                   </button>
                 </div>
               </div>
               <ul className={styles.accessBullets}>
-                <li>Sesiones en contenedor seguro: cierre automatico tras 15 minutos de inactividad.</li>
-                <li>Encriptacion extremo a extremo y limpieza automatica de metadatos en cada archivo adjunto.</li>
-                <li>Salida rapida: un clic abre el portal de la PNC y bloquea notificaciones sensibles.</li>
-                <li>Denuncias maliciosas generan alertas y podrian derivar en acciones legales.</li>
+                <li>{t('denuncias.identity.bullet1', 'Sesiones en contenedor seguro: cierre automatico tras 15 minutos de inactividad.')}</li>
+                <li>
+                  {t(
+                    'denuncias.identity.bullet2',
+                    'Encriptacion extremo a extremo y limpieza automtica de metadatos en cada archivo adjunto.'
+                  )}
+                </li>
+                <li>{t('denuncias.identity.bullet3', 'Salida rapida: un clic abre el portal de la PNC y bloquea notificaciones sensibles.')}</li>
+                <li>{t('denuncias.identity.bullet4', 'Denuncias maliciosas generan alertas y podran derivar en acciones legales.')}</li>
               </ul>
             </div>
           ) : (
             <div className={styles.loginPanel}>
               <div className={styles.loginFields}>
                 <label className={styles.loginLabel} htmlFor="perfil-dpi">
-                  Numero de DPI
+                  {t('denuncias.identity.dpi', 'Numero de DPI')}
                 </label>
                 <input
                   id="perfil-dpi"
@@ -538,7 +541,7 @@ export default function DenunciasPage() {
                   onChange={handleCredentialsChange('dpi')}
                 />
                 <label className={styles.loginLabel} htmlFor="perfil-email">
-                  Correo cifrado
+                  {t('denuncias.identity.email', 'Correo cifrado')}
                 </label>
                 <input
                   id="perfil-email"
@@ -549,18 +552,18 @@ export default function DenunciasPage() {
                   onChange={handleCredentialsChange('email')}
                 />
                 <label className={styles.loginLabel} htmlFor="perfil-password">
-                  Frase de acceso con doble factor
+                  {t('denuncias.identity.password', 'Frase de acceso con doble factor')}
                 </label>
                 <input
                   id="perfil-password"
                   type="password"
                   className={styles.loginInput}
-                  placeholder="Ingresa tu clave unica"
+                  placeholder={t('denuncias.identity.passwordPlaceholder', 'Ingresa tu clave unica')}
                   value={credentials.password}
                   onChange={handleCredentialsChange('password')}
                 />
                 <label className={styles.loginLabel} htmlFor="perfil-otp">
-                  Codigo OTP (app o llavero fisico)
+                  {t('denuncias.identity.otp', 'codigo OTP (app o llavero fisico)')}
                 </label>
                 <input
                   id="perfil-otp"
@@ -574,7 +577,7 @@ export default function DenunciasPage() {
               </div>
               <div className={styles.selfieUpload}>
                 <label className={styles.loginLabel} htmlFor="perfil-selfie">
-                  Fotografia frontal (JPG/PNG)
+                  {t('denuncias.identity.selfie', 'Fotografia frontal (JPG/PNG)')}
                 </label>
                 <div className={styles.selfieDrop}>
                   <input
@@ -585,11 +588,16 @@ export default function DenunciasPage() {
                     onChange={handleSelfieUpload}
                     className={styles.fileInput}
                   />
-                  <span>Sube una imagen sin mascarilla ni lentes oscuros para validar identidad.</span>
+                  <span>
+                    {t(
+                      'denuncias.identity.selfieHint',
+                      'Sube una imagen sin mascarilla ni lentes oscuros para validar identidad.'
+                    )}
+                  </span>
                 </div>
                 {selfiePreview ? (
                   <div className={styles.selfiePreview}>
-                    {/* eslint-disable-next-line @next/next/no-img-element -- requerido para mostrar blob locales */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={selfiePreview.src} alt="Selfie de verificacion" />
                     <div>
                       <strong>{selfiePreview.name}</strong>
@@ -597,12 +605,15 @@ export default function DenunciasPage() {
                       <span>{selfiePreview.size}</span>
                     </div>
                     <button type="button" className={styles.selfieClear} onClick={clearSelfie}>
-                      Reemplazar
+                      {t('denuncias.identity.selfieReplace', 'Reemplazar')}
                     </button>
                   </div>
                 ) : (
                   <p className={styles.selfieHint}>
-                    Se utilizara exclusivamente para evitar suplantaciones y se almacenara cifrada (AES-256 + claves efimeras).
+                    {t(
+                      'denuncias.identity.selfieStorage',
+                      'Se utilizar exclusivamente para evitar suplantaciones y se almacenar cifrada (AES-256 + claves efmeras).'
+                    )}
                   </p>
                 )}
               </div>
@@ -610,7 +621,7 @@ export default function DenunciasPage() {
                 <p>
                   {t(
                     'denuncias.identity.note',
-                    'Aún con tu perfil verificado puedes alternar a modo anónimo antes de enviar la denuncia. Solo el equipo auditor conoce tu identidad y cada acceso queda notificado.'
+                    'An con tu perfil verificado puedes alternar a modo anonimo antes de enviar la denuncia. Solo el equipo auditor conoce tu identidad y cada acceso queda notificado.'
                   )}
                 </p>
                 <ul className={styles.loginChecklist}>
@@ -619,28 +630,29 @@ export default function DenunciasPage() {
                   ))}
                 </ul>
                 <ul className={styles.loginNotesList}>
-                  <li>Firma digital para solicitudes de medidas de proteccion.</li>
-                  <li>Historial cifrado: descarga constancias sin revelar datos personales.</li>
-                  <li>Control granular para compartir expedientes con superior o abogado.</li>
-                  <li>Contraseñas se guardan con hashing bcrypt y sesiones con tokens JWT de corta duracion.</li>
+                  <li>{t('denuncias.identity.feature1', 'Firma digital para solicitudes de medidas de proteccion.')}</li>
+                  <li>
+                    {t(
+                      'denuncias.identity.feature2',
+                      'Historial cifrado: descarga constancias sin revelar datos personales.'
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      'denuncias.identity.feature3',
+                      'Control granular para compartir expedientes con superior o abogado.'
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      'denuncias.identity.feature4',
+                      'Contraseas almacenadas con hashing fuerte y sesiones protegidas con tokens de corta duracin.'
+                    )}
+                  </li>
                 </ul>
               </div>
             </div>
           )}
-          <aside className={styles.penaltyNotice}>
-            <h3>{t('denuncias.penalty.title', 'Advertencia sobre denuncias falsas')}</h3>
-            <p>
-              {t(
-                'denuncias.penalty.description',
-                'El sistema cruza la información con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y pueden trasladarse al Ministerio Público.'
-              )}
-            </p>
-            <ul>
-              {penaltyGuidelines.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </aside>
         </article>
 
         <article className={styles.profileCard}>
@@ -655,60 +667,92 @@ export default function DenunciasPage() {
               </header>
               <dl className={styles.profileStats}>
                 <div>
-                  <dt>Reportes enviados</dt>
+                  <dt>{t('denuncias.identity.statsSent', 'Reportes enviados')}</dt>
                   <dd>{profileSnapshot.totalReports}</dd>
                 </div>
                 <div>
-                  <dt>Casos resueltos</dt>
+                  <dt>{t('denuncias.identity.statsResolved', 'Casos resueltos')}</dt>
                   <dd>{profileSnapshot.resolved}</dd>
                 </div>
                 <div>
-                  <dt>Activos</dt>
+                  <dt>{t('denuncias.identity.statsActive', 'Activos')}</dt>
                   <dd>{profileSnapshot.active}</dd>
                 </div>
               </dl>
               <div className={styles.profileBadge}>
-                <strong>Confianza avanzada</strong>
+                <strong>{t('denuncias.identity.confidence', 'Confianza avanzada')}</strong>
                 <span>{profileSnapshot.trustedLevel}</span>
               </div>
               <p className={styles.profileFootnote}>
-                Ultimo codigo en seguimiento: <strong>{profileSnapshot.lastCode}</strong>. Puedes migrar cualquier denuncia a
-                modo anonimo desde tu panel sin perder evidencias.
+                {t('denuncias.identity.lastCode', 'ultimo codigo en seguimiento:')}{' '}
+                <strong>{profileSnapshot.lastCode}</strong>.{' '}
+                {t(
+                  'denuncias.identity.lastCodeNote',
+                  'Puedes migrar cualquier denuncia a modo anonimo desde tu panel sin perder evidencias.'
+                )}
               </p>
             </div>
           ) : (
             <div className={styles.profileContent}>
-              <h3>Anonimato reforzado</h3>
+              <h3>{t('denuncias.identity.anonymousTitle', 'Anonimato reforzado')}</h3>
               <p>
-                No almacenamos cookies de rastreo ni direccion IP. Cada informe se cifra con claves efimeras y se destruye
-                si decides no enviarlo.
+                {t(
+                  'denuncias.identity.anonymousDescription',
+                  'No almacenamos cookies de rastreo ni direccin IP. Cada informe se cifra con claves efmeras y se destruye si decides no enviarlo.'
+                )}
               </p>
               <ul className={styles.profileGuarantees}>
-                <li>Comite independiente audita los accesos y publica reportes trimestrales.</li>
-                <li>Copia segura opcional para entregar a tu red de confianza fuera de linea.</li>
-                <li>Integracion con linea 1574 y Crime Stoppers sin revelar tu dispositivo.</li>
+                <li>{t('denuncias.identity.guard1', 'Comite independiente audita los accesos y publica reportes trimestrales.')}</li>
+                <li>{t('denuncias.identity.guard2', 'Copia segura opcional para entregar a tu red de confianza fuera de linea.')}</li>
+                <li>
+                  {t(
+                    'denuncias.identity.guard3',
+                    'Integracion con linea 1574 y Crime Stoppers sin revelar tu dispositivo.'
+                  )}
+                </li>
               </ul>
             </div>
           )}
         </article>
       </section>
 
+      <aside className={styles.penaltyNotice}>
+        <h3>{t('denuncias.penalty.title', 'Advertencia sobre denuncias falsas')}</h3>
+        <p>
+          {t(
+            'denuncias.penalty.description',
+            'El sistema cruza la informacion con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y pueden trasladarse al Ministerio Pblico.'
+          )}
+        </p>
+        <ul>
+          {penaltyGuidelines.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </aside>
+    </>
+  );
+
+  const reportPanelContent = (
+    <>
       <section className={styles.formGrid}>
         <article className={styles.reportComposer}>
           <header className={styles.composerHeader}>
             <div>
-              <h2>Compone tu denuncia con guia segura</h2>
+              <h2>{t('denuncias.form.title', 'Compone tu denuncia con gua segura')}</h2>
               <p>
-                Creamos un flujo guiado que valida coherencia, elimina metadatos y genera hashes de integridad para cada
-                archivo adjunto.
+                {t(
+                  'denuncias.form.description',
+                  'Creamos un flujo guiado que valida coherencia, elimina metadatos y genera hashes de integridad para cada archivo adjunto.'
+                )}
               </p>
             </div>
-            <span className={`${styles.riskBadge} ${styles[`risk${riskLevel}`]}`}>Riesgo {riskLevel}</span>
+            <span className={`${styles.riskBadge} ${styles[`risk${riskLevel}`]}`}>{t('denuncias.form.risk', 'Riesgo')} {riskLevel}</span>
           </header>
 
           <div className={styles.formRow}>
             <label className={styles.formLabel} htmlFor="tipo-incidente">
-              Tipo de incidente
+              {t('denuncias.form.type', 'Tipo de incidente')}
             </label>
             <select
               id="tipo-incidente"
@@ -727,7 +771,7 @@ export default function DenunciasPage() {
           <div className={styles.dualRow}>
             <div className={styles.formRow}>
               <label className={styles.formLabel} htmlFor="ubicacion-incidente">
-                Zona o municipio
+                {t('denuncias.form.location', 'Zona o municipio')}
               </label>
               <select
                 id="ubicacion-incidente"
@@ -744,7 +788,7 @@ export default function DenunciasPage() {
             </div>
             <div className={styles.formRow}>
               <label className={styles.formLabel} htmlFor="fecha-incidente">
-                Fecha y hora aproximada
+                {t('denuncias.form.datetime', 'Fecha y hora aproximada')}
               </label>
               <input
                 id="fecha-incidente"
@@ -758,18 +802,26 @@ export default function DenunciasPage() {
 
           <div className={styles.formRow}>
             <label className={styles.formLabel} htmlFor="descripcion-incidente">
-              Relato principal
+              {t('denuncias.form.descriptionLabel', 'Relato principal')}
             </label>
             <textarea
               id="descripcion-incidente"
               className={`${styles.formControl} ${styles.textArea}`}
               rows={5}
-              placeholder="Describe lo ocurrido, quienes estaban presentes y si hubo armas, placas o rutas identificables."
+              placeholder={t(
+                'denuncias.form.descriptionPlaceholder',
+                'Describe lo ocurrido, quines estaban presentes y si hubo armas, placas o rutas identificables.'
+              )}
               value={incidentForm.description}
               onChange={handleDescriptionChange}
             />
             <div className={styles.helperRow}>
-              <span>Se cifrara en reposo con AES-256 y solo un equipo reducido podra acceder.</span>
+              <span>
+                {t(
+                  'denuncias.form.descriptionHelper',
+                  'Se cifrar en reposo con AES-256 y solo un equipo reducido podra acceder.'
+                )}
+              </span>
               <span>{incidentForm.description.length} / 1200</span>
             </div>
           </div>
@@ -777,7 +829,7 @@ export default function DenunciasPage() {
           <div className={styles.dualRow}>
             <div className={styles.formRow}>
               <label className={styles.formLabel} htmlFor="soporte-incidente">
-                Que apoyo necesitas
+                {t('denuncias.form.support', 'Qu apoyo necesitas')}
               </label>
               <select
                 id="soporte-incidente"
@@ -794,18 +846,21 @@ export default function DenunciasPage() {
             </div>
             <div className={styles.formRow}>
               <label className={styles.formLabel} htmlFor="notas-evidencia">
-                Nota confidencial para el equipo superior
+                {t('denuncias.form.notesLabel', 'Nota confidencial para el equipo superior')}
               </label>
               <textarea
                 id="notas-evidencia"
                 className={`${styles.formControl} ${styles.textArea}`}
                 rows={2}
-                placeholder="Incluye palabra clave, riesgos inmediatos o datos para contactar a tu red de apoyo."
+                placeholder={t(
+                  'denuncias.form.notesPlaceholder',
+                  'Incluye palabra clave, riesgos inmediatos o datos para contactar a tu red de apoyo.'
+                )}
                 value={evidenceNotes}
                 onChange={handleEvidenceNotesChange}
               />
               <div className={styles.helperRow}>
-                <span>Solo visible para personal con doble autorizacion.</span>
+                <span>{t('denuncias.form.notesHelper', 'Solo visible para personal con doble autorizacion.')}</span>
                 <span>{evidenceNotes.length} / 240</span>
               </div>
             </div>
@@ -814,16 +869,26 @@ export default function DenunciasPage() {
           <div className={styles.evidenceBlock}>
             <div className={styles.evidenceHeader}>
               <div>
-                <h3>Adjunta evidencia segura</h3>
-                <p>Limpiamos geolocalizacion, marcas de agua y generamos codigo hash para auditoria independiente.</p>
+                <h3>{t('denuncias.form.evidenceTitle', 'Adjunta evidencia segura')}</h3>
+                <p>
+                  {t(
+                    'denuncias.form.evidenceDescription',
+                    'Limpiamos geolocalizacin, marcas de agua y generamos codigo hash para auditora independiente.'
+                  )}
+                </p>
               </div>
               <button type="button" className={styles.cleanButton} onClick={() => setEvidenceList([])}>
-                Vaciar adjuntos
+                {t('denuncias.form.clearAttachments', 'Vaciar adjuntos')}
               </button>
             </div>
             <label className={styles.dropzone}>
               <input type="file" multiple onChange={handleEvidenceUpload} className={styles.fileInput} />
-              <span>Arrastra o haz clic para cargar fotos, audio o documentos (max 250 MB)</span>
+              <span>
+                {t(
+                  'denuncias.form.dropzone',
+                  'Arrastra o haz clic para cargar fotos, audio o documentos (max. 250 MB)'
+                )}
+              </span>
             </label>
             {evidenceList.length > 0 ? (
               <ul className={styles.evidenceList}>
@@ -839,155 +904,77 @@ export default function DenunciasPage() {
               </ul>
             ) : (
               <div className={styles.evidencePlaceholder}>
-                Tus archivos se procesaran en un entorno aislado. Puedes pegarlos tambien desde tu portapapeles.
+                {t(
+                  'denuncias.form.placeholder',
+                  'Tus archivos se procesaran en un entorno aislado. Puedes pegarlos tambin desde tu portapapeles.'
+                )}
               </div>
             )}
           </div>
 
           <div className={styles.composerFooter}>
             <ul>
-              <li>Cada evidencia obtiene un hash SHA-512 compartido con la fiscalia para validar integridad.</li>
-              <li>Elimina datos EXIF, borra ruido identificable y permite marcar rostros que deban difuminarse.</li>
-              <li>Solicita clasificacion rapida si temes represalias en las proximas 24 horas.</li>
-            </ul>
-          </div>
-        </article>
-
-        <article className={styles.recognitionCenter}>
-          <header className={styles.recognitionHeader}>
-            <div>
-              <h2>Reconocimiento asistido y aprobacion superior</h2>
-              <p>
-                Subimos la fotografia o fotograma del sospechoso para generar coincidencias con AWS Rekognition y bases
-                comunitarias sin comprometer tu anonimato.
-              </p>
-            </div>
-            <div className={styles.enginePill}>Motor IA + validacion humana</div>
-          </header>
-
-          <div className={styles.suspectUpload}>
-            <label className={styles.formLabel} htmlFor="sospechoso-foto">
-              Carga foto o fotograma del sospechoso
-            </label>
-            <div className={styles.suspectDrop}>
-              <input
-                key={suspectInputKey}
-                id="sospechoso-foto"
-                type="file"
-                accept="image/*"
-                onChange={handleSuspectUpload}
-                className={styles.fileInput}
-              />
-              <span>JPG, PNG o frame de video. Se difuminaran rostros de victimas automaticamente.</span>
-            </div>
-            {suspectPreview ? (
-              <div className={styles.suspectPreview}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- se requiere <img> para renderizar blob:// locales */}
-                <img src={suspectPreview.src} alt="Sospechoso cargado" />
-                <div>
-                  <strong>{suspectPreview.name}</strong>
-                  <span>{suspectPreview.type}</span>
-                  <span>{suspectPreview.size}</span>
-                </div>
-              </div>
-            ) : (
-              <div className={styles.suspectPlaceholder}>
-                Sin archivos cargados. Puedes pegar una imagen directamente desde tu portapapeles (Ctrl + V).
-              </div>
-            )}
-            <div className={styles.recognitionActions}>
-              <button
-                type="button"
-                className={styles.analyseButton}
-                onClick={triggerRecognition}
-                disabled={!canRunRecognition || analysing}
-              >
-                {analysing ? 'Analizando coincidencias...' : 'Analizar con IA y validar'}
-              </button>
-              <button type="button" className={styles.clearButton} onClick={resetRecognition} disabled={!suspectPreview}>
-                Limpiar
-              </button>
-            </div>
-            <div className={styles.recognitionStatus}>
-              {recognitionState === 'idle' && <span>Carga una imagen para activar el analisis.</span>}
-              {recognitionState === 'ready' && <span>Listo para analizar. El proceso tarda aprox. 8 segundos.</span>}
-              {recognitionState === 'processing' && <span>Ejecutando comparacion contra bases verificadas...</span>}
-              {recognitionState === 'done' &&
-                (recognitionMatches.length ? (
-                  <span>
-                    {recognitionMatches.length} coincidencias encontradas. Revisa y decide si escalar a tu superior de
-                    confianza.
-                  </span>
-                ) : (
-                  <span>No se encontraron coincidencias exactas. Puedes solicitar apoyo a la red comunitaria.</span>
-                ))}
-            </div>
-          </div>
-
-          {recognitionMatches.length > 0 && (
-            <div className={styles.matchList}>
-              <h3>Coincidencias probables</h3>
-              <ul>
-                {recognitionMatches.map((match) => (
-                  <li key={match.id}>
-                    <div>
-                      <strong>{match.alias}</strong>
-                      <span>{match.context}</span>
-                    </div>
-                    <div className={styles.matchMeta}>
-                      <span className={styles.matchScore}>{match.confidence}%</span>
-                      <span className={styles.matchSeen}>Ultimo registro: {match.lastSeen}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className={styles.supervisorBoard}>
-            <h3>Ruta de aprobacion y acompanamiento</h3>
-            <ul>
-              {supervisorPipeline.map((stage) => {
-                const statusClass =
-                  stage.status === 'completado'
-                    ? styles.stageCompleted
-                    : stage.status === 'en-progreso'
-                    ? styles.stageActive
-                    : styles.stagePending;
-                return (
-                  <li key={stage.id} className={`${styles.supervisorStage} ${statusClass}`}>
-                    <div>
-                      <strong>{stage.label}</strong>
-                      <span>{stage.detail}</span>
-                    </div>
-                    <span className={styles.stageTime}>{stage.timestamp}</span>
-                  </li>
-                );
-              })}
-            </ul>
-            <p>
-              Cada aprobacion requiere doble factor y firma digital. Tu evidencia solo se comparte con la cadena autorizada y
-              puedes revocar permisos en cualquier momento.
-            </p>
-          </div>
-
-          <div className={styles.recognitionFootnote}>
-            <ul>
-              <li>El sistema registra hash y cadena de custodia para auditorias externas.</li>
-              <li>Los superiores reciben alertas con version difuminada hasta aprobar medidas.</li>
-              <li>Integra panel de entrenamiento para mejorar la precision con bucles de retroalimentacion.</li>
+              <li>
+                {t(
+                  'denuncias.form.footer1',
+                  'Cada evidencia obtiene un hash SHA-512 compartido con la fiscala para validar integridad.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'denuncias.form.footer2',
+                  'Eliminamos datos EXIF, borramos ruido identificable y puedes marcar rostros que deban difuminarse.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'denuncias.form.footer3',
+                  'Solicita clasificacin rapida si temes represalias en las proximas 24 horas.'
+                )}
+              </li>
             </ul>
           </div>
         </article>
       </section>
 
+      <section className={styles.securityIntro}>
+        <SectionHeader
+          eyebrow={t('denuncias.security.eyebrow', 'Anonimato genuino')}
+          title={t('denuncias.security.title', 'proteccion tcunica y protocolos para denunciar sin miedo')}
+          description={t(
+            'denuncias.security.description',
+            'Basado en recomendaciones del equipo de investigacin: anonimizacin automtica, cifrado de extremo a extremo y salidas de emergencia accesibles.'
+          )}
+        />
+        <div className={styles.securityGrid}>
+          {anonimatoPrincipios.map((item) => (
+            <article key={item.title} className={styles.securityCard}>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+            </article>
+          ))}
+        </div>
+        <div className={styles.securityChecklist}>
+          <h4>{t('denuncias.security.beforeTitle', 'Antes de iniciar una denuncia:')}</h4>
+          <ul>
+            {seguridadRapida.map((tip) => (
+              <li key={tip}>{tip}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
+  );
+
+  const emergencyPanelContent = (
+    <>
       <section className={styles.emergencySection}>
         <article className={styles.emergencyCard}>
-          <h2>{t('denuncias.emergency.title', 'Botón de emergencia en campo')}</h2>
+          <h2>{t('denuncias.emergency.title', 'boton de emergencia en campo')}</h2>
           <p>
             {t(
               'denuncias.emergency.description',
-              'Pensado para escenarios de riesgo inmediato. Puede activarse en pantalla, con combinaciones de botones físicos o mediante gestos configurables.'
+              'Pensado para escenarios de riesgo inmediato. Puede activarse en pantalla, con combinaciones de botones fisicos o mediante gestos configurables.'
             )}
           </p>
           <ul>
@@ -997,7 +984,7 @@ export default function DenunciasPage() {
           </ul>
         </article>
         <article className={styles.emergencyCard}>
-          <h3>{t('denuncias.emergency.permitsTitle', 'Permisos y seguridad técnica')}</h3>
+          <h3>{t('denuncias.emergency.permitsTitle', 'Permisos y seguridad tcunica')}</h3>
           <ul>
             {emergencyPermits.map((item) => (
               <li key={item}>{item}</li>
@@ -1018,7 +1005,7 @@ export default function DenunciasPage() {
           <p>
             {t(
               'denuncias.assistant.description',
-              'Chat seguro que ofrece acompañamiento emocional, material educativo y deriva a profesionales cuando detecta señales de riesgo.'
+              'Chat seguro que ofrece Acompanamiento emocional, material educativo y deriva a profesionales cuando detecta senales de riesgo.'
             )}
           </p>
           <ul>
@@ -1038,106 +1025,10 @@ export default function DenunciasPage() {
             <button type="button">{t('denuncias.assistant.startChat', 'Iniciar chat de apoyo')}</button>
             <button type="button">{t('denuncias.assistant.whatsapp', 'Configurar alertas WhatsApp')}</button>
             <button type="button" className={styles.assistantGhost}>
-              {t('denuncias.assistant.guides', 'Ver guías de autocuidado')}
+              {t('denuncias.assistant.guides', 'Ver guas de autocuidado')}
             </button>
           </div>
         </article>
-      </section>
-
-      <section className={styles.securityIntro}>
-        <SectionHeader
-          eyebrow="Anonimato genuino"
-          title="Proteccion tecnica y protocolos para denunciar sin miedo"
-          description="Inspirado en las recomendaciones del equipo de investigacion: anonimizacion automatica, cifrado de extremo a extremo y salidas de emergencia accesibles."
-        />
-        <div className={styles.securityGrid}>
-          {anonimatoPrincipios.map((item) => (
-            <article key={item.title} className={styles.securityCard}>
-              <h3>{item.title}</h3>
-              <p>{item.detail}</p>
-            </article>
-          ))}
-        </div>
-        <div className={styles.securityChecklist}>
-          <h4>Antes de iniciar una denuncia:</h4>
-          <ul>
-            {seguridadRapida.map((tip) => (
-              <li key={tip}>{tip}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className={styles.trackingModule}>
-        <div className={styles.trackingCard}>
-          <SectionHeader
-            eyebrow="Seguimiento anonimo"
-            title="Consulta el estado de tu caso con un codigo de 8 caracteres"
-            description="El codigo se genera al finalizar el registro y puedes compartirlo con una persona de apoyo sin revelar tus datos."
-          />
-          <form
-            className={styles.trackingForm}
-            onSubmit={(event) => {
-              event.preventDefault();
-            }}
-          >
-            <label htmlFor="trackingCode" className={styles.trackingLabel}>
-              Ingresa tu codigo
-            </label>
-            <div className={styles.trackingFieldset}>
-              <input
-                id="trackingCode"
-                name="trackingCode"
-                placeholder="Ejemplo: AX18-72Q"
-                value={trackingCode}
-                onChange={(event) => setTrackingCode(event.target.value.toUpperCase())}
-                className={styles.trackingInput}
-                autoComplete="off"
-              />
-              <button type="submit" className={styles.trackingButton}>
-                Revisar estado
-              </button>
-            </div>
-          </form>
-
-          <div className={styles.trackingStatus}>
-            {caseInfo ? (
-              <>
-                <div className={styles.statusHeader}>
-                  <span className={styles.statusBadge}>{caseInfo.status}</span>
-                  <span className={styles.statusMeta}>
-                    Riesgo {caseInfo.risk} · {caseInfo.lastUpdate}
-                  </span>
-                </div>
-                <ul className={styles.statusTimeline}>
-                  {caseInfo.timeline.map((milestone) => (
-                    <li key={milestone}>{milestone}</li>
-                  ))}
-                </ul>
-                <div className={styles.statusNext}>
-                  <strong>Accion siguiente:</strong> {caseInfo.nextStep}
-                </div>
-              </>
-            ) : (
-              <div className={styles.statusPlaceholder}>
-                <p>Introduce tu codigo para ver el detalle de hitos, documentos liberados y alertas enviadas.</p>
-                <span>Si perdiste el codigo, solicita uno nuevo en la linea segura 1574 con tu palabra clave.</span>
-              </div>
-            )}
-          </div>
-        </div>
-        <aside className={styles.trackingTips}>
-          <h3>Transparencia radical</h3>
-          <p>
-            Cada acceso al expediente queda auditado por un comite independiente y se notifica a la persona denunciante.
-            Los reportes pueden compartirse en modo lectura para acompanantes comunitarios.
-          </p>
-          <ul>
-            <li>Opciones para pausar o reactivar el expediente sin perder evidencia.</li>
-            <li>Descarga de constancias anonimas para presentar ante otras instituciones.</li>
-            <li>Registro de apoyo psicologico y juridico que se habilita segun el nivel de riesgo.</li>
-          </ul>
-        </aside>
       </section>
 
       <section className={styles.supportGrid}>
@@ -1152,13 +1043,96 @@ export default function DenunciasPage() {
           </article>
         ))}
       </section>
+    </>
+  );
+
+  const followupPanelContent = (
+    <>
+      <section className={styles.trackingModule}>
+        <div className={styles.trackingCard}>
+          <div className={styles.trackingForm}>
+            <label className={styles.trackingLabel} htmlFor="codigo-seguimiento">
+              {t('denuncias.followup.codeTitle', 'Introduce tu codigo de seguimiento')}
+            </label>
+            <div className={styles.trackingFieldset}>
+              <input
+                id="codigo-seguimiento"
+                className={styles.trackingInput}
+                value={trackingCode}
+                onChange={(event) => setTrackingCode(event.target.value)}
+                placeholder="AX18-72Q"
+              />
+              <button type="button" className={styles.trackingButton}>
+                {t('denuncias.followup.checkButton', 'Consultar estado')}
+              </button>
+            </div>
+            <p className={styles.trackingHint}>
+              {t(
+                'denuncias.followup.hint',
+                'Comparte este codigo unicamente con personas de confianza. Puedes regenerar uno nuevo desde tu panel.'
+              )}
+            </p>
+          </div>
+          <div className={styles.trackingStatus}>
+            {caseInfo ? (
+              <>
+                <div className={styles.statusHeader}>
+                  <span className={styles.statusBadge}>{caseInfo.status}</span>
+                  <span className={styles.statusMeta}>
+                    {t('denuncias.followup.risk', 'Riesgo')} {caseInfo.risk}  {caseInfo.lastUpdate}
+                  </span>
+                </div>
+                <ul className={styles.statusTimeline}>
+                  {caseInfo.timeline.map((milestone) => (
+                    <li key={milestone}>{milestone}</li>
+                  ))}
+                </ul>
+                <div className={styles.statusNext}>
+                  <strong>{t('denuncias.followup.next', 'Accin siguiente:')}</strong> {caseInfo.nextStep}
+                </div>
+              </>
+            ) : (
+              <div className={styles.statusPlaceholder}>
+                <p>
+                  {t(
+                    'denuncias.followup.placeholder',
+                    'Introduce tu codigo para ver el detalle de hitos, documentos liberados y alertas enviadas.'
+                  )}
+                </p>
+                <span>
+                  {t(
+                    'denuncias.followup.placeholderHelp',
+                    'Si perdiste el codigo, solicita uno nuevo en la linea segura 1574 con tu palabra clave.'
+                  )}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+        <aside className={styles.trackingTips}>
+          <h3>{t('denuncias.followup.tipsTitle', 'Transparencia radical')}</h3>
+          <p>
+            {t(
+              'denuncias.followup.tipsDescription',
+              'Cada acceso al expediente queda auditado por un Comite independiente y se notifica a la persona denunciante. Los reportes pueden compartirse en modo lectura para acompaantes comunitarios.'
+            )}
+          </p>
+          <ul>
+            <li>{t('denuncias.followup.tip1', 'Opciones para pausar o reactivar el expediente sin perder evidencia.')}</li>
+            <li>{t('denuncias.followup.tip2', 'Descarga de constancias anonimas para presentar ante otras instituciones.')}</li>
+            <li>{t('denuncias.followup.tip3', 'Registro de apoyo psicolgico y jurdico que se habilita segn el nivel de riesgo.')}</li>
+          </ul>
+        </aside>
+      </section>
 
       <section className={styles.grid}>
         <article className={styles.card}>
-          <h3 className={styles.cardTitle}>Que necesito para iniciar?</h3>
+          <h3 className={styles.cardTitle}>{t('denuncias.resources.startTitle', 'Qu necesito para iniciar?')}</h3>
           <p className={styles.description}>
-            Puedes comenzar una denuncia aunque la informacion este incompleta. La plataforma sugiere que datos agregar y
-            permite adjuntar testimonios o evidencias desde tu dispositivo.
+            {t(
+              'denuncias.resources.startDescription',
+              'Puedes comenzar una denuncia aunque la informacion est incompleta. La plataforma sugiere qu datos agregar y permite adjuntar testimonios o evidencias desde tu dispositivo.'
+            )}
           </p>
           <ul className={styles.checklist}>
             {requisitos.map((item) => (
@@ -1168,10 +1142,12 @@ export default function DenunciasPage() {
         </article>
 
         <article className={`${styles.card} ${styles.cardDark}`}>
-          <h3 className={styles.cardTitle}>Protocolos y confidencialidad</h3>
+          <h3 className={styles.cardTitle}>{t('denuncias.resources.protocolTitle', 'Protocolos y confidencialidad')}</h3>
           <p className={styles.description}>
-            Toda la informacion se cifra y se comparte unicamente con las instituciones autorizadas. Los datos sensibles se
-            resguardan con medidas adicionales y se notifica cada acceso realizado.
+            {t(
+              'denuncias.resources.protocolDescription',
+              'Toda la informacion se cifra y se comparte unicamente con las instituciones autorizadas. Los datos sensibles se resguardan con medidas adicionales y se notifica cada acceso realizado.'
+            )}
           </p>
           <div className={styles.channels}>
             {canales.map((canal) => (
@@ -1186,9 +1162,12 @@ export default function DenunciasPage() {
 
       <section className={styles.card}>
         <SectionHeader
-          eyebrow="Proceso acompanante"
-          title="Tres pasos claros para recibir ayuda oportuna"
-          description="Visualizacion simplificada para talleres y capacitaciones en comunidades."
+          eyebrow={t('denuncias.resources.stepsEyebrow', 'Proceso acompaante')}
+          title={t('denuncias.resources.stepsTitle', 'Tres pasos claros para recibir ayuda oportuna')}
+          description={t(
+            'denuncias.resources.stepsDescription',
+            'Visualizacin simplificada para talleres y capacitaciones en comunidades.'
+          )}
         />
         <ul className={styles.stepper}>
           {pasos.map((paso, index) => (
@@ -1205,21 +1184,80 @@ export default function DenunciasPage() {
 
       <section className={styles.ctaBanner}>
         <SectionHeader
-          eyebrow="Acompanamiento"
-          title="Red de apoyo disponible 24/7"
-          description="Una persona gestora te acompana durante todo el proceso, coordina traslados si son necesarios y asegura la proteccion de tus datos."
+          eyebrow={t('denuncias.resources.ctaEyebrow', 'Acompanamiento')}
+          title={t('denuncias.resources.ctaTitle', 'Red de apoyo disponible 24/7')}
+          description={t(
+            'denuncias.resources.ctaDescription',
+            'Una persona gestora te acompaa durante todo el proceso, coordina traslados si son necesarios y asegura la proteccion de tus datos.'
+          )}
           actions={
             <div className={styles.ctaActions}>
               <a className={styles.ctaButton} href="#!">
-                Agendar videollamada
+                {t('denuncias.resources.ctaPrimary', 'Agendar videollamada')}
               </a>
               <a className={`${styles.ctaButton} ${styles.ctaGhost}`} href="#!">
-                Descargar materiales
+                {t('denuncias.resources.ctaSecondary', 'Descargar materiales')}
               </a>
             </div>
           }
         />
       </section>
+    </>
+  );
+
+  const panelItems = [
+    {
+      key: 'identity',
+      title: t('denuncias.panels.identityTitle', 'Identidad y seguridad'),
+      description: t(
+        'denuncias.panels.identityDescription',
+        'Activa modo anonimo o perfil verificado, gestiona codigos efimeros y conoce las politicas contra denuncias falsas.'
+      ),
+      content: identityPanelContent
+    },
+    {
+      key: 'report',
+      title: t('denuncias.panels.reportTitle', 'Denuncia y evidencia'),
+      description: t(
+        'denuncias.panels.reportDescription',
+        'Completa el formulario guiado, adjunta evidencia protegida y revisa las medidas de anonimato recomendadas.'
+      ),
+      content: reportPanelContent
+    },
+    {
+      key: 'emergency',
+      title: t('denuncias.panels.emergencyTitle', 'Emergencias y asistencia IA'),
+      description: t(
+        'denuncias.panels.emergencyDescription',
+        'Configura el boton de panico 360, recibe Acompanamiento virtual y coordina respuestas multicanal.'
+      ),
+      content: emergencyPanelContent
+    },
+    {
+      key: 'followup',
+      title: t('denuncias.panels.followupTitle', 'Seguimiento y recursos'),
+      description: t(
+        'denuncias.panels.followupDescription',
+        'Consulta el estado del caso, accede a protocolos y material descargable para Acompanamiento comunitario.'
+      ),
+      content: followupPanelContent
+    }
+  ];
+  return (
+    <div className={styles.page}>
+      <SectionHeader
+        eyebrow={t('denuncias.hero.eyebrow', 'Denuncias')}
+        title={t('denuncias.hero.title', 'Ruta digital para reportar incidentes y activar proteccion')}
+        description={t('denuncias.hero.description', 'Diseno de experiencia centrada en la persona denunciante, con orientacion clara, accesible y Acompanamiento institucional desde el primer contacto.')}
+      />
+
+      <PanelSwitcher panels={panelItems} />
     </div>
   );
 }
+
+
+
+
+
+
