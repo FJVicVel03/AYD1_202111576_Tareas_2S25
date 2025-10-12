@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/38DoIRGLGOgxOFBqLBiWK/_buildManifest.js",
-    "static/38DoIRGLGOgxOFBqLBiWK/_ssgManifest.js"
+    "static/93gv-BDO4RI7n7GiNJ9L2/_buildManifest.js",
+    "static/93gv-BDO4RI7n7GiNJ9L2/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -14,8 +14,8 @@
       "static/chunks/webpack-c0effdcb15a4f618.js",
       "static/chunks/framework-ecc4130bc7a58a64.js",
       "static/chunks/main-c154dece2d0accd0.js",
-      "static/css/637cbcde64103b0f.css",
-      "static/chunks/pages/index-494cf23098dc793d.js"
+      "static/css/ee60128bc816f50c.css",
+      "static/chunks/pages/index-5b50d8556aae9942.js"
     ],
     "/_app": [
       "static/chunks/webpack-c0effdcb15a4f618.js",
@@ -41,8 +41,8 @@
       "static/chunks/webpack-c0effdcb15a4f618.js",
       "static/chunks/framework-ecc4130bc7a58a64.js",
       "static/chunks/main-c154dece2d0accd0.js",
-      "static/css/01bb3bbaeb649145.css",
-      "static/chunks/pages/denuncias-aa9202a42951636d.js"
+      "static/css/2de097d68c0c3fb0.css",
+      "static/chunks/pages/denuncias-d408bc1d3e7ccad9.js"
     ],
     "/mockups": [
       "static/chunks/webpack-c0effdcb15a4f618.js",
