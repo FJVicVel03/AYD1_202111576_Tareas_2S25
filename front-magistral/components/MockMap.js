@@ -395,7 +395,7 @@ export default function MockMap({ className, showTiles = true, useRouting = true
         </button>
         <span style={{ opacity: 0.9 }}>
           {routeSummary.distanceMeters != null && routeSummary.durationSec != null
-            ? `${(routeSummary.distanceMeters / 1000).toFixed(1)} km · ${(routeSummary.durationSec / 60).toFixed(0)} min` + (routeSummary.source ? ` · ${routeSummary.source}` : '') + (routeSummary.provider ? ` · ${routeSummary.provider}` : '')
+            ? `${(routeSummary.distanceMeters / 1000).toFixed(1)} km · ${(routeSummary.durationSec / 60).toFixed(0)} min`
             : '---'}
         </span>
       </div>
