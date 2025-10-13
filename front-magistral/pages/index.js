@@ -6,6 +6,8 @@ import PanelSwitcher from "@/components/PanelSwitcher";
 import styles from "@/styles/Home.module.css";
 import dynamic from 'next/dynamic';
 import FadeIn from "@components/FadeIn";
+import ShowMoreList from '@/components/ShowMoreList';
+
 
 const MockMap = dynamic(() => import('@/components/MockMap'), { ssr: false });
 
@@ -158,11 +160,14 @@ export default function HomePage() {
         <span className={styles.badge}>{module.badge}</span>
         <h3 className={styles.moduleTitle}>{module.title}</h3>
         <p className={styles.moduleDescription}>{module.description}</p>
-        <ul className={styles.moduleList}>
-          {module.bullets.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+        <ShowMoreList
+          items={module.bullets}
+          initiallyVisible={2}
+          listClassName={styles.moduleList}
+          buttonClassName={styles.secondaryButton}
+          moreLabel="Ver detalles"
+          lessLabel="Ocultar"
+        />
         <Link href={module.href} className={styles.secondaryButton}>
           {t('home.modules.cta', 'Ver prototipo')}
         </Link>
