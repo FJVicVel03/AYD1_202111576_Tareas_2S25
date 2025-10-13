@@ -1,5 +1,6 @@
 import SectionHeader from '@/components/SectionHeader';
 import styles from '@/styles/Observatorio.module.css';
+import { LineChart, BarChart, DonutChart, StackedBarChart, FunnelChart } from '@/components/Charts';
 
 const filters = {
   periodo: ['Ultimos 7 dias', 'Ultimos 30 dias', '2025 (YTD)', 'Comparativo anual'],
@@ -73,22 +74,72 @@ export default function ObservatorioPage() {
       </section>
 
       <section className={styles.boards}>
-        {tableros.map((tablero) => (
-          <article key={tablero.title} className={styles.boardCard}>
-            <header>
-              <h3>{tablero.title}</h3>
-              <p>{tablero.description}</p>
-            </header>
-            <div className={styles.chartPlaceholder}>Grafica interactiva</div>
-            <ul className={styles.insightsList}>
-              {tablero.insights.map((insight) => (
-                <li key={insight} className={styles.insightItem}>
-                  {insight}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+        {/* 1. Tendencia de homicidios */}
+        <article className={styles.boardCard}>
+          <header>
+            <h3>{tableros[0].title}</h3>
+            <p>{tableros[0].description}</p>
+          </header>
+          <LineChart
+            labels={["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]}
+            series={[
+              { label: 'Guatemala', values: [120, 110, 125, 118, 130, 128, 122, 116, 124, 129, 121, 117] },
+              { label: 'Alta Verapaz', values: [44, 40, 38, 36, 34, 33, 31, 29, 30, 28, 27, 26] },
+              { label: 'Huehuetenango', values: [35, 36, 38, 40, 43, 42, 41, 45, 47, 46, 44, 43] }
+            ]}
+            height={240}
+          />
+          <ul className={styles.insightsList}>
+            {tableros[0].insights.map((insight) => (
+              <li key={insight} className={styles.insightItem}>{insight}</li>
+            ))}
+          </ul>
+        </article>
+
+        {/* 2. Densidad de extorsiones (por zonas/municipios) */}
+        <article className={styles.boardCard}>
+          <header>
+            <h3>{tableros[1].title}</h3>
+            <p>{tableros[1].description}</p>
+          </header>
+          <BarChart
+            data={[
+              { label: 'Zona 18', value: 86 },
+              { label: 'Zona 6 Mixco', value: 74 },
+              { label: 'Zona 21', value: 65 },
+              { label: 'Villa Nueva', value: 59 },
+              { label: 'Centro', value: 42 }
+            ]}
+            height={240}
+            color="#ef4444"
+          />
+          <ul className={styles.insightsList}>
+            {tableros[1].insights.map((insight) => (
+              <li key={insight} className={styles.insightItem}>{insight}</li>
+            ))}
+          </ul>
+        </article>
+
+        {/* 3. Violencia contra mujeres (Embudo de atención) */}
+        <article className={styles.boardCard}>
+          <header>
+            <h3>{tableros[2].title}</h3>
+            <p>{tableros[2].description}</p>
+          </header>
+          <FunnelChart
+            steps={[
+              { label: 'Denuncias registradas', value: 100, color: '#ef4444' },
+              { label: 'Medidas de protección', value: 40, color: '#f59e0b' },
+              { label: 'Acompañamiento psicosocial', value: 25, color: '#a855f7' },
+            ]}
+            height={240}
+          />
+          <ul className={styles.insightsList}>
+            {tableros[2].insights.map((insight) => (
+              <li key={insight} className={styles.insightItem}>{insight}</li>
+            ))}
+          </ul>
+        </article>
       </section>
 
       <section className={styles.reportCard}>
