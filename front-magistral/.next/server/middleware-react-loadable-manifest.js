@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST='{"pages\\\\index.js -> @/components/MockMap":{"id":3421,"files":["static/chunks/0b7b90cd.abad55a865e4a8c0.js","static/chunks/801.030f2bd6778c0c0f.js","static/chunks/421.76309347b4026302.js"]}}';
+self.__REACT_LOADABLE_MANIFEST='{"pages\\\\index.js -> @/components/MockMap":{"id":3421,"files":["static/chunks/0b7b90cd.abad55a865e4a8c0.js","static/chunks/801.030f2bd6778c0c0f.js","static/chunks/421.e89267916de1622c.js"]}}';
