@@ -169,7 +169,10 @@ export default function MockMap({ className, showTiles = true, useRouting = true
   };
   const loadStaticCache = async (key) => {
     try {
-      const resp = await fetch('/routes-cache.json', { cache: 'no-cache' });
+      // Handle basePath/assetPrefix in production (GitHub Pages)
+      const base = (typeof window !== 'undefined' && window.__NEXT_DATA__?.assetPrefix) || '';
+      const url = `${base || ''}/routes-cache.json`;
+      const resp = await fetch(url, { cache: 'no-cache' });
       if (!resp.ok) return null;
       const data = await resp.json();
       const entry = data && data[key];
@@ -248,6 +251,7 @@ export default function MockMap({ className, showTiles = true, useRouting = true
 
   const requestRoute = useCallback(async () => {
     const key = process.env.NEXT_PUBLIC_ORS_API_KEY; // optional (proxy also checks server-side)
+    const isStatic = typeof window !== 'undefined' && !!(window.__NEXT_DATA__ && window.__NEXT_DATA__.nextExport);
     if (!useRouting) {
       // Calcular resumen para ruta simulada
       const base = avoidHigh ? ROUTE_POINTS_AVOID : ROUTE_POINTS;
@@ -260,6 +264,42 @@ export default function MockMap({ className, showTiles = true, useRouting = true
     const end = [DEST[1], DEST[0]];       // [lng,lat]
     const avoidGeo = buildAvoidGeoJSON();
     const cacheKey = routeCacheKey(start, end, avoidHigh);
+
+    // En export estático (GitHub Pages) no existen API Routes: usa caché estático o mock sin intentar llamar al proxy
+    if (isStatic) {
+      const cached = await loadStaticCache(cacheKey);
+      if (cached && Array.isArray(cached.coords) && cached.coords.length) {
+        const latlng = cached.coords.map((c) => [c[1], c[0]]);
+        if (avoidHigh && routeIntersectsHazards(latlng)) {
+          setFetchedRoute([]);
+          setRouteError('Ruta cacheada intersecta zonas · alternando a ruta segura');
+          const base = ROUTE_POINTS_AVOID;
+          const dist = computeDistanceMeters(base);
+          const estDuration = dist / 8.33;
+          setRouteSummary({ distanceMeters: Math.round(dist), durationSec: Math.round(estDuration), source: 'mock', provider: null });
+          return;
+        }
+        setFetchedRoute(latlng);
+        setRouteError(null);
+        const summary = cached.summary;
+        const provider = cached.provider || 'cache';
+        if (summary && (summary.distance || summary.duration)) {
+          setRouteSummary({ distanceMeters: Math.round(summary.distance || 0), durationSec: Math.round(summary.duration || 0), source: 'cached', provider });
+        } else {
+          const dist = computeDistanceMeters(latlng);
+          const estDuration = dist / 8.33;
+          setRouteSummary({ distanceMeters: Math.round(dist), durationSec: Math.round(estDuration), source: 'cached-estimate', provider });
+        }
+        return;
+      }
+      // Sin caché estático disponible: usa mock
+      setRouteError('Sitio estático: sin ruta cacheada');
+      const base = avoidHigh ? ROUTE_POINTS_AVOID : ROUTE_POINTS;
+      const dist = computeDistanceMeters(base);
+      const estDuration = dist / 8.33;
+      setRouteSummary({ distanceMeters: Math.round(dist), durationSec: Math.round(estDuration), source: 'mock', provider: null });
+      return;
+    }
     try {
       const res = await axios.post('/api/ors-route', { start, end, avoid_polygons: avoidGeo || undefined });
       const coords = res?.data?.coordinates || [];
@@ -329,7 +369,7 @@ export default function MockMap({ className, showTiles = true, useRouting = true
       const estDuration = dist / 8.33;
       setRouteSummary({ distanceMeters: Math.round(dist), durationSec: Math.round(estDuration), source: 'mock', provider: null });
     }
-  }, [useRouting, avoidHigh, buildAvoidGeoJSON, computeDistanceMeters]);
+  }, [useRouting, avoidHigh, buildAvoidGeoJSON, computeDistanceMeters, routeIntersectsHazards]);
 
   useEffect(() => { requestRoute(); }, [requestRoute]);
   // Build hazard primitives
