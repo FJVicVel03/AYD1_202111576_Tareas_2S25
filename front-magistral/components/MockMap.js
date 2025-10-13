@@ -152,6 +152,32 @@ export default function MockMap({ className, showTiles = true, useRouting = true
   const [avoidHigh, setAvoidHigh] = useState(false); // evitar media/alta/muy-alta
   const [routeSummary, setRouteSummary] = useState({ distanceMeters: null, durationSec: null, source: 'mock', provider: null });
 
+  // --- Simple client cache helpers (browser-only) ---
+  const routeCacheKey = (start, end, avoid) => `route:${start[0]},${start[1]}->${end[0]},${end[1]}:avoid=${avoid ? 1 : 0}`;
+  const saveRouteCache = (key, payload) => {
+    try { if (typeof window !== 'undefined' && window.localStorage) { localStorage.setItem(key, JSON.stringify({ ...payload, ts: Date.now() })); } } catch (_) {}
+  };
+  const loadRouteCache = (key) => {
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) return null;
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || !Array.isArray(obj.coords)) return null;
+      return obj;
+    } catch (_) { return null; }
+  };
+  const loadStaticCache = async (key) => {
+    try {
+      const resp = await fetch('/routes-cache.json', { cache: 'no-cache' });
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      const entry = data && data[key];
+      if (entry && Array.isArray(entry.coords)) return entry;
+      return null;
+    } catch (_) { return null; }
+  };
+
   // Fetch real route from OpenRouteService if enabled and API key available
   // Helpers to build avoid polygons
   const toLngLat = (lat, lng) => [lng, lat];
@@ -233,6 +259,7 @@ export default function MockMap({ className, showTiles = true, useRouting = true
     const start = [ORIGIN[1], ORIGIN[0]]; // [lng,lat]
     const end = [DEST[1], DEST[0]];       // [lng,lat]
     const avoidGeo = buildAvoidGeoJSON();
+    const cacheKey = routeCacheKey(start, end, avoidHigh);
     try {
       const res = await axios.post('/api/ors-route', { start, end, avoid_polygons: avoidGeo || undefined });
       const coords = res?.data?.coordinates || [];
@@ -252,6 +279,10 @@ export default function MockMap({ className, showTiles = true, useRouting = true
         setRouteError(null);
         const summary = res?.data?.summary;
         const provider = res?.data?.provider || 'ors';
+  // save to local cache for offline/static fallback
+        saveRouteCache(cacheKey, { coords, summary, provider });
+  // also persist into public/routes-cache.json via API (dev/server only; ignored on static hosting)
+  try { await axios.post('/api/save-route-cache', { key: cacheKey, coords, summary, provider }); } catch (_) {}
         if (summary && (summary.distance || summary.duration)) {
           setRouteSummary({ distanceMeters: Math.round(summary.distance || 0), durationSec: Math.round(summary.duration || 0), source: 'ors', provider });
         } else {
@@ -264,6 +295,34 @@ export default function MockMap({ className, showTiles = true, useRouting = true
       throw new Error('Respuesta del proxy sin coordenadas');
     } catch (err) {
       console.error('Error obteniendo ruta desde proxy /api/ors-route:', err);
+      // Try cached route from localStorage
+      const cached = loadRouteCache(cacheKey) || await loadStaticCache(cacheKey);
+      if (cached && Array.isArray(cached.coords) && cached.coords.length) {
+        const latlng = cached.coords.map((c) => [c[1], c[0]]);
+        // If avoid is ON and cached path intersects hazards, fall back to safe mock
+        if (avoidHigh && routeIntersectsHazards(latlng)) {
+          setFetchedRoute([]);
+          setRouteError('Usando ruta cacheada, pero intersecta zonas · alternando a ruta segura');
+          const base = ROUTE_POINTS_AVOID;
+          const dist = computeDistanceMeters(base);
+          const estDuration = dist / 8.33;
+          setRouteSummary({ distanceMeters: Math.round(dist), durationSec: Math.round(estDuration), source: 'mock', provider: null });
+          return;
+        }
+        setFetchedRoute(latlng);
+        setRouteError('Usando ruta cacheada');
+        const summary = cached.summary;
+        const provider = cached.provider || 'cache';
+        if (summary && (summary.distance || summary.duration)) {
+          setRouteSummary({ distanceMeters: Math.round(summary.distance || 0), durationSec: Math.round(summary.duration || 0), source: 'cached', provider });
+        } else {
+          const dist = computeDistanceMeters(latlng);
+          const estDuration = dist / 8.33;
+          setRouteSummary({ distanceMeters: Math.round(dist), durationSec: Math.round(estDuration), source: 'cached-estimate', provider });
+        }
+        return;
+      }
+      // Final fallback
       setRouteError(err?.response?.data?.error || err?.message || 'Error de ruteo');
       const base = avoidHigh ? ROUTE_POINTS_AVOID : ROUTE_POINTS;
       const dist = computeDistanceMeters(base);
