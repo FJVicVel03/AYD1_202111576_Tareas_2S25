@@ -5,6 +5,7 @@ import SectionHeader from "@/components/SectionHeader";
 import PanelSwitcher from "@/components/PanelSwitcher";
 import styles from "@/styles/Home.module.css";
 import dynamic from 'next/dynamic';
+import FadeIn from "@components/FadeIn";
 
 const MockMap = dynamic(() => import('@/components/MockMap'), { ssr: false });
 
@@ -152,8 +153,8 @@ export default function HomePage() {
   };
 
   const renderModuleCard = useCallback(
-    (module) => (
-      <article key={module.title} className={styles.moduleCard}>
+    (module, i = 0) => (
+     <FadeIn repeat as="article" key={module.title} delay={120 * i} className={styles.moduleCard}>
         <span className={styles.badge}>{module.badge}</span>
         <h3 className={styles.moduleTitle}>{module.title}</h3>
         <p className={styles.moduleDescription}>{module.description}</p>
@@ -165,14 +166,14 @@ export default function HomePage() {
         <Link href={module.href} className={styles.secondaryButton}>
           {t('home.modules.cta', 'Ver prototipo')}
         </Link>
-      </article>
+      </FadeIn>
     ),
     [t]
   );
 
   const renderInclusionCard = useCallback(
-    (feature) => (
-      <article key={feature.title} className={styles.inclusionCard}>
+    (feature, i = 0) => (
+      <FadeIn repeat as="article" key={feature.title} delay={120 * i} className={styles.inclusionCard}>
         <h3>{feature.title}</h3>
         <p>{feature.description}</p>
         <div className={styles.inclusionTags}>
@@ -182,14 +183,15 @@ export default function HomePage() {
             </span>
           ))}
         </div>
-      </article>
+      </FadeIn>
     ),
     []
   );
 
+
   const renderRoadmapCard = useCallback(
-    (phase) => (
-      <article key={phase.phase} className={styles.roadmapCard}>
+    (phase, i = 0) => (
+      <FadeIn repeat as="article" key={phase.phase} delay={120 * i} className={styles.roadmapCard}>
         <div className={styles.roadmapHeader}>
           <span>{phase.phase}</span>
           <p>{phase.focus}</p>
@@ -199,7 +201,7 @@ export default function HomePage() {
             <li key={item}>{item}</li>
           ))}
         </ul>
-      </article>
+      </FadeIn>
     ),
     []
   );
@@ -298,7 +300,7 @@ export default function HomePage() {
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
-        <div className={styles.heroContent}>
+        <FadeIn className={styles.heroContent}>
           <p className={styles.heroSubtitle}>{heroContent.subtitle}</p>
           <h1 className={styles.heroTitle}>{heroContent.title}</h1>
           <p className={styles.heroSubtitle}>{heroContent.description}</p>
@@ -310,14 +312,14 @@ export default function HomePage() {
               {heroContent.secondaryCta}
             </Link>
           </div>
-        </div>
+        </FadeIn>
         <div className={styles.heroStats}>
-          {heroStats.map((stat) => (
-            <article key={stat.label} className={styles.statCard}>
+          {heroStats.map((stat, i) => (
+            <FadeIn repeat as="article" key={stat.label} delay={100 * i} className={styles.statCard}>
               <span className={styles.statLabel}>{stat.label}</span>
               <span className={styles.statValue}>{stat.value}</span>
               <span className={styles.statTrend}>{stat.trend}</span>
-            </article>
+            </FadeIn>
           ))}
         </div>
       </section>
@@ -332,12 +334,12 @@ export default function HomePage() {
           <PanelSwitcher panels={strategicPanels} />
         </div>
         <div className={`${styles.sectionsGrid} ${styles.desktopOnly}`}>
-          {strategicModules.map((module) => renderModuleCard(module))}
+          {strategicModules.map((module, i) => renderModuleCard(module, i))}
         </div>
       </section>
 
       <section className={styles.mapPreview}>
-        <div className={styles.mapCard}>
+        <FadeIn repeat className={styles.mapCard}>
           <SectionHeader
             eyebrow="Visualizacion territorial"
             title="Mapa dinamico de incidencia"
@@ -354,23 +356,24 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        </div>
-        <div className={styles.alertsCard}>
+        </FadeIn>
+        
+        <FadeIn repeat className={styles.alertsCard}>
           <SectionHeader
             eyebrow="Alertas recientes"
             title="Eventos priorizados en las ultimas horas"
             description="Resumen de incidentes registrados por la ciudadania y las autoridades."
           />
-          {alertas.map((alerta) => (
-            <article key={alerta.zona} className={styles.alertItem}>
+          {alertas.map((alerta, i) => (
+            <FadeIn repeat as="article" key={alerta.zona} delay={90 * i} className={styles.alertItem}>
               <span className={styles.alertLocation}>{alerta.zona}</span>
               <span>{alerta.categoria}</span>
               <span className={styles.alertMeta}>
                 {alerta.hora} / {alerta.estado}
               </span>
-            </article>
+            </FadeIn>
           ))}
-        </div>
+        </FadeIn>
       </section>
 
       <section>
@@ -395,12 +398,12 @@ export default function HomePage() {
           <article className={styles.communityCard}>
             <h3 className={styles.moduleTitle}>Ruta colaborativa</h3>
             <ul className={styles.timeline}>
-              {stepsColaboracion.map((step, index) => (
-                <li key={step.title} className={styles.timelineItem}>
-                  <span className={styles.timelineStep}>{index + 1}</span>
+              {stepsColaboracion.map((step, i) => (
+                <FadeIn repeat as="li" key={step.title} delay={100 * i} className={styles.timelineItem}>
+                  <span className={styles.timelineStep}>{i + 1}</span>
                   <span className={styles.timelineTitle}>{step.title}</span>
                   <p className={styles.timelineDescription}>{step.description}</p>
-                </li>
+                </FadeIn>
               ))}
             </ul>
           </article>
@@ -417,7 +420,7 @@ export default function HomePage() {
           <PanelSwitcher panels={inclusionPanels} />
         </div>
         <div className={`${styles.inclusionGrid} ${styles.desktopOnly}`}>
-          {inclusionFeatures.map((feature) => renderInclusionCard(feature))}
+          {inclusionFeatures.map((feature, i) => renderInclusionCard(feature, i))}
         </div>
       </section>
 
@@ -431,31 +434,34 @@ export default function HomePage() {
           <PanelSwitcher panels={roadmapPanels} />
         </div>
         <div className={`${styles.roadmapGrid} ${styles.desktopOnly}`}>
-          {roadmapPhases.map((phase) => renderRoadmapCard(phase))}
+          {roadmapPhases.map((phase, i) => renderRoadmapCard(phase, i))}
         </div>
+  
         <div className={styles.storyKpiGrid}>
-          <article className={styles.storyCard}>
+          <FadeIn repeat as="article" className={styles.storyCard}>
             <h3>{roadmapHeader.storiesTitle}</h3>
             <ul className={styles.storyList}>
-              {userStories.map((story) => (
-                <li key={story}>{story}</li>
+              {userStories.map((story, i) => (
+                <FadeIn repeat as="li" key={story} delay={90 * i}>
+                  {story}
+                </FadeIn>
               ))}
             </ul>
-          </article>
-          <article className={styles.kpiCard}>
+          </FadeIn>
+          
+          <FadeIn repeat as="article" className={styles.kpiCard}>
             <h3>{roadmapHeader.kpisTitle}</h3>
             <ul className={styles.kpiList}>
-              {successMetrics.map((metric) => (
-                <li key={metric.label}>
+              {successMetrics.map((metric, i) => (
+                <FadeIn repeat as="li" key={metric.label} delay={90 * i}>
                   <strong>{metric.label}</strong>
                   <span>{metric.target}</span>
-                </li>
+                </FadeIn>
               ))}
             </ul>
-          </article>
+          </FadeIn>
         </div>
       </section>
     </div>
   );
 }
-

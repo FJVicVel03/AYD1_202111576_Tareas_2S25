@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SectionHeader from '@/components/SectionHeader';
 import PanelSwitcher from '@/components/PanelSwitcher';
+import FadeIn from '@/components/FadeIn';
 import styles from '@/styles/Denuncias.module.css';
 
 const requisitos = [
@@ -310,7 +311,6 @@ export default function DenunciasPage() {
       size: formatFileSize(file.size)
     }));
     setEvidenceList(mapped);
-    // Limpiar input para permitir volver a seleccionar el mismo archivo si es necesario
     event.target.value = '';
   };
 
@@ -436,25 +436,17 @@ export default function DenunciasPage() {
   const analysing = recognitionState === 'processing';
   const canRunRecognition = recognitionState === 'ready' || recognitionState === 'done';
   const riskLevel = useMemo(() => {
-    if (incidentForm.type === 'violencia-genero') {
-      return 'Critico';
-    }
-    if (incidentForm.type === 'asalto') {
-      return 'Alto';
-    }
-    if (incidentForm.type === 'extorsion') {
-      return 'Alto';
-    }
-    if (incidentForm.type === 'amenaza') {
-      return 'Medio';
-    }
+    if (incidentForm.type === 'violencia-genero') return 'Critico';
+    if (incidentForm.type === 'asalto') return 'Alto';
+    if (incidentForm.type === 'extorsion') return 'Alto';
+    if (incidentForm.type === 'amenaza') return 'Medio';
     return 'Medio';
   }, [incidentForm.type]);
 
   const identityPanelContent = (
     <>
       <section className={styles.accessSection}>
-        <article className={styles.accessCard}>
+        <FadeIn repeat as="article" className={styles.accessCard}>
           <header className={styles.accessHeader}>
             <h2>{t('denuncias.identity.title', 'Control de identidad flexible')}</h2>
             <p>
@@ -653,9 +645,9 @@ export default function DenunciasPage() {
               </div>
             </div>
           )}
-        </article>
+        </FadeIn>
 
-        <article className={styles.profileCard}>
+        <FadeIn repeat as="article" className={styles.profileCard}>
           {reportMode === 'identificado' ? (
             <div className={styles.profileContent}>
               <header className={styles.profileHeader}>
@@ -713,22 +705,26 @@ export default function DenunciasPage() {
               </ul>
             </div>
           )}
-        </article>
+        </FadeIn>
       </section>
 
       <aside className={styles.penaltyNotice}>
-        <h3>{t('denuncias.penalty.title', 'Advertencia sobre denuncias falsas')}</h3>
-        <p>
-          {t(
-            'denuncias.penalty.description',
-            'El sistema cruza la informacion con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y pueden trasladarse al Ministerio Pblico.'
-          )}
-        </p>
-        <ul>
-          {penaltyGuidelines.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+        <FadeIn repeat>
+          <h3>{t('denuncias.penalty.title', 'Advertencia sobre denuncias falsas')}</h3>
+          <p>
+            {t(
+              'denuncias.penalty.description',
+              'El sistema cruza la informacion con unidades especializadas. Reportes maliciosos activan bloqueos de cuenta y pueden trasladarse al Ministerio Pblico.'
+            )}
+          </p>
+          <ul>
+            {penaltyGuidelines.map((item, i) => (
+              <FadeIn repeat as="li" key={item} delay={60 * i}>
+                {item}
+              </FadeIn>
+            ))}
+          </ul>
+        </FadeIn>
       </aside>
     </>
   );
@@ -736,7 +732,7 @@ export default function DenunciasPage() {
   const reportPanelContent = (
     <>
       <section className={styles.formGrid}>
-        <article className={styles.reportComposer}>
+        <FadeIn repeat as="article" className={styles.reportComposer}>
           <header className={styles.composerHeader}>
             <div>
               <h2>{t('denuncias.form.title', 'Compone tu denuncia con gua segura')}</h2>
@@ -934,31 +930,35 @@ export default function DenunciasPage() {
               </li>
             </ul>
           </div>
-        </article>
+        </FadeIn>
       </section>
 
       <section className={styles.securityIntro}>
-        <SectionHeader
-          eyebrow={t('denuncias.security.eyebrow', 'Anonimato genuino')}
-          title={t('denuncias.security.title', 'proteccion tcunica y protocolos para denunciar sin miedo')}
-          description={t(
-            'denuncias.security.description',
-            'Basado en recomendaciones del equipo de investigacin: anonimizacin automtica, cifrado de extremo a extremo y salidas de emergencia accesibles.'
-          )}
-        />
+        <FadeIn repeat>
+          <SectionHeader
+            eyebrow={t('denuncias.security.eyebrow', 'Anonimato genuino')}
+            title={t('denuncias.security.title', 'proteccion tcunica y protocolos para denunciar sin miedo')}
+            description={t(
+              'denuncias.security.description',
+              'Basado en recomendaciones del equipo de investigacin: anonimizacin automtica, cifrado de extremo a extremo y salidas de emergencia accesibles.'
+            )}
+          />
+        </FadeIn>
         <div className={styles.securityGrid}>
-          {anonimatoPrincipios.map((item) => (
-            <article key={item.title} className={styles.securityCard}>
+          {anonimatoPrincipios.map((item, i) => (
+            <FadeIn repeat as="article" key={item.title} delay={80 * i} className={styles.securityCard}>
               <h3>{item.title}</h3>
               <p>{item.detail}</p>
-            </article>
+            </FadeIn>
           ))}
         </div>
         <div className={styles.securityChecklist}>
           <h4>{t('denuncias.security.beforeTitle', 'Antes de iniciar una denuncia:')}</h4>
           <ul>
-            {seguridadRapida.map((tip) => (
-              <li key={tip}>{tip}</li>
+            {seguridadRapida.map((tip, i) => (
+              <FadeIn repeat as="li" key={tip} delay={60 * i}>
+                {tip}
+              </FadeIn>
             ))}
           </ul>
         </div>
@@ -969,7 +969,7 @@ export default function DenunciasPage() {
   const emergencyPanelContent = (
     <>
       <section className={styles.emergencySection}>
-        <article className={styles.emergencyCard}>
+        <FadeIn repeat as="article" className={styles.emergencyCard}>
           <h2>{t('denuncias.emergency.title', 'boton de emergencia en campo')}</h2>
           <p>
             {t(
@@ -978,16 +978,20 @@ export default function DenunciasPage() {
             )}
           </p>
           <ul>
-            {emergencyFlow.map((item) => (
-              <li key={item}>{item}</li>
+            {emergencyFlow.map((item, i) => (
+              <FadeIn repeat as="li" key={item} delay={60 * i}>
+                {item}
+              </FadeIn>
             ))}
           </ul>
-        </article>
-        <article className={styles.emergencyCard}>
+        </FadeIn>
+        <FadeIn repeat as="article" className={styles.emergencyCard}>
           <h3>{t('denuncias.emergency.permitsTitle', 'Permisos y seguridad tcunica')}</h3>
           <ul>
-            {emergencyPermits.map((item) => (
-              <li key={item}>{item}</li>
+            {emergencyPermits.map((item, i) => (
+              <FadeIn repeat as="li" key={item} delay={60 * i}>
+                {item}
+              </FadeIn>
             ))}
           </ul>
           <div className={styles.emergencyActions}>
@@ -996,11 +1000,11 @@ export default function DenunciasPage() {
               {t('denuncias.emergency.simulation', 'Probar simulacro')}
             </button>
           </div>
-        </article>
+        </FadeIn>
       </section>
 
       <section className={styles.assistantSection}>
-        <article className={styles.assistantCard}>
+        <FadeIn repeat as="article" className={styles.assistantCard}>
           <h2>{t('denuncias.assistant.title', 'Asistente virtual IA')}</h2>
           <p>
             {t(
@@ -1009,16 +1013,20 @@ export default function DenunciasPage() {
             )}
           </p>
           <ul>
-            {assistantCapabilities.map((item) => (
-              <li key={item}>{item}</li>
+            {assistantCapabilities.map((item, i) => (
+              <FadeIn repeat as="li" key={item} delay={60 * i}>
+                {item}
+              </FadeIn>
             ))}
           </ul>
-        </article>
-        <article className={styles.assistantCard}>
+        </FadeIn>
+        <FadeIn repeat as="article" className={styles.assistantCard}>
           <h3>{t('denuncias.assistant.followupTitle', 'Escalonamiento y seguimiento')}</h3>
           <ul>
-            {assistantEscalations.map((item) => (
-              <li key={item}>{item}</li>
+            {assistantEscalations.map((item, i) => (
+              <FadeIn repeat as="li" key={item} delay={60 * i}>
+                {item}
+              </FadeIn>
             ))}
           </ul>
           <div className={styles.assistantActions}>
@@ -1028,19 +1036,21 @@ export default function DenunciasPage() {
               {t('denuncias.assistant.guides', 'Ver guas de autocuidado')}
             </button>
           </div>
-        </article>
+        </FadeIn>
       </section>
 
       <section className={styles.supportGrid}>
-        {respuestaCrisis.map((card) => (
-          <article key={card.title} className={styles.supportCard}>
+        {respuestaCrisis.map((card, i) => (
+          <FadeIn repeat as="article" key={card.title} delay={90 * i} className={styles.supportCard}>
             <h3>{card.title}</h3>
             <ul>
-              {card.bullets.map((item) => (
-                <li key={item}>{item}</li>
+              {card.bullets.map((item, j) => (
+                <FadeIn repeat as="li" key={item} delay={50 * j}>
+                  {item}
+                </FadeIn>
               ))}
             </ul>
-          </article>
+          </FadeIn>
         ))}
       </section>
     </>
@@ -1049,7 +1059,7 @@ export default function DenunciasPage() {
   const followupPanelContent = (
     <>
       <section className={styles.trackingModule}>
-        <div className={styles.trackingCard}>
+        <FadeIn repeat className={styles.trackingCard}>
           <div className={styles.trackingForm}>
             <label className={styles.trackingLabel} htmlFor="codigo-seguimiento">
               {t('denuncias.followup.codeTitle', 'Introduce tu codigo de seguimiento')}
@@ -1069,7 +1079,7 @@ export default function DenunciasPage() {
             <p className={styles.trackingHint}>
               {t(
                 'denuncias.followup.hint',
-                'Comparte este codigo unicamente con personas de confianza. Puedes regenerar uno nuevo desde tu panel.'
+                'Comparte este codigo unicamente con personas de confianza. Puedes regenerar uno nuevo en la linea segura 1574 con tu palabra clave.'
               )}
             </p>
           </div>
@@ -1083,8 +1093,10 @@ export default function DenunciasPage() {
                   </span>
                 </div>
                 <ul className={styles.statusTimeline}>
-                  {caseInfo.timeline.map((milestone) => (
-                    <li key={milestone}>{milestone}</li>
+                  {caseInfo.timeline.map((milestone, i) => (
+                    <FadeIn repeat as="li" key={milestone} delay={60 * i}>
+                      {milestone}
+                    </FadeIn>
                   ))}
                 </ul>
                 <div className={styles.statusNext}>
@@ -1108,8 +1120,8 @@ export default function DenunciasPage() {
               </div>
             )}
           </div>
-        </div>
-        <aside className={styles.trackingTips}>
+        </FadeIn>
+        <FadeIn repeat as="aside" className={styles.trackingTips}>
           <h3>{t('denuncias.followup.tipsTitle', 'Transparencia radical')}</h3>
           <p>
             {t(
@@ -1122,11 +1134,11 @@ export default function DenunciasPage() {
             <li>{t('denuncias.followup.tip2', 'Descarga de constancias anonimas para presentar ante otras instituciones.')}</li>
             <li>{t('denuncias.followup.tip3', 'Registro de apoyo psicolgico y jurdico que se habilita segn el nivel de riesgo.')}</li>
           </ul>
-        </aside>
+        </FadeIn>
       </section>
 
       <section className={styles.grid}>
-        <article className={styles.card}>
+        <FadeIn repeat as="article" className={styles.card}>
           <h3 className={styles.cardTitle}>{t('denuncias.resources.startTitle', 'Qu necesito para iniciar?')}</h3>
           <p className={styles.description}>
             {t(
@@ -1135,13 +1147,15 @@ export default function DenunciasPage() {
             )}
           </p>
           <ul className={styles.checklist}>
-            {requisitos.map((item) => (
-              <li key={item}>{item}</li>
+            {requisitos.map((item, i) => (
+              <FadeIn repeat as="li" key={item} delay={60 * i}>
+                {item}
+              </FadeIn>
             ))}
           </ul>
-        </article>
+        </FadeIn>
 
-        <article className={`${styles.card} ${styles.cardDark}`}>
+        <FadeIn repeat as="article" className={`${styles.card} ${styles.cardDark}`}>
           <h3 className={styles.cardTitle}>{t('denuncias.resources.protocolTitle', 'Protocolos y confidencialidad')}</h3>
           <p className={styles.description}>
             {t(
@@ -1150,57 +1164,61 @@ export default function DenunciasPage() {
             )}
           </p>
           <div className={styles.channels}>
-            {canales.map((canal) => (
-              <div key={canal.label} className={styles.channelCard}>
+            {canales.map((canal, i) => (
+              <FadeIn repeat key={canal.label} delay={80 * i} className={styles.channelCard}>
                 <span className={styles.channelLabel}>{canal.label}</span>
                 <span className={styles.channelMeta}>{canal.meta}</span>
-              </div>
+              </FadeIn>
             ))}
           </div>
-        </article>
+        </FadeIn>
       </section>
 
       <section className={styles.card}>
-        <SectionHeader
-          eyebrow={t('denuncias.resources.stepsEyebrow', 'Proceso acompaante')}
-          title={t('denuncias.resources.stepsTitle', 'Tres pasos claros para recibir ayuda oportuna')}
-          description={t(
-            'denuncias.resources.stepsDescription',
-            'Visualizacin simplificada para talleres y capacitaciones en comunidades.'
-          )}
-        />
+        <FadeIn repeat>
+          <SectionHeader
+            eyebrow={t('denuncias.resources.stepsEyebrow', 'Proceso acompaante')}
+            title={t('denuncias.resources.stepsTitle', 'Tres pasos claros para recibir ayuda oportuna')}
+            description={t(
+              'denuncias.resources.stepsDescription',
+              'Visualizacin simplificada para talleres y capacitaciones en comunidades.'
+            )}
+          />
+        </FadeIn>
         <ul className={styles.stepper}>
           {pasos.map((paso, index) => (
-            <li key={paso.title} className={styles.step}>
+            <FadeIn repeat as="li" key={paso.title} delay={90 * index} className={styles.step}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepBadge}>{index + 1}</span>
                 <span className={styles.stepTitle}>{paso.title}</span>
               </div>
               <p className={styles.stepDescription}>{paso.description}</p>
-            </li>
+            </FadeIn>
           ))}
         </ul>
       </section>
 
       <section className={styles.ctaBanner}>
-        <SectionHeader
-          eyebrow={t('denuncias.resources.ctaEyebrow', 'Acompanamiento')}
-          title={t('denuncias.resources.ctaTitle', 'Red de apoyo disponible 24/7')}
-          description={t(
-            'denuncias.resources.ctaDescription',
-            'Una persona gestora te acompaa durante todo el proceso, coordina traslados si son necesarios y asegura la proteccion de tus datos.'
-          )}
-          actions={
-            <div className={styles.ctaActions}>
-              <a className={styles.ctaButton} href="#!">
-                {t('denuncias.resources.ctaPrimary', 'Agendar videollamada')}
-              </a>
-              <a className={`${styles.ctaButton} ${styles.ctaGhost}`} href="#!">
-                {t('denuncias.resources.ctaSecondary', 'Descargar materiales')}
-              </a>
-            </div>
-          }
-        />
+        <FadeIn repeat>
+          <SectionHeader
+            eyebrow={t('denuncias.resources.ctaEyebrow', 'Acompanamiento')}
+            title={t('denuncias.resources.ctaTitle', 'Red de apoyo disponible 24/7')}
+            description={t(
+              'denuncias.resources.ctaDescription',
+              'Una persona gestora te acompaa durante todo el proceso, coordina traslados si son necesarios y asegura la proteccion de tus datos.'
+            )}
+            actions={
+              <div className={styles.ctaActions}>
+                <a className={styles.ctaButton} href="#!">
+                  {t('denuncias.resources.ctaPrimary', 'Agendar videollamada')}
+                </a>
+                <a className={`${styles.ctaButton} ${styles.ctaGhost}`} href="#!">
+                  {t('denuncias.resources.ctaSecondary', 'Descargar materiales')}
+                </a>
+              </div>
+            }
+          />
+        </FadeIn>
       </section>
     </>
   );
@@ -1243,21 +1261,20 @@ export default function DenunciasPage() {
       content: followupPanelContent
     }
   ];
+
   return (
     <div className={styles.page}>
-      <SectionHeader
-        eyebrow={t('denuncias.hero.eyebrow', 'Denuncias')}
-        title={t('denuncias.hero.title', 'Ruta digital para reportar incidentes y activar proteccion')}
-        description={t('denuncias.hero.description', 'Diseno de experiencia centrada en la persona denunciante, con orientacion clara, accesible y Acompanamiento institucional desde el primer contacto.')}
-      />
+      <FadeIn repeat>
+        <SectionHeader
+          eyebrow={t('denuncias.hero.eyebrow', 'Denuncias')}
+          title={t('denuncias.hero.title', 'Ruta digital para reportar incidentes y activar proteccion')}
+          description={t('denuncias.hero.description', 'Diseno de experiencia centrada en la persona denunciante, con orientacion clara, accesible y Acompanamiento institucional desde el primer contacto.')}
+        />
+      </FadeIn>
 
-      <PanelSwitcher panels={panelItems} />
+      <FadeIn repeat>
+        <PanelSwitcher panels={panelItems} />
+      </FadeIn>
     </div>
   );
 }
-
-
-
-
-
-

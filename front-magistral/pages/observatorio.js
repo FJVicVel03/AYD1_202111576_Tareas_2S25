@@ -1,4 +1,5 @@
 import SectionHeader from '@/components/SectionHeader';
+import FadeIn from '@/components/FadeIn';
 import styles from '@/styles/Observatorio.module.css';
 import { LineChart, BarChart, DonutChart, StackedBarChart, FunnelChart } from '@/components/Charts';
 
@@ -50,32 +51,32 @@ export default function ObservatorioPage() {
   return (
     <div className={styles.page}>
       <section className={styles.intro}>
-        <div>
+        <FadeIn repeat>
           <SectionHeader
             eyebrow="Observatorio"
             title="Datos unificados para decisiones basadas en evidencia"
             description="Explora indicadores criticos de seguridad ciudadana, cruza variables socioeconomicas y descubre zonas de riesgo con analitica interactiva."
           />
-        </div>
-        <div className={styles.filterPanel}>
-          {Object.entries(filters).map(([label, items]) => (
-            <div key={label} className={styles.filterGroup}>
+        </FadeIn>
+        <FadeIn repeat className={styles.filterPanel}>
+          {Object.entries(filters).map(([label, items], i) => (
+            <FadeIn repeat key={label} as="div" delay={80 * i} className={styles.filterGroup}>
               <strong>{label.toUpperCase()}</strong>
               <div className={styles.chips}>
-                {items.map((item) => (
-                  <span key={item} className={styles.chip}>
+                {items.map((item, j) => (
+                  <FadeIn repeat key={item} as="span" delay={40 * j} className={styles.chip}>
                     {item}
-                  </span>
+                  </FadeIn>
                 ))}
               </div>
-            </div>
+            </FadeIn>
           ))}
-        </div>
+        </FadeIn>
       </section>
 
       <section className={styles.boards}>
         {/* 1. Tendencia de homicidios */}
-        <article className={styles.boardCard}>
+        <FadeIn repeat as="article" className={styles.boardCard}>
           <header>
             <h3>{tableros[0].title}</h3>
             <p>{tableros[0].description}</p>
@@ -89,15 +90,17 @@ export default function ObservatorioPage() {
             ]}
             height={240}
           />
-          <ul className={styles.insightsList}>
-            {tableros[0].insights.map((insight) => (
-              <li key={insight} className={styles.insightItem}>{insight}</li>
-            ))}
-          </ul>
-        </article>
+        <ul className={styles.insightsList}>
+          {tableros[0].insights.map((insight, i) => (
+            <FadeIn repeat as="li" key={insight} delay={80 * i} className={styles.insightItem}>
+              {insight}
+            </FadeIn>
+          ))}
+        </ul>
+      </FadeIn>
 
         {/* 2. Densidad de extorsiones (por zonas/municipios) */}
-        <article className={styles.boardCard}>
+        <FadeIn repeat as="article" className={styles.boardCard}>
           <header>
             <h3>{tableros[1].title}</h3>
             <p>{tableros[1].description}</p>
@@ -113,15 +116,17 @@ export default function ObservatorioPage() {
             height={240}
             color="#ef4444"
           />
-          <ul className={styles.insightsList}>
-            {tableros[1].insights.map((insight) => (
-              <li key={insight} className={styles.insightItem}>{insight}</li>
-            ))}
-          </ul>
-        </article>
+        <ul className={styles.insightsList}>
+          {tableros[1].insights.map((insight, i) => (
+            <FadeIn repeat as="li" key={insight} delay={80 * i} className={styles.insightItem}>
+              {insight}
+            </FadeIn>
+          ))}
+        </ul>
+      </FadeIn>
 
         {/* 3. Violencia contra mujeres (Embudo de atención) */}
-        <article className={styles.boardCard}>
+        <FadeIn repeat as="article" className={styles.boardCard}>
           <header>
             <h3>{tableros[2].title}</h3>
             <p>{tableros[2].description}</p>
@@ -134,29 +139,35 @@ export default function ObservatorioPage() {
             ]}
             height={240}
           />
-          <ul className={styles.insightsList}>
-            {tableros[2].insights.map((insight) => (
-              <li key={insight} className={styles.insightItem}>{insight}</li>
+        <ul className={styles.insightsList}>
+            {tableros[2].insights.map((insight, i) => (
+              <FadeIn repeat as="li" key={insight} delay={80 * i} className={styles.insightItem}>
+                {insight}
+              </FadeIn>
             ))}
           </ul>
-        </article>
+        </FadeIn>
       </section>
 
       <section className={styles.reportCard}>
-        <SectionHeader
-          eyebrow="Reporte ejecutivo"
-          title="Concentra la informacion clave para el gabinete de seguridad"
-          description="Generacion automatica de reportes con narrativa, graficas y recomendaciones priorizadas."
-        />
+        <FadeIn repeat>
+          <SectionHeader
+            eyebrow="Reporte ejecutivo"
+            title="Concentra la informacion clave para el gabinete de seguridad"
+            description="Generacion automatica de reportes con narrativa, graficas y recomendaciones priorizadas."
+          />
+        </FadeIn>
         <div className={styles.reportHighlights}>
-          {reportHighlights.map((highlight) => (
-            <div key={highlight.label} className={styles.highlight}>
-              <span className={styles.highlightValue}>{highlight.value}</span>
-              <span>{highlight.label}</span>
-            </div>
+          {reportHighlights.map((h, i) => (
+            <FadeIn repeat key={h.label} as="div" delay={90 * i} className={styles.highlight}>
+              <span className={styles.highlightValue}>{h.value}</span>
+              <span>{h.label}</span>
+            </FadeIn>
           ))}
         </div>
       </section>
+
     </div>
+
   );
 }
