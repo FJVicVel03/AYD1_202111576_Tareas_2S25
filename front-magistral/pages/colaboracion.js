@@ -1,4 +1,5 @@
 import SectionHeader from '@/components/SectionHeader';
+import FadeIn from '@/components/FadeIn';
 import styles from '@/styles/Colaboracion.module.css';
 
 const aliados = [
@@ -89,56 +90,68 @@ export default function ColaboracionPage() {
   return (
     <div className={styles.page}>
       <section className={styles.introCard}>
-        <SectionHeader
-          eyebrow="Alianzas"
-          title="Articulacion interinstitucional y comunitaria"
-          description="El prototipo plantea como las instituciones y comunidades trabajan juntas para prevenir, responder y reconstruir confianza en la seguridad ciudadana."
-        />
-        <p>
-          Cada mesa tecnica cuenta con un tablero compartido, acuerdos de intercambio de informacion y un calendario de acciones
-          territoriales. La plataforma facilita reportes automaticos, bitacoras de coordinacion y metricas de impacto social.
-        </p>
+        <FadeIn repeat>
+          <SectionHeader
+            eyebrow="Alianzas"
+            title="Articulacion interinstitucional y comunitaria"
+            description="El prototipo plantea como las instituciones y comunidades trabajan juntas para prevenir, responder y reconstruir confianza en la seguridad ciudadana."
+          />
+        </FadeIn>
+        <FadeIn repeat delay={80}>
+          <p>
+            Cada mesa tecnica cuenta con un tablero compartido, acuerdos de intercambio de informacion y un calendario de acciones
+            territoriales. La plataforma facilita reportes automaticos, bitacoras de coordinacion y metricas de impacto social.
+          </p>
+        </FadeIn>
       </section>
 
       <section className={styles.alliances}>
-        {aliados.map((aliado) => (
-          <article key={aliado.nombre} className={styles.allyCard}>
+        {aliados.map((aliado, i) => (
+          <FadeIn repeat as="article" key={aliado.nombre} delay={90 * i} className={styles.allyCard}>
             <h3 className={styles.allyTitle}>{aliado.nombre}</h3>
             <p className={styles.allyDescription}>{aliado.enfoque}</p>
             <span className={styles.pill}>Rol clave</span>
             <p className={styles.allyDescription}>{aliado.rol}</p>
-          </article>
+          </FadeIn>
         ))}
       </section>
 
       <section className={styles.roadmap}>
-        {roadmap.map((fase) => (
-          <article key={fase.fase} className={styles.roadmapCard}>
+        {roadmap.map((fase, i) => (
+          <FadeIn repeat as="article" key={fase.fase} delay={100 * i} className={styles.roadmapCard}>
             <span className={styles.pill}>{fase.fase}</span>
             <ul className={styles.timeline}>
-              {fase.items.map((item) => (
-                <li key={item.title} className={styles.timelineRow}>
+              {fase.items.map((item, j) => (
+                <FadeIn
+                  repeat
+                  as="li"
+                  key={item.title}
+                  delay={70 * j}
+                  className={styles.timelineRow}
+                >
                   <span className={styles.timelineTitle}>{item.title}</span>
                   <p className={styles.timelineDescription}>{item.description}</p>
-                </li>
+                </FadeIn>
               ))}
             </ul>
-          </article>
+          </FadeIn>
         ))}
       </section>
 
       <section className={styles.communityShowcase}>
-        <SectionHeader
-          eyebrow="Casos piloto"
-          title="Resultados iniciales de la red comunitaria"
-          description="Historias que inspiran confianza y muestran el potencial de las alianzas locales."
-        />
+        <FadeIn repeat>
+          <SectionHeader
+            eyebrow="Casos piloto"
+            title="Resultados iniciales de la red comunitaria"
+            description="Historias que inspiran confianza y muestran el potencial de las alianzas locales."
+          />
+        </FadeIn>
         <div className={styles.communityGrid}>
-          {comunidades.map((comunidad) => (
-            <article key={comunidad.nombre} className={styles.communityCard}>
+          {comunidades.map((comunidad, i) => (
+            <FadeIn repeat as="article" key={comunidad.nombre} delay={90 * i} className={styles.communityCard}>
               <span className={styles.communityLabel}>{comunidad.nombre}</span>
               <span className={styles.communityMeta}>{comunidad.resultado}</span>
-            </article>
+            </FadeIn>
           ))}
         </div>
       </section>
