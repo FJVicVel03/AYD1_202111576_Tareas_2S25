@@ -4,6 +4,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import SectionHeader from "@/components/SectionHeader";
 import PanelSwitcher from "@/components/PanelSwitcher";
 import styles from "@/styles/Home.module.css";
+import dynamic from 'next/dynamic';
+
+const MockMap = dynamic(() => import('@/components/MockMap'), { ssr: false });
 
 const heroStats = [
   { label: "Municipios monitoreados", value: "45", trend: "Cobertura prioritaria 2025" },
@@ -78,7 +81,8 @@ const mapLegend = [
   { label: "Muy alta incidencia", color: "#ff5f6d" },
   { label: "Alta incidencia", color: "#ff9966" },
   { label: "Media", color: "#ffd56f" },
-  { label: "Baja", color: "#8bd46e" }
+  { label: "Baja", color: "#8bd46e" },
+  { label: "Zona de riesgo", color: "#b91c1c" }
 ];
 
 const inclusionFeatures = [
@@ -339,7 +343,9 @@ export default function HomePage() {
             title="Mapa dinamico de incidencia"
             description="Permite identificar zonas calientes, rutas de riesgo y puntos criticos de violencia para priorizar intervenciones."
           />
-          <div className={styles.mapPlaceholder}>Mapa de calor interactivo</div>
+          <div className={styles.mapContainer}>
+            <MockMap className={styles.mapContainer} />
+          </div>
           <div className={styles.mapLegend}>
             {mapLegend.map((legend) => (
               <div key={legend.label} className={styles.legendItem}>

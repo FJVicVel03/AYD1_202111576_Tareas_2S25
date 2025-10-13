@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}";
+self.__REACT_LOADABLE_MANIFEST="{\"pages\\\\index.js -> @/components/MockMap\":{\"id\":\"pages\\\\index.js -> @/components/MockMap\",\"files\":[\"static/chunks/components_MockMap_js.js\"]}}"
