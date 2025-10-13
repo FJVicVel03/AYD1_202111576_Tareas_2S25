@@ -1,0 +1,3 @@
+1. Al hacer scroll que cuente con efecto de desvanecimiento (Hecho)
+2. Distintos colores para reduccion de carga visual
+3. Optimizar pagina principal

@@ -1,4 +1,4 @@
 // ignorar los node modules
 node_modules
-.next
+.next/
 out

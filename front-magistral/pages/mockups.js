@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import SectionHeader from '@/components/SectionHeader';
+import FadeIn from '@/components/FadeIn';
 import styles from '@/styles/Mockups.module.css';
 
 const MOCKUPS = [
@@ -27,40 +28,51 @@ export default function MockupsPage() {
   const [orientationFilter, setOrientationFilter] = useState('all');
 
   const filteredMockups = useMemo(() => {
-    if (orientationFilter === 'all') {
-      return MOCKUPS;
-    }
+    if (orientationFilter === 'all') return MOCKUPS;
     return MOCKUPS.filter((item) => item.orientation === orientationFilter);
   }, [orientationFilter]);
 
   return (
     <div className={styles.page}>
-      <SectionHeader
-        eyebrow="Mockups"
-        title="Galeria de pantallas"
-        description="Versiones estaticas de las vistas principales. Descarga los SVG o reemplazalos con exportaciones desde tu herramienta de diseno."
-        actions={
-          <div className={styles.filterGroup}>
-            {ORIENTATION_FILTERS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={`${styles.filterButton} ${orientationFilter === option.id ? styles.filterButtonActive : ''}`}
-                onClick={() => setOrientationFilter(option.id)}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        }
-      />
+      <FadeIn repeat>
+        <SectionHeader
+          eyebrow="Mockups"
+          title="Galeria de pantallas"
+          description="Versiones estaticas de las vistas principales. Descarga los SVG o reemplazalos con exportaciones desde tu herramienta de diseno."
+          actions={
+            <div className={styles.filterGroup}>
+              {ORIENTATION_FILTERS.map((option, i) => (
+                <FadeIn repeat as="span" key={option.id} delay={70 * i}>
+                  <button
+                    type="button"
+                    className={`${styles.filterButton} ${orientationFilter === option.id ? styles.filterButtonActive : ''}`}
+                    onClick={() => setOrientationFilter(option.id)}
+                  >
+                    {option.label}
+                  </button>
+                </FadeIn>
+              ))}
+            </div>
+          }
+        />
+      </FadeIn>
 
       <div className={styles.grid}>
-        {filteredMockups.map((mockup) => (
-          <article key={mockup.key} className={styles.card}>
+        {filteredMockups.map((mockup, i) => (
+          <FadeIn
+            repeat
+            as="article"
+            key={mockup.key}
+            delay={80 * i}
+            className={styles.card}
+          >
             <button type="button" className={styles.thumbButton} onClick={() => setActiveMockup(mockup)}>
               {/* eslint-disable-next-line @next/next/no-img-element -- Requerimos <img> para cargar recursos locales SVG */}
-              <img className={styles.thumb} src={`${base}${mockup.src}`} alt={`${mockup.module} ${mockup.orientation}`} />
+              <img
+                className={styles.thumb}
+                src={`${base}${mockup.src}`}
+                alt={`${mockup.module} ${mockup.orientation}`}
+              />
             </button>
             <div className={styles.meta}>
               <div>
@@ -73,12 +85,16 @@ export default function MockupsPage() {
                 <a className={styles.secondaryButton} href={`${base}${mockup.src}`} download>
                   Descargar
                 </a>
-                <button className={styles.primaryButton} type="button" onClick={() => setActiveMockup(mockup)}>
+                <button
+                  className={styles.primaryButton}
+                  type="button"
+                  onClick={() => setActiveMockup(mockup)}
+                >
                   Ver
                 </button>
               </div>
             </div>
-          </article>
+          </FadeIn>
         ))}
       </div>
 
@@ -88,7 +104,12 @@ export default function MockupsPage() {
         role="presentation"
       >
         {activeMockup && (
-          <div className={styles.viewerContent} onClick={(event) => event.stopPropagation()}>
+          <FadeIn
+            repeat
+            as="div"
+            className={styles.viewerContent}
+            onClick={(event) => event.stopPropagation()}
+          >
             <header className={styles.viewerHeader}>
               <div>
                 <p className={styles.moduleLabel}>{activeMockup.module}</p>
@@ -101,11 +122,15 @@ export default function MockupsPage() {
               </button>
             </header>
             {/* eslint-disable-next-line @next/next/no-img-element -- Vista en vivo de SVG locales */}
-            <img className={styles.viewerImg} src={`${base}${activeMockup.src}`} alt={`${activeMockup.module} ${activeMockup.orientation}`} />
+            <img
+              className={styles.viewerImg}
+              src={`${base}${activeMockup.src}`}
+              alt={`${activeMockup.module} ${activeMockup.orientation}`}
+            />
             <a className={styles.viewerDownload} href={`${base}${activeMockup.src}`} download>
               Descargar SVG
             </a>
-          </div>
+          </FadeIn>
         )}
       </div>
     </div>
