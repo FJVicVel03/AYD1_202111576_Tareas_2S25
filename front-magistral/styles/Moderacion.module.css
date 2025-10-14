@@ -1,0 +1,121 @@
+.wrap {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.banner {
+  border-radius: 1.5rem;
+  padding: 1.25rem 1.25rem 0.25rem;
+  color: #fff;
+  background: linear-gradient(135deg, #1f3d99 0%, #4b7bec 45%, #1b9ea6 100%);
+  box-shadow: 0 22px 48px rgba(36, 80, 180, 0.35);
+}
+
+.card {
+  border-radius: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid rgba(38, 61, 115, 0.08);
+  box-shadow: 0 18px 38px rgba(45, 62, 101, 0.12);
+  display: grid;
+  gap: 1rem;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardHeader h2 { margin: 0; color: #1f2a44; }
+
+.badge {
+  background: rgba(31, 61, 153, 0.12);
+  color: #1f3d99;
+  border: 1px solid rgba(31, 61, 153, 0.25);
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+}
+
+.list { display: grid; gap: 0.9rem; }
+
+.item {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid rgba(38, 61, 115, 0.12);
+  background: #fafdff;
+  padding: 1rem 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+.item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 0% 0%, rgba(75, 123, 236, 0.08), rgba(27, 158, 166, 0.08) 60%, transparent 70%);
+  pointer-events: none;
+}
+
+.itemDisabled { opacity: 0.65; }
+
+.itemHead { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+.itemMeta { display: grid; gap: 0.25rem; }
+.itemZona { color: #1f2a44; }
+.itemCategoria {
+  background: linear-gradient(135deg, rgba(27, 158, 166, 0.18), rgba(75, 123, 236, 0.18));
+  color: #1b9ea6;
+  border: 1px solid rgba(27, 158, 166, 0.25);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.itemInfo { display: flex; gap: 0.5rem; align-items: center; }
+.itemChip {
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.itemChip[data-risk="medio"] {
+  background: rgba(234, 179, 8, 0.12);
+  color: #a16207;
+  border-color: rgba(234, 179, 8, 0.35);
+}
+.itemChip[data-risk="bajo"] {
+  background: rgba(34, 197, 94, 0.12);
+  color: #15803d;
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.itemHora { color: #445480; font-size: 0.9rem; }
+.itemDesc { margin: 0; color: #445480; }
+.itemFoot { display: flex; justify-content: space-between; align-items: center; gap: .75rem; flex-wrap: wrap; }
+.itemEvid { color: #1f2a44; font-weight: 700; }
+
+.actions { display: flex; gap: 0.5rem; }
+.actions button { cursor: pointer; border-radius: .8rem; padding: .5rem .9rem; font-weight: 700; border: 1px solid transparent; }
+.accept { background: linear-gradient(135deg, rgba(31,61,153,0.18), rgba(75,123,236,0.24)); color: #123a9b; border-color: rgba(31, 61, 153, 0.3); box-shadow: 0 8px 18px rgba(36,80,180,0.22); }
+.accept:hover, .accept:focus-visible { background: linear-gradient(135deg, rgba(31,61,153,0.28), rgba(75,123,236,0.32)); transform: translateY(-1px); }
+.reject { background: linear-gradient(135deg, rgba(220,38,38,0.12), rgba(251,113,133,0.18)); color: #b91c1c; border-color: rgba(220,38,38,0.25); box-shadow: 0 8px 18px rgba(220,38,38,0.15); }
+.reject:hover, .reject:focus-visible { background: linear-gradient(135deg, rgba(220,38,38,0.18), rgba(251,113,133,0.24)); transform: translateY(-1px); }
+
+.proceso { display: flex; gap: .5rem; align-items: center; }
+.estado { font-weight: 700; color: #1f2a44; }
+.estado[data-estado="rechazado"] { color: #b91c1c; }
+.estado[data-estado="aceptado"] { color: #1f3d99; }
+.undo { cursor: pointer; background: white; border: 1px solid rgba(38,61,115,.2); color: #1f2a44; padding: .35rem .7rem; border-radius: .6rem; }
+.undo:hover, .undo:focus-visible { background: #f4f7fb; }
+
+.empty { color: #445480; text-align: center; padding: .6rem 0; }
+
+.footerNav { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
+.link { color: #1f3d99; text-decoration: none; font-weight: 700; background: rgba(31,61,153,0.08); border: 1px solid rgba(31,61,153,0.18); padding: .45rem .8rem; border-radius: .8rem; }
+.link:hover, .link:focus-visible { text-decoration: underline; }

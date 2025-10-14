@@ -10,6 +10,8 @@ const navLinks = [
   { href: "/mapa", key: "mapa" },
   { href: "/observatorio", key: "observatorio" },
   { href: "/denuncias", key: "denuncias" },
+  { href: "/revisiones", key: "revisiones" },
+  { href: "/notificaciones", key: "notificaciones" },
   { href: "/colaboracion", key: "colaboracion" },
   { href: "/perfil", key: "perfil" },
   { href: "/mockups", key: "mockups" }
@@ -25,6 +27,8 @@ const translationsByLanguage = {
   mapa: "Mapa Seguro",
       observatorio: "Observatorio",
       denuncias: "Denuncias",
+      revisiones: "Revisiones",
+  notificaciones: "Notificaciones",
       colaboracion: "Colaboracion",
       perfil: "Perfil",
       mockups: "Mockups"
@@ -112,6 +116,8 @@ const translationsByLanguage = {
   mapa: "Safe Map",
       observatorio: "Observatory",
       denuncias: "Reports",
+      revisiones: "Reviews",
+  notificaciones: "Notifications",
       colaboracion: "Collaboration",
       perfil: "Profile",
       mockups: "Mockups"
@@ -199,6 +205,8 @@ const translationsByLanguage = {
   mapa: "Mapa Seguro",
       observatorio: "Kitzij nikaj",
       denuncias: "Kitzij kamolo",
+      revisiones: "Revisiones",
+  notificaciones: "Notificaciones",
       colaboracion: "Kibanonem",
       perfil: "Kikolel",
       mockups: "Ruwachulew"
@@ -286,6 +294,8 @@ const translationsByLanguage = {
   mapa: "Mapa Seguro",
       observatorio: "Ruk at q ij",
       denuncias: "Rutzijol",
+      revisiones: "Revisiones",
+  notificaciones: "Notificaciones",
       colaboracion: "Kaqk utunik",
       perfil: "Rubanikil",
       mockups: "Ruwachulew"
