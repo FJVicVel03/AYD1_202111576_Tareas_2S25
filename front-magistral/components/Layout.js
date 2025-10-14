@@ -7,6 +7,7 @@ import styles from "@/styles/Layout.module.css";
 
 const navLinks = [
   { href: "/", key: "home" },
+  { href: "/mapa", key: "mapa" },
   { href: "/observatorio", key: "observatorio" },
   { href: "/denuncias", key: "denuncias" },
   { href: "/colaboracion", key: "colaboracion" },
@@ -21,6 +22,7 @@ const translationsByLanguage = {
     languages: { es: "Espanol", en: "Ingles", qu: "Kiche", kaq: "Kaqchikel" },
     nav: {
       home: "Inicio",
+  mapa: "Mapa Seguro",
       observatorio: "Observatorio",
       denuncias: "Denuncias",
       colaboracion: "Colaboracion",
@@ -107,6 +109,7 @@ const translationsByLanguage = {
     languages: { es: "Spanish", en: "English", qu: "Kiche", kaq: "Kaqchikel" },
     nav: {
       home: "Home",
+  mapa: "Safe Map",
       observatorio: "Observatory",
       denuncias: "Reports",
       colaboracion: "Collaboration",
@@ -193,6 +196,7 @@ const translationsByLanguage = {
     languages: { es: "Kiche", en: "English", qu: "Kiche", kaq: "Kaqchikel" },
     nav: {
       home: "Tikirisaxik",
+  mapa: "Mapa Seguro",
       observatorio: "Kitzij nikaj",
       denuncias: "Kitzij kamolo",
       colaboracion: "Kibanonem",
@@ -279,6 +283,7 @@ const translationsByLanguage = {
     languages: { es: "Espanol", en: "English", qu: "Kiche", kaq: "Kaqchikel" },
     nav: {
       home: "Rutikirisaxik",
+  mapa: "Mapa Seguro",
       observatorio: "Ruk at q ij",
       denuncias: "Rutzijol",
       colaboracion: "Kaqk utunik",

@@ -397,7 +397,7 @@ export default function MockMap({ className, showTiles = true, useRouting = true
   // Render an OpenStreetMap TileLayer for a real map background (requires internet access)
 
   return (
-    <div className={className} style={{ width: '100%', height: '100%' }}>
+  <div className={className} style={{ width: '100%', height: '100%', position: 'relative' }}>
       <MapContainer
         center={CENTER}
         zoom={13}

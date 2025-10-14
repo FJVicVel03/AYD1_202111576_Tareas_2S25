@@ -1,8 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/mockups": "pages/mockups.js",
-  "/perfil": "pages/perfil.js"
-}
+{"/_document":"pages/_document.js","/_app":"pages/_app.js","/_error":"pages/_error.js","/api/ors-route":"pages/api/ors-route.js","/api/save-route-cache":"pages/api/save-route-cache.js","/mapa":"pages/mapa.html","/colaboracion":"pages/colaboracion.html","/denuncias":"pages/denuncias.html","/mockups":"pages/mockups.html","/":"pages/index.html","/perfil":"pages/perfil.html","/observatorio":"pages/observatorio.html","/404":"pages/404.html"}

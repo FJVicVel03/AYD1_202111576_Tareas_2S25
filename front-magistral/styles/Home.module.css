@@ -330,3 +330,92 @@
     opacity: 1 !important;
   }
 }
+
+/* === Emergencia full-width === */
+.emerSection { display: grid; gap: 1rem; padding: 1rem; }
+.emerHeader { display: grid; gap: .4rem; text-align: center; }
+.emerTitle { font-size: clamp(1.7rem,4.2vw,2.5rem); }
+.emerDesc { color: #4a5a87; max-width: 900px; margin: 0 auto; }
+.emerWrap { display: grid; gap: .55rem; max-width: 1100px; margin: 0 auto; width: 100%; }
+.emerButton {
+  position: relative; width: 100%; min-height: 92px; border-radius: 1.2rem; border: none; cursor: pointer;
+  font-size: clamp(1.4rem,3.4vw,1.8rem); font-weight: 800; letter-spacing: .5px; color: #fff;
+  background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 45%, #b91c1c 100%);
+  box-shadow: 0 20px 50px rgba(239,68,68,0.35), inset 0 -8px 20px rgba(0,0,0,.2);
+}
+.emerButton:active { transform: translateY(1px); }
+.siren { margin-right: .6rem; }
+.emerProgress { position:absolute; inset: 0; border-radius: inherit; background: conic-gradient(#fff calc(var(--p,0)*100%), rgba(255,255,255,0.15) 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 6px; }
+.emerFeedback { display:flex; gap:.75rem; align-items:center; justify-content:center; color:#1f2a44; }
+.emerCancel { background: #1f2a44; color: #fff; border: none; border-radius: .6rem; padding: .35rem .75rem; cursor: pointer; font-size: .85rem; }
+
+/* Alerts full width */
+.alertsFull { width: 100%; max-width: 1100px; margin: 0 auto; }
+
+/* CTA lite buttons row */
+.ctaLite { padding: 1rem; }
+.ctaLiteInner { display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; }
+.ctaCard { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; isolation: isolate; background: linear-gradient(135deg, #1f3d99 0%, #4b7bec 45%, #1b9ea6 100%); border:1px solid rgba(255,255,255,0.18); box-shadow: 0 22px 48px rgba(36,80,180,0.35); border-radius: 1.25rem; padding: 1.6rem; display: grid; gap: .65rem; text-align: center; color: white; }
+.ctaCard::before { content:''; position:absolute; inset:-1px; border-radius:inherit; background: radial-gradient(70% 65% at 20% 0%, rgba(255,255,255,0.32), rgba(255,255,255,0) 60%); z-index:0; }
+.ctaCardTitle { margin: 0; font-size: clamp(1.2rem,2.6vw,1.6rem); color:#ffffff; position: relative; z-index:1; }
+.ctaCardText { margin: 0; color:rgba(255,255,255,0.9); position: relative; z-index:1; }
+.ctaCardActions { display:flex; justify-content:center; padding-top: .5rem; }
+.ctaIcon { margin-right:.5rem; }
+
+/* Hero como footnote (más compacto) */
+.heroFootnote {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, #1f3d99 0%, #4b7bec 45%, #1b9ea6 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(36, 80, 180, 0.25);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.heroFootnote .heroTitle { font-size: clamp(1.4rem, 3vw, 2rem); }
+.heroFootnote .heroSubtitle { font-size: 0.95rem; color: rgba(255,255,255,0.9); }
+
+/* === MAPA: pantalla completa === */
+.mapViewport {
+  min-height: calc(100vh - 64px);
+  /* header sticky height ~64px; adjust if header size changes */
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.mapShell {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.mapCanvas {
+  position: relative; /* allows absolute overlays inside the map (controls, banners) */
+  width: 100%;
+  height: 100%;
+  min-height: 0; /* prevent grid overflow */
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #eef3f8;
+}
+
+/* Place legend as an overlay inside the map canvas */
+.mapShell { grid-template-rows: auto 1fr; grid-template-columns: 1fr; }
+.mapCanvas > .mapLegend {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 600;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(38,61,115,0.12);
+  box-shadow: 0 8px 24px rgba(45,62,101,0.15);
+  border-radius: 12px;
+  padding: 10px 12px;
+}

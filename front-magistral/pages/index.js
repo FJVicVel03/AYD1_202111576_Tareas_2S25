@@ -1,12 +1,9 @@
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SectionHeader from "@/components/SectionHeader";
 import styles from "@/styles/Home.module.css";
 import FadeIn from "@components/FadeIn";
-
-// Carga del mapa de manera dinámica (sin SSR)
-const MockMap = dynamic(() => import("@/components/MockMap"), { ssr: false });
 
 // Datos de alertas
 const alertas = [
@@ -15,16 +12,14 @@ const alertas = [
   { zona: "Guatemala - Zona 18", categoria: "Robos a transporte", hora: "Hace 6 h", estado: "PNC en patrullaje preventivo" }
 ];
 
-// Leyenda del mapa
-const mapLegend = [
-  { label: "Muy alta incidencia", color: "#ff5f6d" },
-  { label: "Alta incidencia", color: "#ff9966" },
-  { label: "Media", color: "#ffd56f" },
-  { label: "Baja", color: "#8bd46e" }
-];
 
 export default function HomePage() {
   const { t } = useLanguage();
+  const [pressing, setPressing] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const rafRef = useRef(null);
+  const startRef = useRef(0);
+  const LONG_MS = 3000;
 
   const heroContent = {
     subtitle: t("home.hero.subtitle", "Estrategia integral de prevención y respuesta"),
@@ -37,48 +32,63 @@ export default function HomePage() {
     secondaryCta: t("home.hero.secondaryCta", "Conectar con la comunidad")
   };
 
+  useEffect(()=>{
+    if(!pressing){ setProgress(0); if(rafRef.current) cancelAnimationFrame(rafRef.current); return; }
+    startRef.current = performance.now();
+    const step = (ts)=>{
+      const p = Math.min(1, (ts - startRef.current)/LONG_MS);
+      setProgress(p);
+      if(p<1){ rafRef.current = requestAnimationFrame(step); } else { alert('🚨 Alerta enviada (demo)'); setPressing(false); setProgress(0); }
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return ()=>{ if(rafRef.current) cancelAnimationFrame(rafRef.current); };
+  },[pressing]);
+
+  const cancelPress = ()=> setPressing(false);
+
   return (
     <div className={styles.page}>
-      {/* HERO PRINCIPAL */}
-      <section className={styles.hero}>
-        <FadeIn className={styles.heroContent}>
-          <p className={styles.heroSubtitle}>{heroContent.subtitle}</p>
-          <h1 className={styles.heroTitle}>{heroContent.title}</h1>
-          <p className={styles.heroSubtitle}>{heroContent.description}</p>
-          <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} href="/observatorio">
-              {heroContent.primaryCta}
-            </Link>
-            <Link className={styles.secondaryButton} href="/colaboracion">
-              {heroContent.secondaryCta}
-            </Link>
-          </div>
-        </FadeIn>
+      {/* Emergencia: Botón grande full-width con sirena */}
+      <section className={styles.emerSection}>
+        <div className={styles.emerHeader}>
+          <h1 className={styles.emerTitle}>Emergencia inmediata</h1>
+          <p className={styles.emerDesc}>{heroContent.description}</p>
+        </div>
+        <div className={styles.emerWrap}>
+          <button
+            className={styles.emerButton}
+            onPointerDown={()=>setPressing(true)}
+            onPointerUp={cancelPress}
+            onPointerLeave={cancelPress}
+            onContextMenu={(e)=>e.preventDefault()}
+            aria-label="Botón de emergencia, mantener presionado 3 segundos"
+          >
+            <span className={styles.siren} aria-hidden>🚨</span> Emergencia
+            {pressing && <span className={styles.emerProgress} style={{'--p':progress}} aria-hidden />}
+          </button>
+          {pressing && (
+            <div className={styles.emerFeedback} role="status" aria-live="assertive">
+              Enviando en {Math.ceil((1-progress)*3)}…
+              <button className={styles.emerCancel} onClick={cancelPress}>Cancelar</button>
+            </div>
+          )}
+        </div>
       </section>
 
-      {/* MAPA DINÁMICO DE INCIDENCIA */}
-      <section className={styles.mapPreview}>
-        <FadeIn repeat className={styles.mapCard}>
-          <SectionHeader
-            eyebrow="Visualización territorial"
-            title="Mapa dinámico de incidencia"
-            description="Permite identificar zonas calientes, rutas de riesgo y puntos críticos de violencia para priorizar intervenciones."
-          />
-          <div className={styles.mapContainer}>
-            <MockMap className={styles.mapContainer} />
+      {/* CTA: Tarjeta Mapa Seguro */}
+      <section className={styles.ctaLite}>
+        <div className={styles.ctaCard}>
+          <h2 className={styles.ctaCardTitle}><span className={styles.ctaIcon}>📍</span> ¿Quieres navegar por la ciudad de forma segura?</h2>
+          <p className={styles.ctaCardText}>Prueba Mapa Seguro para visualizar rutas y evitar zonas de riesgo.</p>
+          <div className={styles.ctaCardActions}>
+            <Link className={styles.primaryButton} href="/mapa">Probar Mapa Seguro</Link>
           </div>
-          <div className={styles.mapLegend}>
-            {mapLegend.map((legend) => (
-              <div key={legend.label} className={styles.legendItem}>
-                <span className={styles.legendSwatch} style={{ background: legend.color }} />
-                <span>{legend.label}</span>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
+        </div>
+      </section>
 
-        {/* ALERTAS RECIENTES */}
-        <FadeIn repeat className={styles.alertsCard}>
+      {/* ALERTAS RECIENTES: full width */}
+      <section>
+        <FadeIn repeat className={`${styles.alertsCard} ${styles.alertsFull}`}>
           <SectionHeader
             eyebrow="Actualizaciones"
             title="Alertas recientes"
@@ -97,19 +107,24 @@ export default function HomePage() {
           ))}
         </FadeIn>
       </section>
-
-      {/* CTA FINAL */}
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <h2 className={styles.heroTitle}>Únete a la seguridad ciudadana</h2>
-          <p className={styles.heroSubtitle}>Contribuye con reportes o explora más recursos.</p>
+          {/* Hero informativo clásico */}
+      <section className={styles.heroFootnote}>
+        <FadeIn className={styles.heroContent}>
+          <p className={styles.heroSubtitle}>{heroContent.subtitle}</p>
+          <h1 className={styles.heroTitle}>{heroContent.title}</h1>
+          <p className={styles.heroSubtitle}>{heroContent.description}</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} href="/colaboracion">
-              {t("home.footer.cta", "Explorar comunidad")}
+            <Link className={styles.primaryButton} href="/observatorio">
+              {heroContent.primaryCta}
+            </Link>
+            <Link className={styles.secondaryButton} href="/colaboracion">
+              {heroContent.secondaryCta}
             </Link>
           </div>
-        </div>
+        </FadeIn>
       </section>
     </div>
+
+    
   );
 }
