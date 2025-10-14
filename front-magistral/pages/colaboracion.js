@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import SectionHeader from '@/components/SectionHeader';
-import FadeIn from '@/components/FadeIn';
 import styles from '@/styles/Colaboracion.module.css';
 
 const aliados = [
@@ -27,7 +27,7 @@ const aliados = [
 
 const roadmap = [
   {
-    fase: 'Fase 1 - Diagnostico',
+    fase: 'Fase 1 - Diagnóstico',
     items: [
       {
         title: 'Laboratorio de datos',
@@ -83,75 +83,88 @@ const comunidades = [
   { nombre: 'Mixco - Zona 6', resultado: 'Reduccion de incidentes armados en 14% tras intervenciones focales.' },
   { nombre: 'Coban - Barrio La Libertad', resultado: '35 lideresas formadas en protocolos de denuncia y autoproteccion.' },
   { nombre: 'Villa Nueva - Barcena', resultado: 'Implementacion de rutas seguras para transporte hacia centros educativos.' },
-  { nombre: 'Quetzaltenango - La Esperanza', resultado: 'Nucleo juvenil mapea riesgos y coordina jornadas de recuperacion de espacios.' }
+  { nombre: 'Quetzaltenango - La Esperanza', resultado: 'Nucleo juvenil mapea riesgos y coordina jornadas de recuperacion de espacios.' },
+  { nombre: 'Chimaltenango - El Tejar', resultado: 'Capacitacion comunitaria logra disminuir robos a comercios en un 20%.' },
+  { nombre: 'Escuintla - Santa Lucía Cotzumalguapa', resultado: 'Alianzas locales fortalecen respuesta ante emergencias y violencia domestica.' }
 ];
 
 export default function ColaboracionPage() {
+  const [flipped, setFlipped] = useState({});
+
+  const toggleFlip = (nombre) => {
+    setFlipped((prev) => ({ ...prev, [nombre]: !prev[nombre] }));
+  };
+
   return (
     <div className={styles.page}>
       <section className={styles.introCard}>
-        <FadeIn repeat>
-          <SectionHeader
-            eyebrow="Alianzas"
-            title="Articulacion interinstitucional y comunitaria"
-            description="El prototipo plantea como las instituciones y comunidades trabajan juntas para prevenir, responder y reconstruir confianza en la seguridad ciudadana."
-          />
-        </FadeIn>
-        <FadeIn repeat delay={80}>
-          <p>
-            Cada mesa tecnica cuenta con un tablero compartido, acuerdos de intercambio de informacion y un calendario de acciones
-            territoriales. La plataforma facilita reportes automaticos, bitacoras de coordinacion y metricas de impacto social.
-          </p>
-        </FadeIn>
+        <SectionHeader
+          eyebrow="Alianzas Estratégicas"
+          title="Articulación interinstitucional y comunitaria"
+          description="El prototipo plantea cómo las instituciones y comunidades trabajan juntas para prevenir, responder y reconstruir confianza en la seguridad ciudadana."
+        />
+        <p>
+          Cada mesa técnica cuenta con un tablero compartido, acuerdos de intercambio de información y un calendario de acciones territoriales.
+          La plataforma facilita reportes automáticos, bitácoras de coordinación y métricas de impacto social.
+        </p>
+        <div className={styles.warningBox}>
+          ⚠️ Advertencia: Los datos mostrados son simulados y se usan únicamente para propósitos de demostración del prototipo.
+        </div>
       </section>
 
       <section className={styles.alliances}>
-        {aliados.map((aliado, i) => (
-          <FadeIn repeat as="article" key={aliado.nombre} delay={90 * i} className={styles.allyCard}>
-            <h3 className={styles.allyTitle}>{aliado.nombre}</h3>
-            <p className={styles.allyDescription}>{aliado.enfoque}</p>
-            <span className={styles.pill}>Rol clave</span>
-            <p className={styles.allyDescription}>{aliado.rol}</p>
-          </FadeIn>
+        {aliados.map((aliado) => (
+          <div
+            key={aliado.nombre}
+            className={`${styles.flipCard} ${flipped[aliado.nombre] ? styles.flipped : ''}`}
+            onClick={() => toggleFlip(aliado.nombre)}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => e.key === 'Enter' && toggleFlip(aliado.nombre)}
+          >
+            <div className={styles.flipInner}>
+              <div className={styles.flipFront}>
+                <h3 className={styles.allyTitle}>{aliado.nombre}</h3>
+                <p className={styles.allyDescription}>{aliado.enfoque}</p>
+                <span className={styles.clickHint}>Haz clic para ver el rol clave</span>
+              </div>
+              <div className={styles.flipBack}>
+                <span className={styles.pill}>Rol clave</span>
+                <p className={styles.allyDescription}>{aliado.rol}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </section>
 
       <section className={styles.roadmap}>
-        {roadmap.map((fase, i) => (
-          <FadeIn repeat as="article" key={fase.fase} delay={100 * i} className={styles.roadmapCard}>
+        {roadmap.map((fase) => (
+          <article key={fase.fase} className={styles.roadmapCard}>
             <span className={styles.pill}>{fase.fase}</span>
             <ul className={styles.timeline}>
-              {fase.items.map((item, j) => (
-                <FadeIn
-                  repeat
-                  as="li"
-                  key={item.title}
-                  delay={70 * j}
-                  className={styles.timelineRow}
-                >
+              {fase.items.map((item) => (
+                <li key={item.title} className={styles.timelineRow}>
                   <span className={styles.timelineTitle}>{item.title}</span>
                   <p className={styles.timelineDescription}>{item.description}</p>
-                </FadeIn>
+                </li>
               ))}
             </ul>
-          </FadeIn>
+          </article>
         ))}
       </section>
 
       <section className={styles.communityShowcase}>
-        <FadeIn repeat>
-          <SectionHeader
-            eyebrow="Casos piloto"
-            title="Resultados iniciales de la red comunitaria"
-            description="Historias que inspiran confianza y muestran el potencial de las alianzas locales."
-          />
-        </FadeIn>
+        <SectionHeader
+          eyebrow="Casos piloto"
+          title="Resultados iniciales de la red comunitaria"
+          description="Historias que inspiran confianza y muestran el potencial de las alianzas locales."
+        />
         <div className={styles.communityGrid}>
-          {comunidades.map((comunidad, i) => (
-            <FadeIn repeat as="article" key={comunidad.nombre} delay={90 * i} className={styles.communityCard}>
+          {comunidades.map((comunidad) => (
+            <article key={comunidad.nombre} className={styles.communityCard}>
               <span className={styles.communityLabel}>{comunidad.nombre}</span>
               <span className={styles.communityMeta}>{comunidad.resultado}</span>
-            </FadeIn>
+            </article>
           ))}
         </div>
       </section>
