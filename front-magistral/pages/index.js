@@ -73,6 +73,9 @@ export default function HomePage() {
             </div>
           )}
         </div>
+        <p className={styles.emerHelp}>
+          Presione por 3 segundos para enviar señales de alerta, compartir su ubicación en tiempo real con vecinos y autoridades, y activar protocolos de ayuda.
+        </p>
       </section>
 
       {/* CTA: Tarjeta Mapa Seguro */}
@@ -81,7 +84,7 @@ export default function HomePage() {
           <h2 className={styles.ctaCardTitle}><span className={styles.ctaIcon}>📍</span> ¿Quieres navegar por la ciudad de forma segura?</h2>
           <p className={styles.ctaCardText}>Prueba Mapa Seguro para visualizar rutas y evitar zonas de riesgo.</p>
           <div className={styles.ctaCardActions}>
-            <Link className={styles.primaryButton} href="/mapa">Probar Mapa Seguro</Link>
+            <Link className={styles.primaryButton} href="/mapa/">Probar Mapa Seguro</Link>
           </div>
         </div>
       </section>
@@ -114,10 +117,10 @@ export default function HomePage() {
           <h1 className={styles.heroTitle}>{heroContent.title}</h1>
           <p className={styles.heroSubtitle}>{heroContent.description}</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} href="/observatorio">
+            <Link className={styles.primaryButton} href="/observatorio/">
               {heroContent.primaryCta}
             </Link>
-            <Link className={styles.secondaryButton} href="/colaboracion">
+            <Link className={styles.secondaryButton} href="/colaboracion/">
               {heroContent.secondaryCta}
             </Link>
           </div>
