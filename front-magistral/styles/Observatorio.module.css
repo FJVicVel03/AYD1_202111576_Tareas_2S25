@@ -8,26 +8,29 @@
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  background: white;
+  background: #d0d5e7be;
   border-radius: 1.5rem;
   padding: 2rem;
-  border: 1px solid rgba(38, 61, 115, 0.08);
-  box-shadow: 0 22px 45px rgba(45, 62, 101, 0.12);
+  color: #ffffff; 
+  border: 1px solid rgba(22, 78, 99, 0.2); 
+  box-shadow: 0 22px 45px rgba(22, 78, 99, 0.12);
 }
 
 .introDescription {
   margin: 0;
-  color: #475885;
+  color: #e2e8f0; 
   line-height: 1.6;
 }
+
 
 .filterPanel {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  background: #f5f7ff;
+  background: #eef2ff;
   border-radius: 1.25rem;
   padding: 1.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.1);
 }
 
 .filterGroup {
@@ -46,10 +49,10 @@
 .chip {
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
-  background: white;
-  border: 1px solid rgba(38, 61, 115, 0.18);
+  background: #e0e7ff;
+  border: 1px solid rgba(99, 102, 241, 0.2);
   font-size: 0.85rem;
-  color: #1f2a44;
+  color: #1e293b;
 }
 
 .boards {
@@ -60,9 +63,9 @@
 
 .boardCard {
   border-radius: 1.5rem;
-  background: white;
-  border: 1px solid rgba(38, 61, 115, 0.08);
-  box-shadow: 0 18px 38px rgba(45, 62, 101, 0.1);
+  background: #ffffff;
+  border: 1px solid rgba(30, 64, 175, 0.08);
+  box-shadow: 0 18px 38px rgba(45, 62, 101, 0.06);
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
@@ -72,17 +75,10 @@
 .chartPlaceholder {
   height: 220px;
   border-radius: 1.25rem;
-  background: repeating-linear-gradient(
-      135deg,
-      rgba(38, 61, 115, 0.12),
-      rgba(38, 61, 115, 0.12) 12px,
-      rgba(75, 123, 236, 0.12) 12px,
-      rgba(75, 123, 236, 0.12) 24px
-    ),
-    linear-gradient(160deg, rgba(27, 158, 166, 0.12), rgba(74, 150, 252, 0.2));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.15));
   display: grid;
   place-items: center;
-  color: #1f2a44;
+  color: #1e293b;
   font-weight: 600;
   letter-spacing: 0.06em;
 }
@@ -101,7 +97,7 @@
 
 .reportCard {
   border-radius: 1.5rem;
-  background: #161f35;
+  background: linear-gradient(135deg, #1e40afe2 0%, #1e3b8af0 50%, #1e1b4be6 100%);
   color: white;
   padding: 1.75rem;
   display: grid;
@@ -115,7 +111,7 @@
 }
 
 .highlight {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 1em;
   padding: 1rem;
   display: grid;

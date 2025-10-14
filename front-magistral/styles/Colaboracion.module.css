@@ -1,139 +1,285 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4rem; 
+  padding: 2rem 1.5rem;
+  background: #f8fafc;
+  min-height: 100vh;
 }
 
+
 .introCard {
-  background: white;
-  border-radius: 1.5rem;
-  padding: 2rem;
-  border: 1px solid rgba(38, 61, 115, 0.08);
-  box-shadow: 0 22px 45px rgba(45, 62, 101, 0.12);
+  background: #d0d5e7be; 
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: grid;
   gap: 1.5rem;
+  transition: all 0.3s ease;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
+
+.introCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.introCard p {
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+
+.warningBox {
+  background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+  border-left: 4px solid #dc2626;
+  color: #7f1d1d;
+  font-weight: 600;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
 
 .alliances {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 3rem; /* Increased spacing between flip cards */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Reduced card width */
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.allyCard {
-  border-radius: 1.4rem;
-  background: #f5f7ff;
-  padding: 1.4rem;
-  display: grid;
-  gap: 0.75rem;
-  border: 1px solid rgba(38, 61, 115, 0.08);
+.flipCard {
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.flipInner {
+  position: relative;
+  width: 100%;
+  height: 160px; 
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flipCard.flipped .flipInner {
+  transform: rotateY(180deg);
+}
+
+.flipFront,
+.flipBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem; 
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.flipFront {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #1e1b4b 100%);
+  border: 2px solid #3b82f6;
+  color: #ffffff;
+}
+
+.flipFront:hover {
+  border-color: #60a5fa;
+  transform: scale(1.02);
+}
+
+.flipBack {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 50%, #1e293b 100%);
+  color: #e2e8f0;
+  transform: rotateY(180deg);
+  border: 2px solid #60a5fa;
 }
 
 .allyTitle {
-  font-weight: 600;
-  color: #1f2a44;
-  margin: 0;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  font-size: 1rem; 
+  line-height: 1.4;
 }
 
 .allyDescription {
-  margin: 0;
-  color: #4a5a87;
-  line-height: 1.55;
-}
-
-.roadmap {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-.roadmapCard {
-  border-radius: 1.5rem;
-  background: white;
-  padding: 1.75rem;
-  border: 1px solid rgba(38, 61, 115, 0.08);
-  box-shadow: 0 20px 40px rgba(45, 62, 101, 0.1);
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.35rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(27, 158, 166, 0.14);
-  color: #1b6d73;
-  font-size: 0.75rem;
+  padding: 0.4rem 0.9rem; 
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.75rem; 
   font-weight: 600;
+  margin-bottom: 0.75rem; 
+  backdrop-filter: blur(10px);
+}
+
+.clickHint {
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  margin-top: 0.75rem;
+  font-weight: 500;
+}
+
+
+.roadmap {
+  display: grid;
+  gap: 3rem; /* Increased spacing between roadmap cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.roadmapCard {
+  border-radius: 16px;
+  background: white;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.roadmapCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.roadmapCard .pill {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  margin-bottom: 1.5rem;
 }
 
 .timeline {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .timelineRow {
-  border-left: 3px solid rgba(27, 158, 166, 0.25);
+  border-left: 3px solid #3b82f6;
   padding-left: 1.25rem;
   position: relative;
-  display: grid;
-  gap: 0.35rem;
 }
 
 .timelineRow::before {
   content: '';
   position: absolute;
-  left: -1.6rem;
-  top: 0.4rem;
+  left: -0.5rem;
+  top: 0.5rem;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #1b9ea6;
+  background: #3b82f6;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #3b82f6;
 }
 
 .timelineTitle {
-  font-weight: 600;
-  color: #1f2a44;
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .timelineDescription {
-  margin: 0;
-  color: #4a5a87;
+  color: #64748b;
   line-height: 1.6;
+  font-size: 0.9rem;
 }
 
+
 .communityShowcase {
-  border-radius: 1.5rem;
-  background: #10172a;
-  color: white;
-  padding: 2rem;
+  border-radius: 16px;
+  background: #d0d5e7be;
+  padding: 2.5rem;
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .communityGrid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 3rem; /* Increased spacing between community cards */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .communityCard {
-  border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 1.25rem;
+  
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  padding: 1.5rem;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  color: white;
+  border: 1px solid #3b82f6;
+}
+
+.communityCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(30, 64, 175, 0.3), 0 10px 10px -5px rgba(30, 64, 175, 0.2);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
 }
 
 .communityLabel {
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 1rem;
 }
 
 .communityMeta {
-  color: rgba(255, 255, 255, 0.78);
+  color: #e2e8f0;
   line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+    gap: 2rem;
+  }
+  
+  .introCard,
+  .communityShowcase {
+    padding: 1.5rem;
+  }
+  
+  .alliances,
+  .roadmap {
+    grid-template-columns: 1fr;
+  }
+  
+  .flipInner {
+    height: 140px; 
+  }
 }

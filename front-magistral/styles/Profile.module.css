@@ -1,52 +1,67 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 3.5rem;
+  padding: 2rem 1.5rem;
+  background: #f8fafc;
+  min-height: 100vh;
 }
 
 .summaryPanel {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .identityCard,
 .statsCard {
-  background: white;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #1e1b4b 100%);
   border-radius: 1.5rem;
-  padding: 1.75rem;
-  border: 1px solid rgba(32, 52, 94, 0.08);
-  box-shadow: 0 28px 52px rgba(34, 51, 92, 0.12);
+  padding: 2rem;
+  border: 1px solid rgba(30, 64, 175, 0.1);
+  /* Adjusted border to match gradient */
+  box-shadow: 0 28px 52px rgba(30, 64, 175, 0.15);
   display: grid;
-  gap: 1.25rem;
+  gap: 1.5rem;
+  /* Increased gap for content separation */
+  color: #e2e8f0;
+  /* Adjusted text color for contrast */
 }
 
 .identityCard h2,
 .statsCard h3 {
   margin: 0;
-  color: #1f2a44;
+  color: #ffffff;
+  /* White text for contrast */
+  font-size: 1.25rem;
+  /* Slightly larger for emphasis */
 }
 
 .identityCard p,
 .statsCard p {
   margin: 0;
-  color: #4a5a87;
-  line-height: 1.6;
+  color: #d1d8e9;
+  /* Lighter text for readability */
+  line-height: 1.7;
+  /* Slightly increased for readability */
 }
 
 .toggleRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  /* Increased gap for better spacing */
   font-weight: 600;
-  color: #1f2a44;
+  color: #ffffff;
+  /* Adjusted for contrast */
 }
 
 .switch {
   position: relative;
-  width: 48px;
-  height: 24px;
+  width: 52px;
+  /* Slightly wider for better usability */
+  height: 26px;
   display: inline-block;
 }
 
@@ -63,155 +78,206 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(31, 61, 153, 0.3);
-  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Adjusted for gradient background */
+  transition: 0.3s;
+  /* Smoother transition */
   border-radius: 999px;
 }
 
 .slider::before {
   position: absolute;
   content: '';
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  /* Slightly larger for better visibility */
+  width: 20px;
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: 0.2s;
+  transition: 0.3s;
   border-radius: 50%;
   box-shadow: 0 6px 16px rgba(17, 34, 68, 0.2);
 }
 
-.switch input:checked + .slider {
-  background: linear-gradient(135deg, #1f3d99, #1b9ea6);
+.switch input:checked+.slider {
+  background: linear-gradient(135deg, #ffffff, #d1d8e9);
+  /* Adjusted for contrast */
 }
 
-.switch input:checked + .slider::before {
-  transform: translateX(24px);
+.switch input:checked+.slider::before {
+  transform: translateX(26px);
+  /* Adjusted for wider switch */
 }
 
 .safeWordBox {
   border-radius: 1.2rem;
-  border: 1px dashed rgba(38, 61, 115, 0.22);
-  padding: 1rem 1.2rem;
-  background: #f6f9ff;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  /* Adjusted for gradient */
+  padding: 1.1rem 1.3rem;
+  /* Slightly increased padding */
+  background: rgba(255, 255, 255, 0.1);
+  /* Subtle background on gradient */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 1.2rem;
+  /* Increased gap */
 }
 
 .safeWordBox span {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  /* Slightly larger for readability */
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #4a5a87;
+  color: #d1d8e9;
 }
 
 .safeWordBox strong {
   display: block;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  /* Slightly larger for emphasis */
   font-weight: 700;
-  color: #1f3d99;
+  color: #ffffff;
 }
 
 .aliasButton {
   border-radius: 999px;
-  border: 1px solid rgba(31, 61, 153, 0.24);
-  background: white;
-  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Adjusted for gradient */
+  background: rgba(255, 255, 255, 0.1);
+  /* Subtle background */
+  padding: 0.6rem 1.2rem;
+  /* Slightly adjusted padding */
   font-weight: 600;
   cursor: pointer;
+  color: #ffffff;
+  /* White text */
+  transition: all 0.2s ease;
+  /* Smooth transition */
 }
 
 .aliasButton:hover,
 .aliasButton:focus-visible {
   border-color: #31a2ad;
   color: #1b9ea6;
+  background: rgba(255, 255, 255, 0.2);
+  /* Lighter on hover */
+  transform: translateY(-1px);
+  /* Subtle lift effect */
 }
 
 .identityList {
   margin: 0;
-  padding-left: 1.1rem;
-  color: #4a5a87;
+  padding-left: 1.2rem;
+  /* Slightly increased */
+  color: #d1d8e9;
   display: grid;
-  gap: 0.55rem;
-  line-height: 1.6;
+  gap: 0.7rem;
+  /* Increased gap */
+  line-height: 1.7;
 }
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  /* Slightly wider min-width */
+  gap: 1.2rem;
+  /* Increased gap */
 }
 
 .statsGrid div {
-  background: #f6f9ff;
+  background: rgba(255, 255, 255, 0.15);
+  /* Subtle background on gradient */
   border-radius: 1rem;
-  padding: 0.9rem 1rem;
+  padding: 1rem;
+  /* Increased padding */
   display: grid;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  /* Adjusted gap */
 }
 
 .statsGrid span {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  /* Slightly larger */
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #4a5a87;
+  color: #d1d8e9;
 }
 
 .statsGrid strong {
-  font-size: 1.35rem;
-  color: #1f2a44;
+  font-size: 1.4rem;
+  /* Slightly larger */
+  color: #ffffff;
 }
 
 .quickActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
+  /* Increased gap */
 }
 
 .quickActions button {
   border-radius: 0.85rem;
-  border: 1px solid rgba(32, 52, 94, 0.14);
-  background: white;
-  padding: 0.7rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Adjusted for gradient */
+  background: rgba(255, 255, 255, 0.1);
+  /* Subtle background */
+  padding: 0.75rem 1.3rem;
+  /* Adjusted padding */
   font-weight: 600;
   cursor: pointer;
+  color: #ffffff;
+  /* White text */
+  transition: all 0.2s ease;
+  /* Smooth transition */
 }
 
 .quickActions button:hover,
 .quickActions button:focus-visible {
-  border-color: #4b7bec;
-  color: #3650a6;
+  border-color: #31a2ad;
+  color: #1b9ea6;
+  background: rgba(255, 255, 255, 0.2);
+  /* Lighter on hover */
+  transform: translateY(-1px);
+  /* Subtle lift effect */
 }
 
 .caseSection {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
+  /* Increased gap */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .caseList {
-  background: white;
+  background: #d0d5e7be;
+  /* Applied the gray background */
   border-radius: 1.5rem;
   border: 1px solid rgba(32, 52, 94, 0.08);
   box-shadow: 0 24px 48px rgba(34, 51, 92, 0.1);
   display: grid;
-  gap: 1.25rem;
-  padding: 1.5rem;
+  gap: 1.5rem;
+  /* Increased gap */
+  padding: 1.75rem;
+  /* Increased padding */
 }
 
 .caseListHeader h3 {
   margin: 0;
   color: #1f2a44;
+  font-size: 1.2rem;
+  /* Slightly larger */
 }
 
 .caseListHeader span {
   display: block;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
+  /* Adjusted margin */
   color: #4a5a87;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  /* Slightly larger */
 }
 
 .caseList ul {
@@ -219,26 +285,31 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.8rem;
+  gap: 1rem;
+  /* Increased gap */
 }
 
 .caseButton {
   width: 100%;
   border-radius: 1.1rem;
   border: 1px solid rgba(38, 61, 115, 0.12);
-  padding: 0.9rem 1rem;
+  padding: 1rem;
+  /* Increased padding */
   display: grid;
-  gap: 0.55rem;
+  gap: 0.6rem;
+  /* Adjusted gap */
   text-align: left;
   background: #f9fbff;
   cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: all 0.2s ease;
+  /* Smooth transition */
 }
 
 .caseButton:hover,
 .caseButton:focus-visible {
   border-color: #31a2ad;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  /* Slightly more lift */
 }
 
 .caseButtonActive {
@@ -251,16 +322,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  /* Adjusted gap */
 }
 
 .caseButtonHead strong {
-  font-size: 0.95rem;
+  font-size: 1rem;
+  /* Slightly larger */
   color: #1f2a44;
 }
 
 .caseStatus {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  /* Slightly larger */
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #284faf;
@@ -275,54 +349,68 @@
 .caseTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.5rem;
+  /* Adjusted gap */
 }
 
 .caseTags span {
   background: rgba(38, 61, 115, 0.12);
   border-radius: 999px;
-  padding: 0.3rem 0.7rem;
-  font-size: 0.8rem;
+  padding: 0.35rem 0.8rem;
+  /* Adjusted padding */
+  font-size: 0.85rem;
+  /* Slightly larger */
   color: #1f2a44;
 }
 
 .caseDetail {
-  background: white;
+  background: #d0d5e7be;
+  /* Removed gradient, applied subtle background */
   border-radius: 1.5rem;
   border: 1px solid rgba(32, 52, 94, 0.08);
   box-shadow: 0 28px 52px rgba(34, 51, 92, 0.12);
   display: grid;
-  gap: 1.5rem;
-  padding: 1.8rem;
+  gap: 1.8rem;
+  /* Increased gap */
+  padding: 2rem;
+  /* Increased padding */
+  color: #1f2a44;
+  /* Adjusted text color for contrast */
 }
 
 .caseDetailHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 1.5rem;
+  /* Increased gap */
 }
 
 .caseDetailHeader h3 {
   margin: 0;
   color: #1f2a44;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  /* Slightly larger */
 }
 
 .caseDetailHeader p {
-  margin: 0.5rem 0 0;
+  margin: 0.6rem 0 0;
+  /* Adjusted margin */
   color: #4a5a87;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .progressWrap {
   display: grid;
-  gap: 0.35rem;
-  min-width: 140px;
+  gap: 0.4rem;
+  /* Adjusted gap */
+  min-width: 150px;
+  /* Slightly wider */
 }
 
 .progressWrap span {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  /* Slightly larger */
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #4a5a87;
@@ -330,7 +418,8 @@
 
 .progressBar {
   width: 100%;
-  height: 8px;
+  height: 9px;
+  /* Slightly thicker */
   border-radius: 999px;
   background: rgba(38, 61, 115, 0.12);
   overflow: hidden;
@@ -349,16 +438,23 @@
 
 .caseMeta {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
+  /* Increased gap */
   flex-wrap: wrap;
 }
 
 .riskPill,
 .modePill {
   border-radius: 999px;
-  padding: 0.3rem 0.9rem;
+  padding: 0.35rem 1rem;
+  /* Adjusted padding */
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  /* Slightly larger */
+  background: rgba(38, 61, 115, 0.12);
+  /* Adjusted background */
+  color: #1f2a44;
+  /* Adjusted text color */
 }
 
 .riskAlto {
@@ -383,7 +479,8 @@
 
 .timeline {
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
+  /* Increased gap */
 }
 
 .timeline ul {
@@ -391,13 +488,16 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
+  /* Increased gap */
 }
 
 .timeline li {
   display: grid;
-  gap: 0.3rem;
-  padding-left: 1.2rem;
+  gap: 0.4rem;
+  /* Adjusted gap */
+  padding-left: 1.3rem;
+  /* Slightly increased */
   position: relative;
 }
 
@@ -405,15 +505,18 @@
   content: '';
   position: absolute;
   left: 0;
-  top: 0.4rem;
-  width: 10px;
-  height: 10px;
+  top: 0.45rem;
+  /* Adjusted position */
+  width: 11px;
+  /* Slightly larger */
+  height: 11px;
   border-radius: 50%;
   background: #1b9ea6;
 }
 
 .timeline span {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  /* Slightly larger */
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #4a5a87;
@@ -422,7 +525,7 @@
 .timeline p {
   margin: 0;
   color: #1f2a44;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .approvals ul {
@@ -430,24 +533,32 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.75rem;
+  gap: 1rem;
+  /* Increased gap */
 }
 
 .approvals li {
   border-radius: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.2rem;
+  /* Adjusted padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 1.2rem;
+  /* Increased gap */
+  background: #f9fbff;
+  /* Adjusted background */
 }
 
 .approvals strong {
   color: #1f2a44;
+  font-size: 1rem;
+  /* Slightly larger */
 }
 
 .approvals span {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  /* Slightly larger */
   color: #4a5a87;
 }
 
@@ -464,67 +575,94 @@
 .nextAction {
   border-radius: 1.1rem;
   border: 1px solid rgba(38, 61, 115, 0.12);
-  padding: 1rem 1.2rem;
+  padding: 1.2rem 1.4rem;
+  /* Increased padding */
   background: #f9fbff;
 }
 
 .nextAction h4 {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.5rem;
+  /* Adjusted margin */
   color: #1f2a44;
+  font-size: 1.1rem;
+  /* Slightly larger */
 }
 
 .nextAction p {
   margin: 0;
   color: #4a5a87;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .toolsSection {
   display: grid;
-  gap: 1.2rem;
+  gap: 1.5rem;
+  /* Increased gap */
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .toolCard {
-  background: white;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #1e1b4b 100%);
+  /* Blue gradient */
   border-radius: 1.4rem;
-  border: 1px solid rgba(32, 52, 94, 0.08);
-  padding: 1.5rem;
+  border: 1px solid rgba(30, 64, 175, 0.1);
+  /* Adjusted border */
+  padding: 1.7rem;
+  /* Increased padding */
   display: grid;
-  gap: 0.9rem;
-  box-shadow: 0 24px 48px rgba(34, 51, 92, 0.1);
+  gap: 1rem;
+  /* Increased gap */
+  box-shadow: 0 24px 48px rgba(30, 64, 175, 0.15);
+  color: #e2e8f0;
+  /* Adjusted text color */
 }
 
 .toolCard h3 {
   margin: 0;
-  color: #1f2a44;
+  color: #ffffff;
+  /* White text */
+  font-size: 1.2rem;
+  /* Slightly larger */
 }
 
 .toolCard p {
   margin: 0;
-  color: #4a5a87;
-  line-height: 1.6;
+  color: #d1d8e9;
+  /* Lighter text */
+  line-height: 1.7;
 }
 
 .toolActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.8rem;
+  /* Increased gap */
 }
 
 .toolActions button {
   border-radius: 0.85rem;
-  border: 1px solid rgba(38, 61, 115, 0.14);
-  background: #f9fbff;
-  padding: 0.6rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Adjusted for gradient */
+  background: rgba(255, 255, 255, 0.1);
+  /* Subtle background */
+  padding: 0.7rem 1.1rem;
+  /* Adjusted padding */
   font-weight: 600;
   cursor: pointer;
+  color: #ffffff;
+  /* White text */
+  transition: all 0.2s ease;
+  /* Smooth transition */
 }
 
 .toolActions button:hover,
 .toolActions button:focus-visible {
   border-color: #31a2ad;
   color: #1b9ea6;
+  background: rgba(255, 255, 255, 0.2);
+  /* Lighter on hover */
+  transform: translateY(-1px);
+  /* Subtle lift effect */
 }
 
 .auditSection {
@@ -532,18 +670,23 @@
   border-radius: 1.5rem;
   border: 1px solid rgba(32, 52, 94, 0.08);
   box-shadow: 0 28px 52px rgba(34, 51, 92, 0.12);
-  padding: 1.75rem;
+  padding: 2rem;
+  /* Increased padding */
   display: grid;
-  gap: 1.25rem;
+  gap: 1.5rem;
+  /* Increased gap */
 }
 
 .auditHeader h3 {
   margin: 0;
   color: #1f2a44;
+  font-size: 1.25rem;
+  /* Slightly larger */
 }
 
 .auditHeader p {
-  margin: 0.4rem 0 0;
+  margin: 0.5rem 0 0;
+  /* Adjusted margin */
   color: #4a5a87;
 }
 
@@ -552,56 +695,67 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
+  /* Increased gap */
 }
 
 .auditList li {
   border-radius: 1.1rem;
   border: 1px solid rgba(38, 61, 115, 0.12);
-  padding: 1rem 1.2rem;
+  padding: 1.2rem 1.4rem;
+  /* Increased padding */
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
+  /* Increased gap */
   background: #f9fbff;
 }
 
 .auditInfo {
   display: grid;
-  gap: 0.35rem;
-  min-width: 200px;
+  gap: 0.4rem;
+  /* Adjusted gap */
+  min-width: 220px;
+  /* Slightly wider */
 }
 
 .auditInfo strong {
   color: #1f2a44;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  /* Slightly larger */
 }
 
 .auditInfo span {
   color: #4a5a87;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  /* Slightly larger */
 }
 
 .auditMeta {
   display: grid;
-  gap: 0.25rem;
+  gap: 0.3rem;
+  /* Adjusted gap */
   align-items: end;
   text-align: right;
 }
 
 .auditScore {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  /* Slightly larger */
   font-weight: 700;
   color: #1f3d99;
 }
 
 .auditMeta span {
   color: #4a5a87;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  /* Slightly larger */
 }
 
 .auditStatus {
-  padding: 0.25rem 0.7rem;
+  padding: 0.3rem 0.8rem;
+  /* Adjusted padding */
   border-radius: 999px;
   font-weight: 600;
   display: inline-block;
@@ -624,44 +778,59 @@
 
 .supportSection {
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
+  /* Increased gap */
 }
 
 .supportSection h3 {
   margin: 0;
   color: #1f2a44;
+  font-size: 1.25rem;
+  /* Slightly larger */
 }
 
 .supportGrid {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
+  /* Increased gap */
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .supportCard {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #1e1b4b 100%);
+  /* Blue gradient */
   border-radius: 1.2rem;
-  border: 1px solid rgba(32, 52, 94, 0.1);
-  background: white;
-  padding: 1.2rem;
+  border: 1px solid rgba(30, 64, 175, 0.1);
+  /* Adjusted border */
+  padding: 1.3rem;
+  /* Increased padding */
   display: grid;
-  gap: 0.5rem;
-  box-shadow: 0 22px 44px rgba(34, 51, 92, 0.1);
+  gap: 0.6rem;
+  /* Adjusted gap */
+  box-shadow: 0 22px 44px rgba(30, 64, 175, 0.15);
+  color: #e2e8f0;
+  /* Adjusted text color */
 }
 
 .supportCard h4 {
   margin: 0;
-  color: #1f2a44;
+  color: #ffffff;
+  /* White text */
+  font-size: 1.1rem;
+  /* Slightly larger */
 }
 
 .supportCard p {
   margin: 0;
-  color: #4a5a87;
+  color: #d1d8e9;
+  /* Lighter text */
 }
 
 .supportMeta {
   display: flex;
   justify-content: space-between;
-  color: #284faf;
+  color: #ffffff;
+  /* White text for contrast */
   font-weight: 600;
 }
 

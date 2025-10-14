@@ -28,13 +28,12 @@ const translationsByLanguage = {
       mockups: "Mockups"
     },
     layout: {
-      tagline: "Ecosistema digital para comunidades seguras",
+
       languageLabel: "Idioma",
       voiceAssist: "Modo voz",
       quickExit: "Salida rapida",
       quickExitAria: "Salir rapidamente a un sitio seguro",
       report: "Reportar incidente",
-      safety: "Navegacion segura"
     },
     home: {
       hero: {
@@ -121,7 +120,6 @@ const translationsByLanguage = {
       quickExit: "Quick exit",
       quickExitAria: "Leave the site and open a safe page",
       report: "Report incident",
-      safety: "Safe navigation"
     },
     home: {
       hero: {
@@ -208,7 +206,6 @@ const translationsByLanguage = {
       quickExit: "Rutexik aninaq",
       quickExitAria: "Rutexik pa jun ruxaq aninaq",
       report: "Tatzijon kitzij",
-      safety: "Rubeyal jikib an"
     },
     home: {
       hero: {
@@ -295,7 +292,6 @@ const translationsByLanguage = {
       quickExit: "Tel pa yalan",
       quickExitAria: "Tel pa jun ruxaq aninaq",
       report: "Tatzijon b iaj",
-      safety: "Rubeyal chajin"
     },
     home: {
       hero: {
@@ -420,7 +416,7 @@ export default function Layout({ children }) {
               <Image src={`${router.basePath || ""}/logo.svg`} alt="SeguridadGT logo" width={40} height={40} priority />
               <span className={styles.logo}>SeguridadGT</span>
             </div>
-            <span className={styles.tagline}>{t("layout.tagline", "Ecosistema digital para comunidades seguras")}</span>
+
           </div>
           <nav className={styles.nav}>
             {navLinks.map((link) => {
@@ -439,7 +435,7 @@ export default function Layout({ children }) {
           <div className={styles.actions}>
             <div className={styles.languageSwitch}>
               <label className={styles.languageLabel} htmlFor="language-toggle">
-                {t("layout.languageLabel", "Idioma")}
+                
               </label>
               <select
                 id="language-toggle"
@@ -465,10 +461,6 @@ export default function Layout({ children }) {
             >
               {t("layout.quickExit", "Salida rapida")}
             </button>
-            <div className={styles.safetyCopy}>
-              <span className={styles.safetyDot} />
-              {t("layout.safety", "Navegacion segura")}
-            </div>
             <Link className={styles.cta} href="/denuncias">
               {t("layout.report", "Reportar incidente")}
             </Link>

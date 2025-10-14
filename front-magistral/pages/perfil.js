@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import SectionHeader from '@/components/SectionHeader';
-import FadeIn from '@/components/FadeIn';
 import styles from '@/styles/Profile.module.css';
 
 const safeWordOptions = ['Amatista', 'Ruta 72', 'Cantera Azul', 'Oasis 15'];
@@ -166,16 +165,14 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.page}>
-      <FadeIn repeat>
-        <SectionHeader
-          eyebrow="Perfil"
-          title="Panel personal y control de identidad"
-          description="Gestiona tus denuncias, alterna entre anonimato y perfil verificado, y haz seguimiento a la cadena de aprobacion sin perder el control de tus datos."
-        />
-      </FadeIn>
+      <SectionHeader
+        eyebrow="Perfil"
+        title="Panel personal y control de identidad"
+        description="Gestiona tus denuncias, alterna entre anonimato y perfil verificado, y haz seguimiento a la cadena de aprobacion sin perder el control de tus datos."
+      />
 
       <section className={styles.summaryPanel}>
-        <FadeIn repeat as="div" className={styles.identityCard}>
+        <div className={styles.identityCard}>
           <div>
             <h2>Identidad dinamica</h2>
             <p>
@@ -204,33 +201,35 @@ export default function ProfilePage() {
             </button>
           </div>
           <ul className={styles.identityList}>
-            {[
-              'Token OTP y llavero fisico disponibles para validar acceso de superiores.',
-              'Historial de ingresos firmado digitalmente y exportable en PDF anonimo.',
-              'Al desactivar el modo anonimo puedes compartir tu identidad solo con quien elijas.'
-            ].map((txt, i) => (
-              <FadeIn repeat as="li" key={i} delay={60 * i}>
-                {txt}
-              </FadeIn>
-            ))}
+            <li>Token OTP y llavero fisico disponibles para validar acceso de superiores.</li>
+            <li>Historial de ingresos firmado digitalmente y exportable en PDF anonimo.</li>
+            <li>Al desactivar el modo anonimo puedes compartir tu identidad solo con quien elijas.</li>
           </ul>
-        </FadeIn>
+        </div>
 
-        <FadeIn repeat as="div" className={styles.statsCard}>
+        <div className={styles.statsCard}>
           <h3>Resumen rapido</h3>
-          <div className={styles.statsGrid}>
-            {[
-              { label: 'Total de denuncias', val: totalReports },
-              { label: 'Anonimas activas', val: anonymousReports },
-              { label: 'Casos resueltos', val: resolvedReports },
-              { label: 'En curso', val: activeReports },
-              { label: 'Reconocimientos IA', val: recognitionRuns.length }
-            ].map((s, i) => (
-              <FadeIn repeat as="div" key={s.label} delay={70 * i}>
-                <span>{s.label}</span>
-                <strong>{s.val}</strong>
-              </FadeIn>
-            ))}
+        <div className={styles.statsGrid}>
+          <div>
+            <span>Total de denuncias</span>
+            <strong>{totalReports}</strong>
+          </div>
+          <div>
+            <span>Anonimas activas</span>
+            <strong>{anonymousReports}</strong>
+          </div>
+          <div>
+            <span>Casos resueltos</span>
+            <strong>{resolvedReports}</strong>
+          </div>
+          <div>
+            <span>En curso</span>
+            <strong>{activeReports}</strong>
+          </div>
+          <div>
+              <span>Reconocimientos IA</span>
+              <strong>{recognitionRuns.length}</strong>
+            </div>
           </div>
           <p>
             Tus datos se almacenan en un vault cifrado. Puedes descargar respaldos protegidos o eliminarlos definitivamente en
@@ -240,18 +239,18 @@ export default function ProfilePage() {
             <button type="button">Reportar nuevo incidente</button>
             <button type="button">Descargar constancia</button>
           </div>
-        </FadeIn>
+        </div>
       </section>
 
       <section className={styles.caseSection}>
-        <FadeIn repeat as="aside" className={styles.caseList}>
+        <aside className={styles.caseList}>
           <div className={styles.caseListHeader}>
             <h3>Tus casos</h3>
             <span>Selecciona para ver detalles y aprobaciones.</span>
           </div>
           <ul>
-            {caseHistory.map((item, i) => (
-              <FadeIn repeat as="li" key={item.code} delay={70 * i}>
+            {caseHistory.map((item) => (
+              <li key={item.code}>
                 <button
                   type="button"
                   className={`${styles.caseButton} ${item.code === selectedCaseCode ? styles.caseButtonActive : ''}`}
@@ -263,19 +262,17 @@ export default function ProfilePage() {
                   </div>
                   <p>{item.title}</p>
                   <div className={styles.caseTags}>
-                    {item.tags.map((tag, j) => (
-                      <FadeIn repeat as="span" key={tag} delay={40 * j}>
-                        {tag}
-                      </FadeIn>
+                    {item.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
                     ))}
                   </div>
                 </button>
-              </FadeIn>
+              </li>
             ))}
           </ul>
-        </FadeIn>
+        </aside>
 
-        <FadeIn repeat as="article" className={styles.caseDetail}>
+        <article className={styles.caseDetail}>
           <header className={styles.caseDetailHeader}>
             <div>
               <h3>{selectedCase.title}</h3>
@@ -293,31 +290,25 @@ export default function ProfilePage() {
             <span className={`${styles.riskPill} ${styles[`risk${selectedCase.risk}`]}`}>Riesgo {selectedCase.risk}</span>
             <span className={styles.modePill}>Modo {selectedCase.mode}</span>
           </div>
-          <div className={styles.timeline}>
+          <div className={styles.timeline}> 
             <h4>Linea de tiempo</h4>
             <ul>
               {selectedCase.timeline.map((milestone, index) => (
-                <FadeIn repeat as="li" key={`${selectedCase.code}-${index}`} delay={70 * index}>
+                <li key={`${selectedCase.code}-${index}`}>
                   <span>{milestone.time}</span>
                   <p>{milestone.detail}</p>
-                </FadeIn>
+                </li>
               ))}
             </ul>
           </div>
           <div className={styles.approvals}>
             <h4>Aprobacion superior</h4>
             <ul>
-              {selectedCase.approvals.map((approval, i) => (
-                <FadeIn
-                  repeat
-                  as="li"
-                  key={approval.role}
-                  delay={70 * i}
-                  className={approval.approved ? styles.approvalDone : styles.approvalPending}
-                >
+              {selectedCase.approvals.map((approval) => (
+                <li key={approval.role} className={approval.approved ? styles.approvalDone : styles.approvalPending}>
                   <strong>{approval.role}</strong>
                   <span>{approval.approved ? 'Firmado y auditado' : 'Pendiente de firma'}</span>
-                </FadeIn>
+                </li>
               ))}
             </ul>
           </div>
@@ -325,33 +316,33 @@ export default function ProfilePage() {
             <h4>Proxima accion</h4>
             <p>{selectedCase.nextAction}</p>
           </div>
-        </FadeIn>
+        </article>
       </section>
 
       <section className={styles.toolsSection}>
-        {toolCards.map((tool, i) => (
-          <FadeIn repeat as="article" key={tool.title} delay={90 * i} className={styles.toolCard}>
+        {toolCards.map((tool) => (
+          <article key={tool.title} className={styles.toolCard}>
             <h3>{tool.title}</h3>
             <p>{tool.description}</p>
             <div className={styles.toolActions}>
-              {tool.actions.map((action, j) => (
-                <FadeIn repeat as="button" key={action} type="button" delay={50 * j}>
+              {tool.actions.map((action) => (
+                <button key={action} type="button">
                   {action}
-                </FadeIn>
+                </button>
               ))}
             </div>
-          </FadeIn>
+          </article>
         ))}
       </section>
 
       <section className={styles.auditSection}>
-        <FadeIn repeat className={styles.auditHeader}>
+        <div className={styles.auditHeader}>
           <h3>Historial de reconocimiento y aprobaciones</h3>
           <p>Cada coincidencia registra hash, firma del revisor y caducidad del enlace compartido.</p>
-        </FadeIn>
+        </div>
         <ul className={styles.auditList}>
-          {recognitionRuns.map((item, i) => (
-            <FadeIn repeat as="li" key={item.id} delay={80 * i}>
+          {recognitionRuns.map((item) => (
+            <li key={item.id}>
               <div className={styles.auditInfo}>
                 <strong>{item.id}</strong>
                 <span>Caso {item.caseCode} · {item.file}</span>
@@ -365,25 +356,23 @@ export default function ProfilePage() {
                   {item.status}
                 </span>
               </div>
-            </FadeIn>
+            </li>
           ))}
         </ul>
       </section>
 
       <section className={styles.supportSection}>
-        <FadeIn repeat>
-          <h3>Red de apoyo directa</h3>
-        </FadeIn>
+        <h3>Red de apoyo directa</h3>
         <div className={styles.supportGrid}>
-          {supportContacts.map((contact, i) => (
-            <FadeIn repeat as="article" key={contact.name} delay={90 * i} className={styles.supportCard}>
+          {supportContacts.map((contact) => (
+            <article key={contact.name} className={styles.supportCard}>
               <h4>{contact.name}</h4>
               <p>{contact.channel}</p>
               <div className={styles.supportMeta}>
                 <span>{contact.availability}</span>
                 <span>{contact.type}</span>
               </div>
-            </FadeIn>
+            </article>
           ))}
         </div>
       </section>
